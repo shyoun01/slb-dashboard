@@ -1,0 +1,44 @@
+[
+  {
+    "year": 2022,
+    "incrementalRevenueMM": 1517,
+    "spendMM": 17.7,
+    "incBF_MM": 871,
+    "tailBF_MM": 1128,
+    "totalBF_MM": 1999,
+    "avgPrice_perMBF": 759,
+    "roiPerDollar": 85.71,
+    "cumulativeRoiPerDollar": 45.58,
+    "slbShare_pct": 3.5,
+    "volumePortion_pct": 42,
+    "pricePortion_pct": 58
+  },
+  {
+    "year": 2023,
+    "incrementalRevenueMM": 779,
+    "spendMM": 18.2,
+    "incBF_MM": 841,
+    "tailBF_MM": 1054,
+    "totalBF_MM": 1895,
+    "avgPrice_perMBF": 411,
+    "roiPerDollar": 42.79,
+    "cumulativeRoiPerDollar": 45.26,
+    "slbShare_pct": 3.5,
+    "volumePortion_pct": 78,
+    "pricePortion_pct": 22
+  },
+  {
+    "year": 2024,
+    "incrementalRevenueMM": 634,
+    "spendMM": 19.4,
+    "incBF_MM": 629,
+    "tailBF_MM": 960,
+    "totalBF_MM": 1589,
+    "avgPrice_perMBF": 399,
+    "roiPerDollar": 32.68,
+    "cumulativeRoiPerDollar": 43.89,
+    "slbShare_pct": 3.2,
+    "volumePortion_pct": 81,
+    "pricePortion_pct": 19
+  }
+]
