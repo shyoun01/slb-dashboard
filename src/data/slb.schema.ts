@@ -1,19 +1,27 @@
 import { z } from "zod";
 
-/** One row per calendar year */
 export const YearRow = z.object({
   year: z.number().int(),
-  incrementalRevenueMM: z.number(),    // $MM (e.g., 634)
-  spendMM: z.number(),                 // $MM (e.g., 19.4)
-  incBF_MM: z.number(),                // In-year incremental MM BF
-  tailBF_MM: z.number(),               // 3-year tail MM BF
-  totalBF_MM: z.number(),              // incBF_MM + tailBF_MM
-  avgPrice_perMBF: z.number(),         // $ per M BF (e.g., 399)
-  roiPerDollar: z.number(),            // $ benefit per $1 spent (yearly)
-  cumulativeRoiPerDollar: z.number(),  // cumulative through this year
-  slbShare_pct: z.number().optional(), // SLB share of industry volume (%)
-  volumePortion_pct: z.number().optional(), // % of revenue driven by volume
-  pricePortion_pct: z.number().optional(),  // % driven by price
+
+  // Core financial metrics
+  incrementalRevenueMM: z.number().nullable().optional(),
+  spendMM: z.number().nullable().optional(),
+
+  // ROI metrics
+  roiPerDollar: z.number().nullable().optional(),
+  cumulativeRoiPerDollar: z.number().nullable().optional(),
+
+  // Lumber metrics
+  incBF_MM: z.number().nullable().optional(),
+  tailBF_MM: z.number().nullable().optional(),
+  totalBF_MM: z.number().nullable().optional(),
+
+  // Market share
+  slbShare_pct: z.number().nullable().optional(),
+
+  // Revenue contribution breakdown
+  volumePortion_pct: z.number().nullable().optional(),
+  pricePortion_pct: z.number().nullable().optional(),
 });
 
 export type YearRow = z.infer<typeof YearRow>;

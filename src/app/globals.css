@@ -24,3 +24,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --slb-green: #6EB43F;
+  --slb-charcoal: #2E2E2E;
+  --slb-light: #F8F8F8;
+  --slb-gray: #666666;
+  --slb-blue: #1E3A8A;
+}
+
+/* Global typography overrides */
+body {
+  background-color: var(--slb-light);
+  font-family: 'Open Sans', 'Inter', sans-serif;
+  color: var(--slb-charcoal);
+}
+
+/* Headings consistent with SLB Annual Report */
+h1, h2, h3, h4, h5 {
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: var(--slb-charcoal);
+}
+
+/* Year slider accent */
+input[type="range"]::-webkit-slider-thumb {
+  background-color: var(--slb-green);
+}
+input[type="range"]::-moz-range-thumb {
+  background-color: var(--slb-green);
+}
+input[type="range"]::-ms-thumb {
+  background-color: var(--slb-green);
+}
+
+/* Interactive glow for the slider */
+input[type="range"]:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 8px var(--slb-green);
+}
