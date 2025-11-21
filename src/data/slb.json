@@ -177,9 +177,9 @@
   "incBF_MM": 495,
   "tailBF_MM": 1026,
   "totalBF_MM": 1520,
-  "slbShare_pct": null,
-  "volumePortion_pct": null,
-  "pricePortion_pct": null
+  "slbShare_pct": 0.0303,
+  "volumePortion_pct": 0.76,
+  "pricePortion_pct": 0.24
 }
 
 
