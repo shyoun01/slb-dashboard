@@ -167,5 +167,20 @@
     "slbShare_pct": 0.0317,
     "volumePortion_pct": 0.72,
     "pricePortion_pct": 0.28
-  }
+  },
+{
+  "year": 2025,
+  "incrementalRevenueMM": 641,
+  "spendMM": 17.6,
+  "roiPerDollar": 36.37,
+  "cumulativeRoiPerDollar": 46.08,
+  "incBF_MM": 495,
+  "tailBF_MM": 1026,
+  "totalBF_MM": 1520,
+  "slbShare_pct": null,
+  "volumePortion_pct": null,
+  "pricePortion_pct": null
+}
+
+
 ]
