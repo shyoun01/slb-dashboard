@@ -10,12 +10,15 @@ import PortionArea from "@/components/charts/PortionArea";
 import IncrementalLumberChart from "@/components/charts/IncrementalLumberChart";
 import CumulativeRoiSummary from "@/components/charts/CumulativeRoiSummary";
 import MarketShareChart from "@/components/charts/MarketShareChart";
+import InfluenceProjectsChart from "@/components/charts/InfluenceProjectsChart";
+import ProgramImpactInYearChart from "@/components/charts/ProgramImpactInYearChart";
 
 export default function Page() {
   const data = loadYears();
   if (!data || data.length === 0) {
-  return <div className="p-6 text-red-700">Error: No data loaded</div>;
-}
+    return <div className="p-6 text-red-700">Error: No data loaded</div>;
+  }
+
   const latest = data[data.length - 1];
   const [year, setYear] = useState(latest.year);
   const row = data.find((r) => r.year === year)!;
@@ -28,77 +31,86 @@ export default function Page() {
           SLB ROI Analysis
         </h1>
         <p className="text-[var(--slb-gray)] text-sm mt-2 uppercase tracking-wider">
-          Softwood Lumber Board | Annual Impact Dashboard
+          Softwood Lumber Board | Investment Impact Dashboard
         </p>
       </header>
+
+      {/* === SECTION: Quarterly Dashboard === */}
+      <section className="bg-white rounded-2xl p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
+          Quarterly Dashboard
+        </h2>
+
+        <div className="grid grid-cols-1 gap-6">
+          <InfluenceProjectsChart data={data} />
+          <ProgramImpactInYearChart data={data} />
+        </div>
+      </section>
 
       {/* === KPI OVERVIEW === */}
       <section className="bg-white rounded-2xl shadow-sm p-6">
         <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          KPI Overview
+          Annual ROI Overview
         </h2>
 
-<div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-  {/* 1. ROI */}
-  <KpiTile
-    label={`ROI (${year})`}
-    value={
-      row.roiPerDollar
-        ? `$${row.roiPerDollar.toLocaleString("en-US")} per $1`
-        : "—"
-    }
-  />
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+          {/* 1. ROI */}
+          <KpiTile
+            label={`ROI (${year})`}
+            value={
+              row.roiPerDollar
+                ? `$${row.roiPerDollar.toLocaleString("en-US")} per $1`
+                : "—"
+            }
+          />
 
-  {/* 2. Cumulative ROI */}
-  <KpiTile
-    label={`Cumulative ROI (${year})`}
-    value={
-      row.cumulativeRoiPerDollar
-        ? `$${row.cumulativeRoiPerDollar.toLocaleString("en-US")} per $1`
-        : "—"
-    }
-  />
+          {/* 2. Cumulative ROI */}
+          <KpiTile
+            label={`Cumulative ROI (${year})`}
+            value={
+              row.cumulativeRoiPerDollar
+                ? `$${row.cumulativeRoiPerDollar.toLocaleString("en-US")} per $1`
+                : "—"
+            }
+          />
 
-  {/* 3. Incremental Revenue */}
-  <KpiTile
-    label={`Incremental Revenue (${year})`}
-    value={
-      row.incrementalRevenueMM
-        ? `$${row.incrementalRevenueMM.toLocaleString("en-US")} MM`
-        : "—"
-    }
-  />
+          {/* 3. Incremental Revenue */}
+          <KpiTile
+            label={`Incremental Revenue (${year})`}
+            value={
+              row.incrementalRevenueMM
+                ? `$${row.incrementalRevenueMM.toLocaleString("en-US")} MM`
+                : "—"
+            }
+          />
 
-  {/* 4. Incremental Lumber */}
-  <KpiTile
-    label={`Incremental Lumber (${year})`}
-    value={
-      row.totalBF_MM
-        ? `${row.totalBF_MM.toLocaleString("en-US")} MM BF`
-        : "—"
-    }
-    sub={`In-year: ${
-      row.incBF_MM !== null && row.incBF_MM !== undefined
-        ? row.incBF_MM.toLocaleString("en-US")
-        : "—"
-    } | Tail: ${
-      row.tailBF_MM !== null && row.tailBF_MM !== undefined
-        ? row.tailBF_MM.toLocaleString("en-US")
-        : "—"
-    }`}
-  />
+          {/* 4. Incremental Lumber */}
+          <KpiTile
+            label={`Incremental Lumber (${year})`}
+            value={
+              row.totalBF_MM
+                ? `${row.totalBF_MM.toLocaleString("en-US")} MM BF`
+                : "—"
+            }
+            sub={`In-year: ${
+              row.incBF_MM !== null && row.incBF_MM !== undefined
+                ? row.incBF_MM.toLocaleString("en-US")
+                : "—"
+            } | Tail: ${
+              row.tailBF_MM !== null && row.tailBF_MM !== undefined
+                ? row.tailBF_MM.toLocaleString("en-US")
+                : "—"
+            }`}
+          />
 
-  {/* 5. SLB Spend */}
-  <KpiTile
-    label={`SLB Spend (${year})`}
-    value={
-      row.spendMM
-        ? `$${row.spendMM.toLocaleString("en-US")} MM`
-        : "—"
-    }
-  />
-</div>
-
+          {/* 5. SLB Spend */}
+          <KpiTile
+            label={`SLB Spend (${year})`}
+            value={
+              row.spendMM ? `$${row.spendMM.toLocaleString("en-US")} MM` : "—"
+            }
+          />
+        </div>
       </section>
 
       {/* === YEAR SELECTOR === */}
@@ -149,14 +161,14 @@ export default function Page() {
       </section>
 
       {/* === SECTION: Market & Volume Dynamics === */}
-<section className="bg-white rounded-2xl p-6 shadow-sm">
-  <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-    Market & Volume Dynamics
-  </h2>
-  <div className="grid grid-cols-1 gap-6">
-    <IncrementalLumberChart data={data} />
-  </div>
-</section>
+      <section className="bg-white rounded-2xl p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
+          Market &amp; Volume Dynamics
+        </h2>
+        <div className="grid grid-cols-1 gap-6">
+          <IncrementalLumberChart data={data} />
+        </div>
+      </section>
 
       {/* === SECTION: SLB Market Share Impact === */}
       <section className="bg-white rounded-2xl p-6 shadow-sm">

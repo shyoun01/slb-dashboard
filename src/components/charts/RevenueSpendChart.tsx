@@ -62,6 +62,7 @@ export default function RevenueSpendChart({ data }: RevenueSpendChartProps) {
             tickFormatter={(v) => `$${v.toLocaleString()}M`}
             tick={{ fill: "#374151", fontSize: 12 }}
             axisLine={{ stroke: "#d1d5db" }}
+            label={{ value: "Revenue", angle: -90, position: "insideLeft", dy: 25, dx: -10 }}
             tickLine={false}
           />
 
@@ -71,6 +72,7 @@ export default function RevenueSpendChart({ data }: RevenueSpendChartProps) {
             tickFormatter={(v) => `$${v.toLocaleString()}M`}
             tick={{ fill: "#374151", fontSize: 12 }}
             axisLine={{ stroke: "#d1d5db" }}
+            label={{ value: "Expenditures ($MM)", angle: 90, position: "insideRight", dy: 65, }}
             tickLine={false}
           />
 

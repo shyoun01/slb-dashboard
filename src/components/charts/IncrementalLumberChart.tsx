@@ -75,7 +75,7 @@ export default function IncrementalLumberChart({
             tick={{ fill: "#374151", fontSize: 12 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
-            label={{ value: "Lumber Volume (MM BF)", angle: -90, position: "insideLeft" }}
+            label={{ value: "Lumber Volume (MM BF)", angle: -90, position: "insideLeft", dy: 65, }}
           />
 
           <YAxis
@@ -85,7 +85,7 @@ export default function IncrementalLumberChart({
             tick={{ fill: "#374151", fontSize: 12 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
-            label={{ value: "Expenditures ($MM)", angle: 90, position: "insideRight" }}
+            label={{ value: "Expenditures ($MM)", angle: 90, position: "insideRight", dy: 65, }}
           />
 
           {/* Custom Tooltip */}

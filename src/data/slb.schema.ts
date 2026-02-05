@@ -16,6 +16,21 @@ export const YearRow = z.object({
   tailBF_MM: z.number().nullable().optional(),
   totalBF_MM: z.number().nullable().optional(),
 
+  // Quarterly TOTAL lumber subtotals (when available)
+  q1BF_MM: z.number().nullable().optional(),
+  q2BF_MM: z.number().nullable().optional(),
+  q3BF_MM: z.number().nullable().optional(),
+  q4BF_MM: z.number().nullable().optional(),
+
+  // ✅ In-Year quarterly subtotals (when available)
+  inYear_q1BF_MM: z.number().nullable().optional(),
+  inYear_q2BF_MM: z.number().nullable().optional(),
+  inYear_q3BF_MM: z.number().nullable().optional(),
+  inYear_q4BF_MM: z.number().nullable().optional(),
+
+  // Projects converted (new series)
+  projects: z.number().nullable().optional(),
+
   // Market share
   slbShare_pct: z.number().nullable().optional(),
 
