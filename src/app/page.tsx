@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { loadYears } from "@/data/load";
 import KpiTile from "@/components/KpiTile";
-import YearSlider from "@/components/YearSlider";
+import YearStepper from "@/components/YearStepper";
 import RevenueSpendChart from "@/components/charts/RevenueSpendChart";
 import RoiTrend from "@/components/charts/RoiTrend";
 import PortionArea from "@/components/charts/PortionArea";
@@ -49,9 +49,20 @@ export default function Page() {
 
       {/* === KPI OVERVIEW === */}
       <section className="bg-white rounded-2xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          Annual ROI Overview
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-[var(--slb-green)] pb-2 mb-4">
+          <h2 className="text-xl font-semibold text-[var(--slb-charcoal)]">
+            Annual ROI Overview
+          </h2>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-[var(--slb-gray)]">Data for</span>
+            <YearStepper
+              min={data[0].year}
+              max={data[data.length - 1].year}
+              value={year}
+              onChange={setYear}
+            />
+          </div>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
           {/* 1. ROI */}
@@ -111,30 +122,6 @@ export default function Page() {
             }
           />
         </div>
-      </section>
-
-      {/* === YEAR SELECTOR === */}
-      <section className="bg-white rounded-2xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          Select Year
-        </h2>
-
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-gray-800 font-medium">Viewing Data for</span>
-          <span className="text-2xl font-bold text-[var(--slb-blue)]">
-            {year}
-          </span>
-        </div>
-
-        <YearSlider
-          min={data[0].year}
-          max={data[data.length - 1].year}
-          value={year}
-          onChange={setYear}
-        />
-        <p className="text-sm text-gray-600 text-center mt-2 italic">
-          ← drag to change year →
-        </p>
       </section>
 
       {/* === SECTION: ROI Summary and Trend === */}

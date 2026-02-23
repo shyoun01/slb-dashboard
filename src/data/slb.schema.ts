@@ -16,6 +16,9 @@ export const YearRow = z.object({
   tailBF_MM: z.number().nullable().optional(),
   totalBF_MM: z.number().nullable().optional(),
 
+  // Average price ($ per thousand BF); when present with totalBF_MM, incrementalRevenueMM is derived
+  avgPricePerThousandBF: z.number().nullable().optional(),
+
   // Quarterly TOTAL lumber subtotals (when available)
   q1BF_MM: z.number().nullable().optional(),
   q2BF_MM: z.number().nullable().optional(),
