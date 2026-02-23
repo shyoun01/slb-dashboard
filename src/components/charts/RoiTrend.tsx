@@ -11,39 +11,24 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
-
-interface RoiTrendProps {
-  data: {
-    year: number;
-    roiPerDollar?: number | null;
-    cumulativeRoiPerDollar?: number | null;
-  }[];
-}
+import { YearRow } from "@/data/slb.schema";
 
 /**
  * ROI Trend Chart
  * ----------------
- * Displays Yearly ROI (blue line) vs. Cumulative ROI (purple line).
- * Handles missing or partial data gracefully.
+ * Uses the same loadYears() data as the rest of the dashboard. Hover values are:
+ * - roiPerDollar  = same as "ROI (Year)" in Annual ROI Overview
+ * - cumulativeRoiPerDollar = same as Cumulative ROI Summary card and "Cumulative ROI (Year)" KPI
  */
-export default function RoiTrend({ data }: RoiTrendProps) {
-  // Clean and format data
-  const chartData = data
-    .filter(
-      (d) =>
-        d.roiPerDollar !== null &&
-        d.roiPerDollar !== undefined &&
-        d.cumulativeRoiPerDollar !== null &&
-        d.cumulativeRoiPerDollar !== undefined
-    )
-    .map((d) => ({
-      year: d.year,
-      yearlyROI: d.roiPerDollar ?? 0,
-      cumulativeROI: d.cumulativeRoiPerDollar ?? 0,
-    }));
+export default function RoiTrend({ data }: { data: YearRow[] }) {
+  const chartData = data.filter(
+    (d) =>
+      d.roiPerDollar != null && d.cumulativeRoiPerDollar != null
+  ) as (YearRow & { roiPerDollar: number; cumulativeRoiPerDollar: number })[];
 
-    // Dynamically set upper Y-axis limit ~10% above max Yearly ROI
-const maxROI = Math.max(...chartData.map((d) => d.yearlyROI)) * 1.1;
+  const maxROI = chartData.length
+    ? Math.max(...chartData.map((d) => d.roiPerDollar)) * 1.1
+    : 100;
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
@@ -67,21 +52,20 @@ const maxROI = Math.max(...chartData.map((d) => d.yearlyROI)) * 1.1;
           />
 
           <YAxis
-  domain={[0, maxROI]}
-  tickFormatter={(v) => `$${v.toLocaleString()}`}
-  tick={{ fill: "#374151", fontSize: 12 }}
-  axisLine={{ stroke: "#d1d5db" }}
-  tickLine={false}
-/>
-
+            domain={[0, maxROI]}
+            tickFormatter={(v) => `$${Number(v).toFixed(2)}`}
+            tick={{ fill: "#374151", fontSize: 12 }}
+            axisLine={{ stroke: "#d1d5db" }}
+            tickLine={false}
+          />
 
           <Tooltip
             formatter={(value: number, name: string) => {
               const label =
-                name === "yearlyROI" ? "Yearly ROI" : "Cumulative ROI";
-              return [`$${value.toLocaleString()} per $1`, label];
+                name === "roiPerDollar" ? "Yearly ROI" : "Cumulative ROI";
+              return [`$${Number(value).toFixed(2)} per $1`, label];
             }}
-            labelFormatter={(year) => `${year}`}
+            labelFormatter={(year) => `Year: ${year}`}
             contentStyle={{
               backgroundColor: "white",
               border: "1px solid #d1d5db",
@@ -94,24 +78,24 @@ const maxROI = Math.max(...chartData.map((d) => d.yearlyROI)) * 1.1;
             verticalAlign="bottom"
             height={36}
             formatter={(value) =>
-              value === "yearlyROI" ? "Yearly ROI" : "Cumulative ROI"
+              value === "roiPerDollar" ? "Yearly ROI" : "Cumulative ROI"
             }
           />
 
-          {/* Yearly ROI (Blue line) */}
           <Line
             type="monotone"
-            dataKey="yearlyROI"
+            dataKey="roiPerDollar"
+            name="Yearly ROI"
             stroke="#1e3a8a"
             strokeWidth={3}
             dot={{ r: 3, strokeWidth: 1, fill: "#1e3a8a" }}
             activeDot={{ r: 6 }}
           />
 
-          {/* Cumulative ROI (Purple line) */}
           <Line
             type="monotone"
-            dataKey="cumulativeROI"
+            dataKey="cumulativeRoiPerDollar"
+            name="Cumulative ROI"
             stroke="#9333ea"
             strokeWidth={3}
             dot={{ r: 3, strokeWidth: 1, fill: "#9333ea" }}

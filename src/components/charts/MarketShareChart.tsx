@@ -18,7 +18,7 @@ export default function MarketShareChart({ data }: { data: YearRow[] }) {
   }));
 
   return (
-    <div className="h-80 w-full rounded-2xl border bg-white p-4 shadow-sm">
+    <div className="h-80 w-full rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
       <h2 className="text-lg font-semibold text-gray-900 mb-2 text-center">
         SLB Market Share Impact
       </h2>

@@ -64,28 +64,18 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {/* 1. ROI */}
           <KpiTile
             label={`ROI (${year})`}
             value={
-              row.roiPerDollar
-                ? `$${row.roiPerDollar.toLocaleString("en-US")} per $1`
+              row.roiPerDollar != null
+                ? `$${Number(row.roiPerDollar).toFixed(2)} per $1`
                 : "—"
             }
           />
 
-          {/* 2. Cumulative ROI */}
-          <KpiTile
-            label={`Cumulative ROI (${year})`}
-            value={
-              row.cumulativeRoiPerDollar
-                ? `$${row.cumulativeRoiPerDollar.toLocaleString("en-US")} per $1`
-                : "—"
-            }
-          />
-
-          {/* 3. Incremental Revenue */}
+          {/* 2. Incremental Revenue */}
           <KpiTile
             label={`Incremental Revenue (${year})`}
             value={
@@ -95,7 +85,7 @@ export default function Page() {
             }
           />
 
-          {/* 4. Incremental Lumber */}
+          {/* 3. Incremental Lumber */}
           <KpiTile
             label={`Incremental Lumber (${year})`}
             value={
@@ -114,7 +104,7 @@ export default function Page() {
             }`}
           />
 
-          {/* 5. SLB Spend */}
+          {/* 4. SLB Spend */}
           <KpiTile
             label={`SLB Spend (${year})`}
             value={
@@ -122,48 +112,12 @@ export default function Page() {
             }
           />
         </div>
-      </section>
 
-      {/* === SECTION: ROI Summary and Trend === */}
-      <section className="bg-gray-50 rounded-2xl p-6 shadow-inner">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          ROI Summary and Trend
-        </h2>
-
-        <div className="space-y-6">
+        <div className="mt-8 space-y-6">
           <CumulativeRoiSummary data={data} />
           <RoiTrend data={data} />
-        </div>
-      </section>
-
-      {/* === SECTION: Financial Performance Trends === */}
-      <section className="bg-gray-50 rounded-2xl p-6 shadow-inner">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          Financial Performance Trends
-        </h2>
-
-        <div className="grid md:grid-cols-1 gap-6">
           <RevenueSpendChart data={data} />
-        </div>
-      </section>
-
-      {/* === SECTION: Market & Volume Dynamics === */}
-      <section className="bg-white rounded-2xl p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          Market &amp; Volume Dynamics
-        </h2>
-        <div className="grid grid-cols-1 gap-6">
           <IncrementalLumberChart data={data} />
-        </div>
-      </section>
-
-      {/* === SECTION: SLB Market Share Impact === */}
-      <section className="bg-white rounded-2xl p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-[var(--slb-charcoal)] border-b-2 border-[var(--slb-green)] pb-2 mb-4">
-          SLB Market Share Impact
-        </h2>
-
-        <div className="grid md:grid-cols-1 gap-6">
           <MarketShareChart data={data} />
         </div>
       </section>
