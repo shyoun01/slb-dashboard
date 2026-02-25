@@ -115,9 +115,9 @@ export default function Page() {
 
         <div className="mt-8 space-y-6">
           <CumulativeRoiSummary data={data} />
-          <RoiTrend data={data} />
           <RevenueSpendChart data={data} />
           <IncrementalLumberChart data={data} />
+          <RoiTrend data={data} />
           <MarketShareChart data={data} />
         </div>
       </section>

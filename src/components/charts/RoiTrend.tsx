@@ -62,7 +62,7 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
           <Tooltip
             formatter={(value: number, name: string) => {
               const label =
-                name === "roiPerDollar" ? "Yearly ROI" : "Cumulative ROI";
+                name === "Yearly ROI" ? "Yearly ROI" : "Cumulative ROI";
               return [`$${Number(value).toFixed(2)} per $1`, label];
             }}
             labelFormatter={(year) => `Year: ${year}`}
@@ -72,14 +72,38 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
               borderRadius: "8px",
               boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
             }}
+            itemSorter={(item) => (item.name === "Yearly ROI" ? -1 : 1)}
           />
 
           <Legend
             verticalAlign="bottom"
             height={36}
-            formatter={(value) =>
-              value === "roiPerDollar" ? "Yearly ROI" : "Cumulative ROI"
-            }
+            content={() => (
+              <div className="flex justify-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: 14,
+                      height: 3,
+                      backgroundColor: "#1e3a8a",
+                    }}
+                  />
+                  <span>Yearly ROI</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: 14,
+                      height: 3,
+                      backgroundColor: "#9333ea",
+                    }}
+                  />
+                  <span>Cumulative ROI</span>
+                </div>
+              </div>
+            )}
           />
 
           <Line
