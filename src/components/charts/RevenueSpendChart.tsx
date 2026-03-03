@@ -81,7 +81,7 @@ export default function RevenueSpendChart({ data }: RevenueSpendChartProps) {
               const label =
                 name === "revenue"
                   ? "Incremental Revenue"
-                  : "SLB Spend";
+                  : "Expenditures";
               return [`$${value.toLocaleString()}M`, label];
             }}
             labelFormatter={(year) => `${year}`}
@@ -107,19 +107,19 @@ export default function RevenueSpendChart({ data }: RevenueSpendChartProps) {
           <Bar
             yAxisId="left"
             dataKey="revenue"
-            fill="#60a5fa" // light blue
+            fill="#7EBC41" // Light green
             barSize={30}
             radius={[6, 6, 0, 0]}
           />
 
-          {/* Line: SLB Spend */}
+          {/* Line: Expenditures */}
           <Line
             yAxisId="right"
             type="monotone"
             dataKey="spend"
-            stroke="#1e3a8a" // SLB blue
+            stroke="#EF7328"
             strokeWidth={3}
-            dot={{ r: 4, strokeWidth: 1, fill: "#1e3a8a" }}
+            dot={{ r: 4, strokeWidth: 1, fill: "#EF7328" }}
             activeDot={{ r: 6 }}
           />
         </ComposedChart>

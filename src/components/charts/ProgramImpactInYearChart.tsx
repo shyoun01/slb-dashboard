@@ -59,10 +59,10 @@ function InYearTooltip({ active, payload, label }: any) {
         Total: {fmt(row.incBF_MM)}
       </div>
 
-      <div style={{ color: "#f97316" }}>Quarter 4 : {fmt(row.q4)}</div>
-      <div style={{ color: "#6366f1" }}>Quarter 3 : {fmt(row.q3)}</div>
-      <div style={{ color: "#0ea5e9" }}>Quarter 2 : {fmt(row.q2)}</div>
-      <div style={{ color: "#2563eb" }}>Quarter 1 : {fmt(row.q1)}</div>
+      <div style={{ color: "#7F7F7F" }}>Quarter 4 : {fmt(row.q4)}</div>
+      <div style={{ color: "#7EBC41" }}>Quarter 3 : {fmt(row.q3)}</div>
+      <div style={{ color: "#42B245" }}>Quarter 2 : {fmt(row.q2)}</div>
+      <div style={{ color: "#005F33" }}>Quarter 1 : {fmt(row.q1)}</div>
     </div>
   );
 }
@@ -156,10 +156,10 @@ export default function ProgramImpactInYearChart({ data }: { data: Row[] }) {
           />
 
           {/* Stacked quarterly bars */}
-            <Bar dataKey="q1" stackId="inyear" fill="#2563eb" barSize={26} />
-            <Bar dataKey="q2" stackId="inyear" fill="#0ea5e9" barSize={26} />
-            <Bar dataKey="q3" stackId="inyear" fill="#6366f1" barSize={26} />
-            <Bar dataKey="q4" stackId="inyear" fill="#f97316" barSize={26} />
+            <Bar dataKey="q1" stackId="inyear" fill="#005F33" barSize={26} />
+            <Bar dataKey="q2" stackId="inyear" fill="#42B245" barSize={26} />
+            <Bar dataKey="q3" stackId="inyear" fill="#7EBC41" barSize={26} />
+            <Bar dataKey="q4" stackId="inyear" fill="#7F7F7F" barSize={26} />
 
         </ComposedChart>
       </ResponsiveContainer>

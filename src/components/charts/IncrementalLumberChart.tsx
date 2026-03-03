@@ -108,18 +108,12 @@ export default function IncrementalLumberChart({
                   >
                     <p style={{ fontWeight: 600, marginBottom: "4px" }}>{label}</p>
 
-                    <p style={{ fontWeight: 700, color: "#1e3a8a" }}>
-                      Direct (In-Year):{" "}
-                      <span style={{ color: "#111827", fontWeight: 500 }}>
-                        {data.direct?.toLocaleString()} MM BF
-                      </span>
+                    <p style={{ fontWeight: 700, color: "#005F33" }}>
+                      Direct (In-Year): {data.direct?.toLocaleString()} MM BF
                     </p>
 
-                    <p style={{ fontWeight: 700, color: "#60a5fa" }}>
-                      Tail (3-Year Indirect):{" "}
-                      <span style={{ color: "#111827", fontWeight: 500 }}>
-                        {data.tail?.toLocaleString()} MM BF
-                      </span>
+                    <p style={{ fontWeight: 700, color: "#7EBC41" }}>
+                      Tail (3-Year Indirect): {data.tail?.toLocaleString()} MM BF
                     </p>
 
                     <hr
@@ -129,15 +123,12 @@ export default function IncrementalLumberChart({
                       }}
                     />
 
-                    <p style={{ fontWeight: 700 }}>
+                    <p style={{ fontWeight: 700, color: "#005F33" }}>
                       Total: {data.total?.toLocaleString()} MM BF
                     </p>
 
-                    <p style={{ fontWeight: 700, color: "#dc2626" }}>
-                      Expenditures:{" "}
-                      <span style={{ color: "#111827", fontWeight: 500 }}>
-                        ${data.expenditures?.toFixed(1)}M
-                      </span>
+                    <p style={{ fontWeight: 700, color: "#EF7328" }}>
+                      Expenditures: {"$" + data.expenditures?.toFixed(1) + "M"}
                     </p>
                   </div>
                 );
@@ -162,7 +153,7 @@ export default function IncrementalLumberChart({
           <Bar
             yAxisId="lumber"
             dataKey="direct"
-            fill="#1e3a8a" // SLB dark blue
+            fill="#005F33" // Primary dark green
             name="Direct (In-Year)"
             stackId="a"
             radius={[6, 6, 0, 0]}
@@ -170,7 +161,7 @@ export default function IncrementalLumberChart({
           <Bar
             yAxisId="lumber"
             dataKey="tail"
-            fill="#60a5fa" // Light blue
+            fill="#7EBC41" // Light green
             name="Tail (3-Year Indirect)"
             stackId="a"
             radius={[6, 6, 0, 0]}
@@ -181,9 +172,9 @@ export default function IncrementalLumberChart({
             yAxisId="spend"
             type="monotone"
             dataKey="expenditures"
-            stroke="#dc2626" // Red color for expenditures
+            stroke="#EF7328" // Orange for expenditures
             strokeWidth={3}
-            dot={{ fill: "#dc2626", strokeWidth: 2, r: 4 }}
+            dot={{ fill: "#EF7328", strokeWidth: 2, r: 4 }}
             activeDot={{ r: 6 }}
             name="expenditures"
           />

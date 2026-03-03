@@ -20,7 +20,7 @@ export default function MarketShareChart({ data }: { data: YearRow[] }) {
   return (
     <div className="h-80 w-full rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
       <h2 className="text-lg font-semibold text-gray-900 mb-2 text-center">
-        SLB Market Share Impact
+        SLB Impact as a Percentage of Total Lumber Volume
       </h2>
 
       <ResponsiveContainer width="100%" height="90%">
@@ -45,15 +45,15 @@ export default function MarketShareChart({ data }: { data: YearRow[] }) {
               color: "#111827",
               fontWeight: "600",
             }}
-            formatter={(v: any) => [`${v.toFixed(2)}%`, "Market Share"]}
+            formatter={(v: any) => [`${v.toFixed(2)}%`, "SLB Impact"]}
             separator=": "
           />
           <Legend />
           <Line
             type="monotone"
             dataKey="share"
-            name="SLB Market Share"
-            stroke="#2563eb"
+            name="SLB Impact"
+            stroke="#005F33"
             strokeWidth={3}
             dot
           />

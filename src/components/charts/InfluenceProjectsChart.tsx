@@ -74,7 +74,7 @@ function CustomTooltip({ active, payload, label }: any) {
       <div style={{ fontWeight: 700, marginBottom: 6 }}>{label}</div>
 
       {projects !== null && (
-        <div style={{ color: "#7c3aed", marginBottom: 6 }}>
+        <div style={{ color: "#EF7328", marginBottom: 6 }}>
           Projects : {projects.toLocaleString()}
         </div>
       )}
@@ -87,16 +87,16 @@ function CustomTooltip({ active, payload, label }: any) {
 
       {/* Quarters (match stacked bar order: Q4 at top → Q1 at bottom) */}
       {hasQuarters && q4 !== null && (
-        <div style={{ color: "#f59e0b" }}>Quarter 4 : {fmtBF(q4)}</div>
+        <div style={{ color: "#7F7F7F" }}>Quarter 4 : {fmtBF(q4)}</div>
       )}
       {hasQuarters && q3 !== null && (
-        <div style={{ color: "#a3e635" }}>Quarter 3 : {fmtBF(q3)}</div>
+        <div style={{ color: "#7EBC41" }}>Quarter 3 : {fmtBF(q3)}</div>
       )}
       {hasQuarters && q2 !== null && (
-        <div style={{ color: "#22c55e" }}>Quarter 2 : {fmtBF(q2)}</div>
+        <div style={{ color: "#42B245" }}>Quarter 2 : {fmtBF(q2)}</div>
       )}
       {hasQuarters && q1 !== null && (
-        <div style={{ color: "#14b8a6" }}>Quarter 1 : {fmtBF(q1)}</div>
+        <div style={{ color: "#005F33" }}>Quarter 1 : {fmtBF(q1)}</div>
       )}
     </div>
   );
@@ -243,25 +243,25 @@ export default function InfluenceProjectsChart({ data }: { data: SlbRow[] }) {
             yAxisId="left"
             dataKey="totalFallback"
             stackId="bf"
-            fill="#34d399"
+            fill="#42B245"
             barSize={26}
             radius={[6, 6, 0, 0]}
             legendType="none"
           />
 
-          <Bar yAxisId="left" dataKey="q1" stackId="bf" fill="#14b8a6" />
-          <Bar yAxisId="left" dataKey="q2" stackId="bf" fill="#22c55e" />
-          <Bar yAxisId="left" dataKey="q3" stackId="bf" fill="#a3e635" />
-          <Bar yAxisId="left" dataKey="q4" stackId="bf" fill="#f59e0b" />
+          <Bar yAxisId="left" dataKey="q1" stackId="bf" fill="#005F33" />
+          <Bar yAxisId="left" dataKey="q2" stackId="bf" fill="#42B245" />
+          <Bar yAxisId="left" dataKey="q3" stackId="bf" fill="#7EBC41" />
+          <Bar yAxisId="left" dataKey="q4" stackId="bf" fill="#7F7F7F" />
 
           {/* Line */}
           <Line
             yAxisId="right"
             type="monotone"
             dataKey="projects"
-            stroke="#7c3aed"
+            stroke="#EF7328"
             strokeWidth={3}
-            dot={{ r: 4, strokeWidth: 1, fill: "#7c3aed" }}
+            dot={{ r: 4, strokeWidth: 1, fill: "#EF7328" }}
             activeDot={{ r: 6 }}
             connectNulls={false}
           />

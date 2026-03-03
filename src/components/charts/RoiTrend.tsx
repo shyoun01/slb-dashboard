@@ -86,7 +86,7 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
                       display: "inline-block",
                       width: 14,
                       height: 3,
-                      backgroundColor: "#1e3a8a",
+                      backgroundColor: "#EF7328",
                     }}
                   />
                   <span>Yearly ROI</span>
@@ -97,7 +97,7 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
                       display: "inline-block",
                       width: 14,
                       height: 3,
-                      backgroundColor: "#9333ea",
+                      backgroundColor: "#67846A",
                     }}
                   />
                   <span>Cumulative ROI</span>
@@ -110,9 +110,9 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
             type="monotone"
             dataKey="roiPerDollar"
             name="Yearly ROI"
-            stroke="#1e3a8a"
+            stroke="#EF7328"
             strokeWidth={3}
-            dot={{ r: 3, strokeWidth: 1, fill: "#1e3a8a" }}
+            dot={{ r: 3, strokeWidth: 1, fill: "#EF7328" }}
             activeDot={{ r: 6 }}
           />
 
@@ -120,9 +120,9 @@ export default function RoiTrend({ data }: { data: YearRow[] }) {
             type="monotone"
             dataKey="cumulativeRoiPerDollar"
             name="Cumulative ROI"
-            stroke="#9333ea"
+            stroke="#67846A"
             strokeWidth={3}
-            dot={{ r: 3, strokeWidth: 1, fill: "#9333ea" }}
+            dot={{ r: 3, strokeWidth: 1, fill: "#67846A" }}
             activeDot={{ r: 6 }}
           />
         </LineChart>

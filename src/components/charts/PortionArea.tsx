@@ -48,16 +48,16 @@ export default function PortionArea({ data }: { data: YearRow[] }) {
             dataKey="volume"
             name="Volume Portion"
             stackId="1"
-            fill="#4ade80"
-            stroke="#16a34a"
+            fill="#7EBC41"
+            stroke="#42B245"
           />
           <Area
             type="monotone"
             dataKey="pricing"
             name="Pricing Portion"
             stackId="1"
-            fill="#60a5fa"
-            stroke="#2563eb"
+            fill="#67846A"
+            stroke="#005F33"
           />
         </AreaChart>
       </ResponsiveContainer>
