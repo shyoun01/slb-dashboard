@@ -284,7 +284,7 @@
     "inYear_q3BF_MM": 132,
     "inYear_q4BF_MM": 156,
     "projects": 1498,
-    "slbShare_pct": 0.0317,
+    "slbShare_pct": 0.031,
     "volumePortion_pct": 0.72,
     "pricePortion_pct": 0.28
   },
@@ -296,7 +296,7 @@
     "cumulativeRoiPerDollar": 46.08,
     "incBF_MM": 580,
     "tailBF_MM": 872,
-    "totalBF_MM": 1323,
+    "totalBF_MM": 1452,
     "avgPricePerThousandBF": 439,
     "q1BF_MM": 315,
     "q2BF_MM": 430,
@@ -307,7 +307,7 @@
     "inYear_q3BF_MM": 149,
     "inYear_q4BF_MM": 131,
     "projects": 1536,
-    "slbShare_pct": 0.0303,
+    "slbShare_pct": 0.029,
     "volumePortion_pct": 0.76,
     "pricePortion_pct": 0.24
   }

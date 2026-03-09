@@ -3,6 +3,11 @@ import { Years, YearRow } from "./slb.schema";
 
 const YEARS_WITH_CALCULATED_TOTAL_BF = [2023, 2024, 2025] as const;
 
+const TOTAL_SOFTWOOD_LUMBER_CONSUMPTION_MM_BF: Record<number, number> = {
+  2024: 51220,
+  2025: 49715,
+};
+
 /**
  * For 2023, 2024, 2025: totalBF_MM = incBF_MM (Direct) + tailBF_MM (Tail).
  * Uses existing fields: incBF_MM = Incremental Lumber, Direct; tailBF_MM = Incremental Lumber, Tail.
@@ -56,6 +61,24 @@ function deriveRoiPerDollar(rows: YearRow[]): YearRow[] {
 }
 
 /**
+ * For years where we have a known total softwood lumber consumption figure,
+ * compute slbShare_pct = totalBF_MM / total_softwood_consumption.
+ * Stored as a fraction (e.g., 0.031 → 3.1%) to match chart expectations.
+ */
+function deriveSlbSharePct(rows: YearRow[]): YearRow[] {
+  return rows.map((row) => {
+    const denominator = TOTAL_SOFTWOOD_LUMBER_CONSUMPTION_MM_BF[row.year];
+    const total = row.totalBF_MM;
+    if (denominator != null && total != null) {
+      const share = total / denominator;
+      const rounded = Math.round(share * 1000) / 1000;
+      return { ...row, slbShare_pct: rounded };
+    }
+    return row;
+  });
+}
+
+/**
  * For each year, cumulative ROI = (sum of incrementalRevenueMM from start through that year)
  * / (sum of spendMM from start through that year). Matches the Cumulative ROI Summary card.
  * Rows must be sorted by year ascending.
@@ -82,7 +105,8 @@ export function loadYears(): YearRow[] {
   const withDerivedTotalBF = deriveTotalBF_MM(parsed.data);
   const withDerivedRevenue = deriveIncrementalRevenueMM(withDerivedTotalBF);
   const withDerivedRoi = deriveRoiPerDollar(withDerivedRevenue);
-  const sorted = withDerivedRoi.sort((a, b) => a.year - b.year);
+  const withDerivedShare = deriveSlbSharePct(withDerivedRoi);
+  const sorted = withDerivedShare.sort((a, b) => a.year - b.year);
   const withCumulativeRoi = deriveCumulativeRoiPerDollar(sorted);
   return withCumulativeRoi;
 }
