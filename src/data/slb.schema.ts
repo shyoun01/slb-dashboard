@@ -40,6 +40,18 @@ export const YearRow = z.object({
   // Revenue contribution breakdown
   volumePortion_pct: z.number().nullable().optional(),
   pricePortion_pct: z.number().nullable().optional(),
+
+  // Construction macro indicators (stored only; not yet visualized)
+  mfStarts_k: z.number().nullable().optional(),
+  mfPermits_k: z.number().nullable().optional(),
+  abiAvg: z.number().nullable().optional(),
+  nahbHmi: z.number().nullable().optional(),
+  constructionSpendingGrowth_pct: z.number().nullable().optional(),
+  mortgage30yr_pct: z.number().nullable().optional(),
+  treasury10yr_pct: z.number().nullable().optional(),
+  fedFunds_pct: z.number().nullable().optional(),
+  lumberPrice_usdPerMbf: z.number().nullable().optional(),
+  bankLendingTighteningIndex_pct: z.number().nullable().optional(),
 });
 
 export type YearRow = z.infer<typeof YearRow>;

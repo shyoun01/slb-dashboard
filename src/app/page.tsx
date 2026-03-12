@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { loadYears } from "@/data/load";
+import { buildCsv, downloadCsv } from "@/data/exportCsv";
 import KpiTile from "@/components/KpiTile";
 import YearStepper from "@/components/YearStepper";
 import RevenueSpendChart from "@/components/charts/RevenueSpendChart";
@@ -12,6 +13,7 @@ import CumulativeRoiSummary from "@/components/charts/CumulativeRoiSummary";
 import MarketShareChart from "@/components/charts/MarketShareChart";
 import InfluenceProjectsChart from "@/components/charts/InfluenceProjectsChart";
 import ProgramImpactInYearChart from "@/components/charts/ProgramImpactInYearChart";
+import ProgramImpactVsMacrosChart from "@/components/charts/ProgramImpactVsMacrosChart";
 
 export default function Page() {
   const data = loadYears();
@@ -32,6 +34,18 @@ export default function Page() {
         </h1>
         <p className="text-[var(--slb-gray)] text-sm mt-2 uppercase tracking-wider">
           Softwood Lumber Board | Investment Impact Dashboard
+        </p>
+        <p className="mt-3">
+          <button
+            type="button"
+            onClick={() => {
+              const csv = buildCsv(data);
+              downloadCsv(csv);
+            }}
+            className="text-sm font-medium text-[var(--slb-charcoal)] underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[var(--slb-green)] rounded px-1"
+          >
+            Download data (CSV)
+          </button>
         </p>
       </header>
 
@@ -119,6 +133,7 @@ export default function Page() {
           <IncrementalLumberChart data={data} />
           <RoiTrend data={data} />
           <MarketShareChart data={data} />
+          <ProgramImpactVsMacrosChart data={data} />
         </div>
       </section>
     </main>

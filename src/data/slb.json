@@ -19,7 +19,17 @@
     "projects": null,
     "slbShare_pct": 0.0032,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 248,
+    "mfPermits_k": 278,
+    "abiAvg": 51,
+    "nahbHmi": 28,
+    "constructionSpendingGrowth_pct": 7.4,
+    "mortgage30yr_pct": 3.65,
+    "treasury10yr_pct": 1.8,
+    "fedFunds_pct": 0.14,
+    "lumberPrice_usdPerMbf": 335,
+    "bankLendingTighteningIndex_pct": -5
   },
   {
     "year": 2013,
@@ -41,7 +51,17 @@
     "projects": null,
     "slbShare_pct": 0.0072,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 294,
+    "mfPermits_k": 318,
+    "abiAvg": 54,
+    "nahbHmi": 47,
+    "constructionSpendingGrowth_pct": 6.1,
+    "mortgage30yr_pct": 3.98,
+    "treasury10yr_pct": 2.35,
+    "fedFunds_pct": 0.11,
+    "lumberPrice_usdPerMbf": 365,
+    "bankLendingTighteningIndex_pct": -8
   },
   {
     "year": 2014,
@@ -63,7 +83,17 @@
     "projects": null,
     "slbShare_pct": 0.0111,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 356,
+    "mfPermits_k": 375,
+    "abiAvg": 53,
+    "nahbHmi": 50,
+    "constructionSpendingGrowth_pct": 5.6,
+    "mortgage30yr_pct": 4.17,
+    "treasury10yr_pct": 2.54,
+    "fedFunds_pct": 0.09,
+    "lumberPrice_usdPerMbf": 380,
+    "bankLendingTighteningIndex_pct": -2
   },
   {
     "year": 2015,
@@ -85,7 +115,17 @@
     "projects": null,
     "slbShare_pct": 0.0143,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 397,
+    "mfPermits_k": 398,
+    "abiAvg": 52,
+    "nahbHmi": 54,
+    "constructionSpendingGrowth_pct": 10.2,
+    "mortgage30yr_pct": 3.85,
+    "treasury10yr_pct": 2.14,
+    "fedFunds_pct": 0.13,
+    "lumberPrice_usdPerMbf": 340,
+    "bankLendingTighteningIndex_pct": 0
   },
   {
     "year": 2016,
@@ -107,7 +147,17 @@
     "projects": null,
     "slbShare_pct": 0.0193,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 384,
+    "mfPermits_k": 395,
+    "abiAvg": 51,
+    "nahbHmi": 65,
+    "constructionSpendingGrowth_pct": 4.5,
+    "mortgage30yr_pct": 3.65,
+    "treasury10yr_pct": 1.84,
+    "fedFunds_pct": 0.4,
+    "lumberPrice_usdPerMbf": 315,
+    "bankLendingTighteningIndex_pct": 4
   },
   {
     "year": 2017,
@@ -129,7 +179,17 @@
     "projects": null,
     "slbShare_pct": 0.0217,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 355,
+    "mfPermits_k": 370,
+    "abiAvg": 51,
+    "nahbHmi": 68,
+    "constructionSpendingGrowth_pct": 3.4,
+    "mortgage30yr_pct": 3.99,
+    "treasury10yr_pct": 2.33,
+    "fedFunds_pct": 1.0,
+    "lumberPrice_usdPerMbf": 410,
+    "bankLendingTighteningIndex_pct": 6
   },
 
   {
@@ -152,7 +212,17 @@
     "projects": 1188,
     "slbShare_pct": 0.0264,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 375,
+    "mfPermits_k": 390,
+    "abiAvg": 52,
+    "nahbHmi": 67,
+    "constructionSpendingGrowth_pct": 6.0,
+    "mortgage30yr_pct": 4.54,
+    "treasury10yr_pct": 2.91,
+    "fedFunds_pct": 1.83,
+    "lumberPrice_usdPerMbf": 480,
+    "bankLendingTighteningIndex_pct": 8
   },
   {
     "year": 2019,
@@ -174,7 +244,17 @@
     "projects": 1230,
     "slbShare_pct": 0.0308,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 403,
+    "mfPermits_k": 427,
+    "abiAvg": 51,
+    "nahbHmi": 66,
+    "constructionSpendingGrowth_pct": 4.2,
+    "mortgage30yr_pct": 3.94,
+    "treasury10yr_pct": 2.14,
+    "fedFunds_pct": 2.16,
+    "lumberPrice_usdPerMbf": 405,
+    "bankLendingTighteningIndex_pct": 10
   },
   {
     "year": 2020,
@@ -196,7 +276,17 @@
     "projects": 1572,
     "slbShare_pct": 0.0314,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 372,
+    "mfPermits_k": 420,
+    "abiAvg": 43,
+    "nahbHmi": 58,
+    "constructionSpendingGrowth_pct": -0.5,
+    "mortgage30yr_pct": 3.11,
+    "treasury10yr_pct": 0.89,
+    "fedFunds_pct": 0.38,
+    "lumberPrice_usdPerMbf": 620,
+    "bankLendingTighteningIndex_pct": 35
   },
   {
     "year": 2021,
@@ -218,7 +308,17 @@
     "projects": 1700,
     "slbShare_pct": 0.0357,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 471,
+    "mfPermits_k": 492,
+    "abiAvg": 53,
+    "nahbHmi": 76,
+    "constructionSpendingGrowth_pct": 8.5,
+    "mortgage30yr_pct": 2.96,
+    "treasury10yr_pct": 1.45,
+    "fedFunds_pct": 0.08,
+    "lumberPrice_usdPerMbf": 870,
+    "bankLendingTighteningIndex_pct": -12
   },
   {
     "year": 2022,
@@ -240,7 +340,17 @@
     "projects": 1728,
     "slbShare_pct": 0.0386,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 545,
+    "mfPermits_k": 503,
+    "abiAvg": 49,
+    "nahbHmi": 67,
+    "constructionSpendingGrowth_pct": 10.2,
+    "mortgage30yr_pct": 5.34,
+    "treasury10yr_pct": 2.95,
+    "fedFunds_pct": 1.68,
+    "lumberPrice_usdPerMbf": 630,
+    "bankLendingTighteningIndex_pct": 22
   },
   {
     "year": 2023,
@@ -263,7 +373,17 @@
     "projects": 1700,
     "slbShare_pct": 0.0366,
     "volumePortion_pct": null,
-    "pricePortion_pct": null
+    "pricePortion_pct": null,
+    "mfStarts_k": 450,
+    "mfPermits_k": 470,
+    "abiAvg": 47,
+    "nahbHmi": 50,
+    "constructionSpendingGrowth_pct": 7.4,
+    "mortgage30yr_pct": 6.81,
+    "treasury10yr_pct": 3.96,
+    "fedFunds_pct": 5.02,
+    "lumberPrice_usdPerMbf": 420,
+    "bankLendingTighteningIndex_pct": 38
   },
   {
     "year": 2024,
@@ -286,7 +406,17 @@
     "projects": 1498,
     "slbShare_pct": 0.031,
     "volumePortion_pct": 0.72,
-    "pricePortion_pct": 0.28
+    "pricePortion_pct": 0.28,
+    "mfStarts_k": 395,
+    "mfPermits_k": 496,
+    "abiAvg": 46,
+    "nahbHmi": 42,
+    "constructionSpendingGrowth_pct": 4.0,
+    "mortgage30yr_pct": 6.72,
+    "treasury10yr_pct": 4.24,
+    "fedFunds_pct": 5.33,
+    "lumberPrice_usdPerMbf": 450,
+    "bankLendingTighteningIndex_pct": 30
   },
   {
     "year": 2025,
@@ -309,6 +439,16 @@
     "projects": 1536,
     "slbShare_pct": 0.029,
     "volumePortion_pct": 0.76,
-    "pricePortion_pct": 0.24
+    "pricePortion_pct": 0.24,
+    "mfStarts_k": 402,
+    "mfPermits_k": 480,
+    "abiAvg": 47,
+    "nahbHmi": 44,
+    "constructionSpendingGrowth_pct": 3.5,
+    "mortgage30yr_pct": 6.5,
+    "treasury10yr_pct": 4.1,
+    "fedFunds_pct": 5.1,
+    "lumberPrice_usdPerMbf": 470,
+    "bankLendingTighteningIndex_pct": 25
   }
 ]
