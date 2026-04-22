@@ -122,7 +122,12 @@ export default function Page() {
           <KpiTile
             label={`SLB Spend (${year})`}
             value={
-              row.spendMM ? `$${row.spendMM.toLocaleString("en-US")} MM` : "—"
+              row.spendMM != null
+                ? `$${row.spendMM.toLocaleString("en-US", {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1,
+                  })} MM`
+                : "—"
             }
           />
         </div>
