@@ -16,14 +16,17 @@ import ProgramImpactInYearChart from "@/components/charts/ProgramImpactInYearCha
 import ProgramImpactVsMacrosChart from "@/components/charts/ProgramImpactVsMacrosChart";
 
 export default function Page() {
-  const data = loadYears();
-  if (!data || data.length === 0) {
+  const allData = loadYears();
+  if (!allData || allData.length === 0) {
     return <div className="p-6 text-red-700">Error: No data loaded</div>;
   }
 
-  const latest = data[data.length - 1];
+  // Keep annual KPIs/stepper anchored to the latest *annual* year (currently through 2025),
+  // while allowing the quarterly dashboard to include partial-year updates (e.g., 2026 Q1).
+  const annualData = allData.filter((r) => r.year <= 2025);
+  const latest = annualData[annualData.length - 1] ?? allData[allData.length - 1];
   const [year, setYear] = useState(latest.year);
-  const row = data.find((r) => r.year === year)!;
+  const row = annualData.find((r) => r.year === year)!;
 
   return (
     <main className="mx-auto max-w-7xl p-6 space-y-12 min-h-screen bg-[var(--slb-light)]">
@@ -39,7 +42,7 @@ export default function Page() {
           <button
             type="button"
             onClick={() => {
-              const csv = buildCsv(data);
+              const csv = buildCsv(allData);
               downloadCsv(csv);
             }}
             className="text-sm font-medium text-[var(--slb-charcoal)] underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[var(--slb-green)] rounded px-1"
@@ -56,8 +59,8 @@ export default function Page() {
         </h2>
 
         <div className="grid grid-cols-1 gap-6">
-          <InfluenceProjectsChart data={data} />
-          <ProgramImpactInYearChart data={data} />
+          <InfluenceProjectsChart data={allData} />
+          <ProgramImpactInYearChart data={allData} />
         </div>
       </section>
 
@@ -70,8 +73,8 @@ export default function Page() {
           <div className="flex items-center gap-3">
             <span className="text-sm text-[var(--slb-gray)]">Data for</span>
             <YearStepper
-              min={data[0].year}
-              max={data[data.length - 1].year}
+              min={annualData[0].year}
+              max={annualData[annualData.length - 1].year}
               value={year}
               onChange={setYear}
             />
@@ -133,12 +136,12 @@ export default function Page() {
         </div>
 
         <div className="mt-8 space-y-6">
-          <CumulativeRoiSummary data={data} />
-          <RevenueSpendChart data={data} />
-          <IncrementalLumberChart data={data} />
-          <RoiTrend data={data} />
-          <MarketShareChart data={data} />
-          <ProgramImpactVsMacrosChart data={data} />
+          <CumulativeRoiSummary data={annualData} />
+          <RevenueSpendChart data={annualData} />
+          <IncrementalLumberChart data={annualData} />
+          <RoiTrend data={annualData} />
+          <MarketShareChart data={annualData} />
+          <ProgramImpactVsMacrosChart data={annualData} />
         </div>
       </section>
     </main>

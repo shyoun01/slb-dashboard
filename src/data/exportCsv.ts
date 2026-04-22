@@ -22,10 +22,20 @@ const CSV_COLUMNS: (keyof YearRow)[] = [
   "slbShare_pct",
   "volumePortion_pct",
   "pricePortion_pct",
+  "mfStarts_k",
+  "mfPermits_k",
+  "abiAvg",
+  "nahbHmi",
+  "constructionSpendingGrowth_pct",
+  "mortgage30yr_pct",
+  "treasury10yr_pct",
+  "fedFunds_pct",
+  "lumberPrice_usdPerMbf",
+  "bankLendingTighteningIndex_pct",
 ];
 
 const DESCRIPTION_ROW =
-  "SLB ROI Analysis dashboard data: annual metrics by year (incremental revenue, expenditures, ROI, lumber volume, quarterly breakdown, projects converted, market share).";
+  "SLB ROI Analysis dashboard data: annual metrics by year (incremental revenue, expenditures, ROI, lumber volume, quarterly breakdown, projects converted, market share) plus construction macro indicators (MF starts/permits, ABI, NAHB HMI, construction spending growth, rates, lumber price, bank tightening).";
 
 const CSV_UNITS: string[] = [
   "year",
@@ -49,6 +59,16 @@ const CSV_UNITS: string[] = [
   "proportion (0-1)",
   "proportion (0-1)",
   "proportion (0-1)",
+  "000s",
+  "000s",
+  "index",
+  "index",
+  "percent",
+  "percent",
+  "percent",
+  "percent",
+  "USD per mbf",
+  "net percent",
 ];
 
 function escapeCsvCell(value: string | number | null | undefined): string {

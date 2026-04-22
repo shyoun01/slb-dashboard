@@ -70,24 +70,24 @@ function InYearTooltip({ active, payload, label }: any) {
 export default function ProgramImpactInYearChart({ data }: { data: Row[] }) {
   const chartData = useMemo(() => {
     return (data ?? [])
-      // ✅ Only include years where ALL quarterly values exist (not null AND not undefined)
+      // Include years with at least one in-year quarter value
       .filter(
         (d) =>
-          d.inYear_q1BF_MM != null &&
-          d.inYear_q2BF_MM != null &&
-          d.inYear_q3BF_MM != null &&
+          d.inYear_q1BF_MM != null ||
+          d.inYear_q2BF_MM != null ||
+          d.inYear_q3BF_MM != null ||
           d.inYear_q4BF_MM != null
       )
       .map((d) => {
-        // At this point, they’re guaranteed present
-        const q1 = d.inYear_q1BF_MM as number;
-        const q2 = d.inYear_q2BF_MM as number;
-        const q3 = d.inYear_q3BF_MM as number;
-        const q4 = d.inYear_q4BF_MM as number;
+        const q1 = (d.inYear_q1BF_MM ?? 0) as number;
+        const q2 = (d.inYear_q2BF_MM ?? 0) as number;
+        const q3 = (d.inYear_q3BF_MM ?? 0) as number;
+        const q4 = (d.inYear_q4BF_MM ?? 0) as number;
 
-        // Prefer the provided annual in-year total; fall back to sum of quarters if needed
-        const annual =
-          typeof d.incBF_MM === "number" ? d.incBF_MM : q1 + q2 + q3 + q4;
+        const sum = q1 + q2 + q3 + q4;
+
+        // Prefer the provided annual in-year total; otherwise use sum of available quarters
+        const annual = typeof d.incBF_MM === "number" ? d.incBF_MM : sum;
 
         return {
           year: d.year,

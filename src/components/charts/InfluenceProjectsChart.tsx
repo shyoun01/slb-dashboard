@@ -105,41 +105,34 @@ function CustomTooltip({ active, payload, label }: any) {
 export default function InfluenceProjectsChart({ data }: { data: SlbRow[] }) {
   const chartData = useMemo(() => {
   return (data ?? [])
-    // ⬇️ NEW: only include years with quarterly data
-    .filter(
-      (d) =>
-        d.q1BF_MM !== null &&
-        d.q2BF_MM !== null &&
-        d.q3BF_MM !== null &&
-        d.q4BF_MM !== null
-    )
+    // Include years with at least one quarterly value
+    .filter((d) => d.q1BF_MM != null || d.q2BF_MM != null || d.q3BF_MM != null || d.q4BF_MM != null)
     .map((d) => {
-      const hasQuarters = true;
+      const hasAnyQuarter = d.q1BF_MM != null || d.q2BF_MM != null || d.q3BF_MM != null || d.q4BF_MM != null;
 
+      return {
+        year: d.year,
 
-        return {
-          year: d.year,
+        // Total BF (for tooltip when present)
+        totalBF_MM: d.totalBF_MM ?? null,
 
-          // Total BF (for tooltip)
-          totalBF_MM: d.totalBF_MM ?? null,
+        // Quarter stack (use 0 for missing quarters so partial-years can render)
+        q1: hasAnyQuarter ? (d.q1BF_MM ?? 0) : null,
+        q2: hasAnyQuarter ? (d.q2BF_MM ?? 0) : null,
+        q3: hasAnyQuarter ? (d.q3BF_MM ?? 0) : null,
+        q4: hasAnyQuarter ? (d.q4BF_MM ?? 0) : null,
 
-          // Quarter stack (only when available)
-          q1: hasQuarters ? (d.q1BF_MM ?? 0) : null,
-          q2: hasQuarters ? (d.q2BF_MM ?? 0) : null,
-          q3: hasQuarters ? (d.q3BF_MM ?? 0) : null,
-          q4: hasQuarters ? (d.q4BF_MM ?? 0) : null,
+        // Fallback single bar when quarters aren’t available
+        totalFallback: hasAnyQuarter ? null : (d.totalBF_MM ?? null),
 
-          // Fallback single bar when quarters aren’t available
-          totalFallback: hasQuarters ? null : (d.totalBF_MM ?? null),
+        // Context (not shown in tooltip currently, but kept)
+        incBF_MM: d.incBF_MM ?? null,
+        tailBF_MM: d.tailBF_MM ?? null,
 
-          // Context (not shown in tooltip currently, but kept)
-          incBF_MM: d.incBF_MM ?? null,
-          tailBF_MM: d.tailBF_MM ?? null,
-
-          // Line series
-          projects: d.projects ?? null,
-        };
-      });
+        // Line series
+        projects: d.projects ?? null,
+      };
+    });
   }, [data]);
 
   const maxBF = useMemo(() => {
