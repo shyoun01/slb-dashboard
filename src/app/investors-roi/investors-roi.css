@@ -1,0 +1,147 @@
+/* Investor ROI — SLB brand palette & Open Sans */
+
+.investors-roi {
+  --ar-dark-green: #255d38;
+  --ar-medium-green: #5ca04e;
+  --ar-light-green: #82c342;
+  --ar-blue: #4a93bb;
+  --ar-orange: #f78f2d;
+  --ar-dark-gray: #404040;
+  --ar-tan: #f0ebe1;
+  --ar-tan-border: #ddd6c8;
+
+  --ar-font-body: var(--font-open-sans), "Open Sans", Arial, sans-serif;
+  --ar-font-heading: var(--font-open-sans), "Open Sans", Arial, sans-serif;
+
+  background-color: var(--ar-tan);
+  color: var(--ar-dark-gray);
+  font-family: var(--ar-font-body);
+  font-weight: 400;
+}
+
+.investors-roi h1,
+.investors-roi h2,
+.investors-roi h3 {
+  font-family: var(--ar-font-heading);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.investors-roi .ar-hero {
+  background: linear-gradient(
+      rgba(37, 93, 56, 0.92),
+      rgba(37, 93, 56, 0.96)
+    ),
+    linear-gradient(135deg, #2d6b44 0%, #255d38 100%);
+  color: #fff;
+}
+
+.investors-roi .ar-section-cream {
+  background-color: var(--ar-tan);
+}
+
+.investors-roi .ar-section-white {
+  background-color: #fff;
+}
+
+.investors-roi .ar-section-green {
+  background-color: var(--ar-medium-green);
+  color: #fff;
+}
+
+.investors-roi .ar-section-blue {
+  background-color: var(--ar-blue);
+  color: #fff;
+}
+
+.investors-roi .ar-section-title {
+  color: var(--ar-medium-green);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.investors-roi .ar-section-green .ar-section-title,
+.investors-roi .ar-section-blue .ar-section-title {
+  color: #fff;
+}
+
+.investors-roi .ar-kpi-grid .kpi-tile {
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.investors-roi .ar-kpi-grid .kpi-tile .kpi-label {
+  color: var(--ar-dark-gray);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.investors-roi .ar-kpi-grid .kpi-tile .kpi-value {
+  color: var(--ar-light-green);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-top: 0.5rem;
+}
+
+.investors-roi .ar-kpi-grid .kpi-tile .kpi-sub {
+  color: var(--ar-dark-gray);
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  opacity: 0.85;
+}
+
+.investors-roi .ar-chart-panel {
+  background: #fff;
+  padding: 1.25rem;
+}
+
+.investors-roi .ar-chart-panel h3 {
+  color: var(--ar-dark-green) !important;
+  font-weight: 700 !important;
+}
+
+.investors-roi .ar-footer {
+  background-color: var(--ar-dark-green);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+.investors-roi input[type="range"]::-webkit-slider-thumb {
+  background-color: var(--ar-medium-green);
+}
+
+.investors-roi input[type="range"]::-moz-range-thumb {
+  background-color: var(--ar-medium-green);
+}
+
+.investors-roi .ar-chart-panel .bf-impact-table th,
+.investors-roi .ar-chart-panel .bf-impact-table td {
+  border-color: var(--ar-tan-border);
+}
+
+.investors-roi .ar-chart-panel .bf-impact-table thead th,
+.investors-roi .ar-chart-panel .bf-impact-table tbody th {
+  background-color: var(--ar-tan);
+  color: var(--ar-dark-green);
+  font-weight: 700;
+}
+
+.investors-roi .ar-chart-panel .bf-impact-table h4 {
+  color: var(--ar-dark-green);
+}
+
+.investors-roi .ar-chart-panel .bf-impact-table tbody tr:last-child td,
+.investors-roi .ar-chart-panel .bf-impact-table tbody tr:last-child th {
+  color: var(--ar-dark-green);
+  font-weight: 700;
+}

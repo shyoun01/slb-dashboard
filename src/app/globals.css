@@ -25,19 +25,19 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 :root {
-  /* New palette */
-  --slb-dark-green: #005F33;
-  --slb-accent-green: #42B245;
-  --slb-muted-green: #67846A;
-  --slb-light-green: #7EBC41;
-  --slb-near-white: #F7F9F7;
-  --slb-gray: #7F7F7F;
-  --slb-orange: #EF7328;
+  /* New palette (2026 brand refresh) */
+  --slb-dark-green: #255D38;
+  --slb-accent-green: #5CA04E;
+  --slb-muted-green: #5CA04E;
+  --slb-light-green: #82C342;
+  --slb-near-white: #F0EBE1;
+  --slb-gray: #404040;
+  --slb-orange: #F78F2D;
+  --slb-blue: #4A93BB;
   /* Mapped for existing usage */
-  --slb-green: #42B245;
-  --slb-charcoal: #005F33;
-  --slb-light: #F7F9F7;
-  --slb-blue: #005F33;
+  --slb-green: #5CA04E;
+  --slb-charcoal: #255D38;
+  --slb-light: #F0EBE1;
 }
 
 /* Global typography overrides */

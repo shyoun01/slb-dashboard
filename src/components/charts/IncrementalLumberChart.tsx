@@ -11,7 +11,9 @@ import {
   Tooltip,
   CartesianGrid,
   Legend,
+  LabelList,
 } from "recharts";
+import { SpendLineLabel } from "@/components/charts/SpendLineLabel";
 
 interface IncrementalLumberChartProps {
   data: {
@@ -57,7 +59,7 @@ export default function IncrementalLumberChart({
       <ResponsiveContainer width="100%" height={360}>
         <ComposedChart
           data={chartData}
-          margin={{ top: 20, right: 40, left: 60, bottom: 20 }}
+          margin={{ top: 44, right: 40, left: 60, bottom: 20 }}
           barGap={6}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -177,7 +179,9 @@ export default function IncrementalLumberChart({
             dot={{ fill: "#EF7328", strokeWidth: 2, r: 4 }}
             activeDot={{ r: 6 }}
             name="expenditures"
-          />
+          >
+            <LabelList dataKey="expenditures" content={<SpendLineLabel />} />
+          </Line>
         </ComposedChart>
       </ResponsiveContainer>
 

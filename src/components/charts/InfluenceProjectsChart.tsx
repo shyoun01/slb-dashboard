@@ -237,15 +237,21 @@ export default function InfluenceProjectsChart({ data }: { data: SlbRow[] }) {
             dataKey="totalFallback"
             stackId="bf"
             fill="#42B245"
-            barSize={26}
+            barSize={30}
             radius={[6, 6, 0, 0]}
             legendType="none"
           />
 
-          <Bar yAxisId="left" dataKey="q1" stackId="bf" fill="#005F33" />
+          <Bar yAxisId="left" dataKey="q1" stackId="bf" fill="#005F33" barSize={30} />
           <Bar yAxisId="left" dataKey="q2" stackId="bf" fill="#42B245" />
           <Bar yAxisId="left" dataKey="q3" stackId="bf" fill="#7EBC41" />
-          <Bar yAxisId="left" dataKey="q4" stackId="bf" fill="#7F7F7F" />
+          <Bar
+            yAxisId="left"
+            dataKey="q4"
+            stackId="bf"
+            fill="#7F7F7F"
+            radius={[6, 6, 0, 0]}
+          />
 
           {/* Line */}
           <Line

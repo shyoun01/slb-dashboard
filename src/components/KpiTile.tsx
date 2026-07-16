@@ -14,20 +14,15 @@ interface KpiTileProps {
  */
 export default function KpiTile({ label, value, sub }: KpiTileProps) {
   return (
-    <div className="flex flex-col justify-between bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
-      {/* Label */}
-      <p className="text-sm font-semibold text-[var(--slb-charcoal)] mb-2 leading-tight">
+    <div className="flex flex-col justify-start pl-6 border-l border-gray-300 first:pl-0 first:border-l-0">
+      <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--slb-gray)] mb-2">
         {label}
       </p>
-
-      {/* Main Value */}
-      <h3 className="text-3xl font-extrabold text-[var(--slb-charcoal)] leading-tight">
+      <h3 className="text-5xl font-extrabold text-[var(--slb-green)] leading-none">
         {value !== null && value !== undefined ? value : "—"}
       </h3>
-
-      {/* Optional Subtext */}
       {sub && (
-        <p className="text-sm text-gray-600 mt-1 leading-snug">{sub}</p>
+        <p className="text-sm text-[var(--slb-charcoal)] font-semibold mt-2">{sub}</p>
       )}
     </div>
   );

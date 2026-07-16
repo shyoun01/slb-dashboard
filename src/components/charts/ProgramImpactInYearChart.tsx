@@ -156,10 +156,15 @@ export default function ProgramImpactInYearChart({ data }: { data: Row[] }) {
           />
 
           {/* Stacked quarterly bars */}
-            <Bar dataKey="q1" stackId="inyear" fill="#005F33" barSize={26} />
-            <Bar dataKey="q2" stackId="inyear" fill="#42B245" barSize={26} />
-            <Bar dataKey="q3" stackId="inyear" fill="#7EBC41" barSize={26} />
-            <Bar dataKey="q4" stackId="inyear" fill="#7F7F7F" barSize={26} />
+          <Bar dataKey="q1" stackId="inyear" fill="#005F33" barSize={30} />
+          <Bar dataKey="q2" stackId="inyear" fill="#42B245" />
+          <Bar dataKey="q3" stackId="inyear" fill="#7EBC41" />
+          <Bar
+            dataKey="q4"
+            stackId="inyear"
+            fill="#7F7F7F"
+            radius={[6, 6, 0, 0]}
+          />
 
         </ComposedChart>
       </ResponsiveContainer>
