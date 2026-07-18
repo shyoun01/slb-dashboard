@@ -43,7 +43,7 @@ export default function InvestorsRoiPage() {
       <section className="ar-section-cream px-6 py-12 md:py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="ar-section-title mb-8 text-center">
-            Quarterly Program Impact
+            Annual Program Impact
           </h2>
           <div className="space-y-8">
             <div className="ar-chart-panel">

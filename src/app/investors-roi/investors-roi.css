@@ -27,12 +27,102 @@
   letter-spacing: 0.02em;
 }
 
+.investors-roi .ar-hero-executive {
+  background: var(--ar-dark-green);
+  color: #ffffff;
+}
+
+.investors-roi .ar-hero-executive__inner {
+  display: flex;
+  min-height: 11rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2.5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .investors-roi .ar-hero-executive__inner {
+    min-height: 12rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 2.75rem 1.5rem;
+  }
+}
+
+.investors-roi .ar-hero-executive__copy {
+  width: 100%;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .investors-roi .ar-hero-executive__copy {
+    width: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+}
+
+.investors-roi .ar-hero-executive__title {
+  margin: 0;
+  font-family: var(--ar-font-heading);
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+.investors-roi .ar-hero-executive__line {
+  display: block;
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.investors-roi .ar-hero-executive__line--white {
+  color: #ffffff;
+}
+
+.investors-roi .ar-hero-executive__line--green {
+  color: var(--ar-light-green);
+}
+
+.investors-roi .ar-hero-executive__quarter {
+  margin: 1rem 0 0;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.investors-roi .ar-hero-executive__logo {
+  display: block;
+  height: auto;
+  max-height: 5.625rem;
+  width: auto;
+  max-width: min(100%, 21rem);
+}
+
+@media (min-width: 768px) {
+  .investors-roi .ar-hero-executive__logo {
+    max-height: 6.375rem;
+    max-width: 24rem;
+  }
+}
+
 .investors-roi .ar-hero {
   background: linear-gradient(
       rgba(37, 93, 56, 0.92),
       rgba(37, 93, 56, 0.96)
     ),
     linear-gradient(135deg, #2d6b44 0%, #255d38 100%);
+  color: #fff;
+}
+
+.investors-roi .ar-hero h1,
+.investors-roi .ar-hero h2,
+.investors-roi .ar-hero h3 {
   color: #fff;
 }
 
@@ -101,13 +191,14 @@
 }
 
 .investors-roi .ar-chart-panel {
-  background: #fff;
-  padding: 1.25rem;
+  background: transparent;
+  padding: 0;
 }
 
 .investors-roi .ar-chart-panel h3 {
   color: var(--ar-dark-green) !important;
   font-weight: 700 !important;
+  font-size: 2.109375rem !important; /* 1.6875rem + 25% */
 }
 
 .investors-roi .ar-footer {
