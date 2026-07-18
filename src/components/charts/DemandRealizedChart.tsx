@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -199,9 +200,9 @@ export default function DemandRealizedChart() {
               {CHART_DATA.map((row) => (
                 <Cell
                   key={`${segment.key}-${row.label}`}
-                  radius={
-                    row.topSegment === segment.key ? [6, 6, 0, 0] : [0, 0, 0, 0]
-                  }
+                  radius={conditionalTopCellRadius(
+                    row.topSegment === segment.key
+                  )}
                 />
               ))}
               <LabelList

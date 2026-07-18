@@ -1,5 +1,6 @@
 "use client";
 
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   Bar,
   BarChart,
@@ -315,7 +316,7 @@ function DirectlyInfluencedChart() {
             {DIRECTLY_INFLUENCED_DATA.map((row) => (
               <Cell
                 key={`projects-q2-${row.year}`}
-                radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
               />
             ))}
             <LabelList
@@ -529,9 +530,10 @@ function BuildingTypeChart() {
               {BUILDING_TYPE_DATA.map((row) => (
                 <Cell
                   key={`${segment.dataKey}-${row.year}`}
-                  radius={
-                    row.topKey === segment.dataKey ? [5, 5, 0, 0] : [0, 0, 0, 0]
-                  }
+                  radius={conditionalTopCellRadius(
+                    row.topKey === segment.dataKey,
+                    5
+                  )}
                 />
               ))}
               <LabelList

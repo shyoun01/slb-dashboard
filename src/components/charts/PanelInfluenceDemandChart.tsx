@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   ResponsiveContainer,
   BarChart,
@@ -264,9 +265,7 @@ export default function PanelInfluenceDemandChart() {
             {chartData.map((entry) => (
               <Cell
                 key={`q2-${entry.label}`}
-                radius={
-                  entry.volumeLabelQ2 != null ? [6, 6, 0, 0] : [0, 0, 0, 0]
-                }
+                radius={conditionalTopCellRadius(entry.volumeLabelQ2 != null)}
               />
             ))}
             <LabelList

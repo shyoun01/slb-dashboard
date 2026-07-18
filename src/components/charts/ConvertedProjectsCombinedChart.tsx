@@ -1,5 +1,6 @@
 "use client";
 
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   Bar,
   BarChart,
@@ -323,7 +324,7 @@ export default function ConvertedProjectsCombinedChart() {
               {QUARTERLY_DATA.map((row) => (
                 <Cell
                   key={`volume-q2-${row.year}`}
-                  radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                  radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
                 />
               ))}
               <LabelList

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   ResponsiveContainer,
   BarChart,
@@ -215,7 +216,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
             {chart.rows.map((row) => (
               <Cell
                 key={`q2-${row.year}`}
-                radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
               />
             ))}
             <LabelList

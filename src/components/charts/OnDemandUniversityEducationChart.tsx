@@ -1,5 +1,6 @@
 "use client";
 
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   Bar,
   BarChart,
@@ -303,7 +304,7 @@ function OnDemandChart() {
             {ON_DEMAND_DATA.map((row) => (
               <Cell
                 key={`q2-${row.year}`}
-                radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
               />
             ))}
             <LabelList
@@ -444,7 +445,7 @@ function UniversityEducationChart({
             {data.map((row) => (
               <Cell
                 key={`${stackId}-q2-${row.year}`}
-                radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
               />
             ))}
             <LabelList

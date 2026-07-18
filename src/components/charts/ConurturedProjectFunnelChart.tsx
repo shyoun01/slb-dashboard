@@ -1,5 +1,6 @@
 "use client";
 
+import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
 import {
   Bar,
   BarChart,
@@ -182,7 +183,7 @@ function SqlReferralConversionsChart() {
             {SQL_REFERRAL_DATA.map((row) => (
               <Cell
                 key={`sql-q2-${row.year}`}
-                radius={row.totalOnQ2 != null ? [5, 5, 0, 0] : [0, 0, 0, 0]}
+                radius={conditionalTopCellRadius(row.totalOnQ2 != null, 5)}
               />
             ))}
             <LabelList dataKey="q2" {...insideLabelProps} fill="#ffffff" />
