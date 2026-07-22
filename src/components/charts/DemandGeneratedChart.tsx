@@ -45,7 +45,7 @@ type PeriodRow = {
 const PERIOD_2012_15_BF = 1683;
 const PERIOD_2016_18_BF = 3182;
 const YEAR_2026_Q1_BF = 514;
-const YEAR_2026_Q2_BF = 600;
+const YEAR_2026_Q2_BF = 517;
 const YEAR_2026_GOAL_BF = 1350;
 
 function sumTotalBfForYears(data: SlbRow[], years: number[]): number {

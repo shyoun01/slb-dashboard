@@ -19,7 +19,11 @@ type OnDemandRow = {
   q2: number;
   q3: number | null;
   q4: number | null;
+  /** Annual total for complete years. */
   newAccounts: number;
+  /** Q1/Q2 new accounts for partial years (pill shows YTD sum). */
+  newAccountsQ1?: number;
+  newAccountsQ2?: number;
   totalOnQ2: number | null;
   totalOnQ4: number | null;
   goal: number | null;
@@ -51,11 +55,13 @@ const ON_DEMAND_DATA: OnDemandRow[] = [
   {
     year: "2026",
     q1: 3438,
-    q2: 3438,
+    q2: 3829,
     q3: null,
     q4: null,
-    newAccounts: 1020,
-    totalOnQ2: 6876,
+    newAccounts: 2069,
+    newAccountsQ1: 1020,
+    newAccountsQ2: 1049,
+    totalOnQ2: 7267,
     totalOnQ4: null,
     goal: 17805,
   },
@@ -87,10 +93,10 @@ const UNIVERSITY_EDUCATION_DATA: UniversityEducationRow[] = [
   {
     year: "2026",
     q1: 2173,
-    q2: 2173,
+    q2: 1036,
     q3: null,
     q4: null,
-    totalOnQ2: 4346,
+    totalOnQ2: 3209,
     totalOnQ4: null,
     goal: 5994,
   },
@@ -120,10 +126,10 @@ const FACULTY_ENGAGEMENT_DATA: UniversityEducationRow[] = [
   {
     year: "2026",
     q1: 397,
-    q2: 397,
+    q2: 468,
     q3: null,
     q4: null,
-    totalOnQ2: 794,
+    totalOnQ2: 865,
     totalOnQ4: null,
     goal: 993,
   },
@@ -133,6 +139,16 @@ function formatWholeNumber(value: unknown) {
   const number = Number(value);
   if (!Number.isFinite(number) || number <= 0) return "";
   return number.toLocaleString("en-US");
+}
+
+function newAccountsYtd(row: OnDemandRow | undefined) {
+  if (!row) return null;
+  if (row.q3 == null && row.q4 == null) {
+    const q1 = row.newAccountsQ1 ?? 0;
+    const q2 = row.newAccountsQ2 ?? 0;
+    if (q1 > 0 || q2 > 0) return q1 + q2;
+  }
+  return row.newAccounts;
 }
 
 const insideLabelProps = {
@@ -228,7 +244,7 @@ function AccountTick({
         stroke="#9CC2DA"
       />
       <text y={35} fill="#25608F" fontSize={11} fontWeight={700}>
-        {formatWholeNumber(row?.newAccounts)}
+        {formatWholeNumber(newAccountsYtd(row))}
       </text>
     </g>
   );

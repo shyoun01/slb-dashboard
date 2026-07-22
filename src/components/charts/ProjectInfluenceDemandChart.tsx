@@ -41,7 +41,7 @@ type PeriodRow = {
 
 const PERIOD_2016_18_BF = 1298.3;
 const YEAR_2026_Q1_BF = 221.9;
-const YEAR_2026_Q2_BF = 221.9;
+const YEAR_2026_Q2_BF = 220.3;
 const YEAR_2026_GOAL_BF = 589;
 
 function sumIncBfForYears(data: SlbRow[], years: number[]): number {

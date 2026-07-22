@@ -68,7 +68,7 @@ const CHARTS: EducationChart[] = [
     rows: [
       makeRow("2024", 22.2, 18.2, 9.2, 14.8),
       makeRow("2025", 10.7, 9.2, 9.2, 12.7),
-      makeRow("2026", 9.4, 9.4, null, null, 40.0),
+      makeRow("2026", 9.4, 8.680, null, null, 40.0),
     ],
     logos: [
       {
@@ -83,7 +83,7 @@ const CHARTS: EducationChart[] = [
     rows: [
       makeRow("2024", 5.3, 5.0, 5.3, 13.8),
       makeRow("2025", 3.6, 4.4, 4.4, 12.9),
-      makeRow("2026", 2.7, 2.7, null, null, 25.2),
+      makeRow("2026", 2.7, 4.600, null, null, 25.2),
     ],
     logos: [
       {
@@ -98,7 +98,7 @@ const CHARTS: EducationChart[] = [
     rows: [
       makeRow("2024", 30.1, 13.6, 12.2, 13.7),
       makeRow("2025", 22.5, 11.6, 11.3, 17.3),
-      makeRow("2026", 15.6, 15.6, null, null, 48.2),
+      makeRow("2026", 15.6, 19.843, null, null, 48.2),
     ],
     logos: [
       {

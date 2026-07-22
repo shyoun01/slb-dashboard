@@ -26,8 +26,8 @@ type FunnelStage = {
 const FUNNEL_STAGES: FunnelStage[] = [
   {
     label: "Subscriber",
-    value: "26,177",
-    change: "-17%",
+    value: "27,157",
+    change: "+4%",
     description: "Contacts with email only or outside of the priority audience",
     fill: "#005F33",
     textColor: "#ffffff",
@@ -35,8 +35,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Prospects",
-    value: "6,130",
-    change: "-8%",
+    value: "6,904",
+    change: "+13%",
     description: "Email, name, and company within the priority target",
     fill: "#42B245",
     textColor: "#ffffff",
@@ -44,8 +44,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Leads",
-    value: "18,299",
-    change: "-16%",
+    value: "22,685",
+    change: "+24%",
     description: "Engaged projects",
     fill: "#A8D649",
     textColor: "#183B27",
@@ -53,8 +53,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Priority Leads (MQL)",
-    value: "63,039",
-    change: "+3%",
+    value: "65,319",
+    change: "+4%",
     description: "Prospects with high engagement",
     fill: "#DDEFCB",
     textColor: "#183B27",
@@ -62,8 +62,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Qualified Leads (SQL)",
-    value: "2,401",
-    change: "+5%",
+    value: "2,479",
+    change: "+3%",
     description: "Leads sent to WoodWorks",
     fill: "#ffffff",
     textColor: "#183B27",
@@ -93,10 +93,10 @@ const SQL_REFERRAL_DATA = [
   {
     year: "2026",
     q1: 11,
-    q2: 11,
+    q2: 5,
     q3: null,
     q4: null,
-    totalOnQ2: 22,
+    totalOnQ2: 16,
     totalOnQ4: null,
   },
 ];

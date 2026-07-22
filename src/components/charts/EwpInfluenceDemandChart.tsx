@@ -37,7 +37,7 @@ const YEAR_2025_Q2 = 35.1;
 const YEAR_2025_Q3 = 30.0;
 const YEAR_2025_Q4 = 26.5;
 const YEAR_2026_Q1 = 44.8;
-const YEAR_2026_Q2 = 44.8;
+const YEAR_2026_Q2 = 43.8;
 
 const ONE_DECIMAL: Intl.NumberFormatOptions = {
   minimumFractionDigits: 1,

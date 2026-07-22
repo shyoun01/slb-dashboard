@@ -27,10 +27,10 @@ const LUMBER = {
   "2019–21": 2076,
   "2022–24": 2341,
   "2025": 581,
-  "2026": 258,
+  "2026": 442.2,
 } as const;
 
-/** Panel (MM SF) — matches PanelInfluenceDemandChart, at 50% for combined total */
+/** Panel (MM SF) — MM BF in combined total = half of MM SF */
 const PANEL_FACTOR = 0.5;
 
 const PANEL = {
@@ -38,7 +38,7 @@ const PANEL = {
   "2019–21": 1462.8,
   "2022–24": 1453.4,
   "2025": 360.2,
-  "2026": 270.2,
+  "2026": 266.0,
 } as const;
 
 /** EWP (MM BF) — matches EwpInfluenceDemandChart */
@@ -47,7 +47,7 @@ const EWP = {
   "2019–21": 461.6,
   "2022–24": 478.6,
   "2025": 118.6,
-  "2026": 89.6,
+  "2026": 88.6,
 } as const;
 
 const PERIODS = [
@@ -57,6 +57,11 @@ const PERIODS = [
   "2025",
   "2026",
 ] as const;
+
+const ONE_DECIMAL: Intl.NumberFormatOptions = {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+};
 
 function formatVolumeLabel(value: unknown) {
   if (value == null || value === "") return "";
@@ -76,6 +81,13 @@ function formatSegmentInsideLabel(value: unknown) {
     minimumFractionDigits: Number.isInteger(n) ? 0 : 1,
     maximumFractionDigits: 1,
   })} MM`;
+}
+
+function formatPanelInsideLabel(value: unknown) {
+  if (value == null || value === "") return "";
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  return `${n.toLocaleString("en-US", ONE_DECIMAL)} MM`;
 }
 
 export default function TotalWoodDemandChart() {
@@ -189,7 +201,10 @@ export default function TotalWoodDemandChart() {
           >
             <LabelList
               dataKey="panel"
-              {...insideLabelProps}
+              position="center"
+              formatter={formatPanelInsideLabel}
+              fontSize={11}
+              fontWeight={700}
               fill="#ffffff"
             />
           </Bar>

@@ -76,8 +76,8 @@ const CHART_DATA: PeriodRow[] = [
     l1: 264,
     l2: 240,
     l3: 436,
-    l4: 589,
-    total: 1529,
+    l4: 441,
+    total: 1381,
     topSegment: "l4",
   },
 ];
