@@ -11,7 +11,6 @@ import ProfessionalEducationChart from "@/components/charts/ProfessionalEducatio
 import OnDemandUniversityEducationChart from "@/components/charts/OnDemandUniversityEducationChart";
 import ConurturedProjectFunnelChart from "@/components/charts/ConurturedProjectFunnelChart";
 import ConvertedProjectsChart from "@/components/charts/ConvertedProjectsChart";
-import ConvertedProjectsCombinedChart from "@/components/charts/ConvertedProjectsCombinedChart";
 import ConvertedProjectsStripsChart from "@/components/charts/ConvertedProjectsStripsChart";
 
 export default function InvestorsQuarterlyPage() {
@@ -75,9 +74,6 @@ export default function InvestorsQuarterlyPage() {
             </div>
             <div className="ar-chart-panel">
               <ConvertedProjectsChart />
-            </div>
-            <div className="ar-chart-panel">
-              <ConvertedProjectsCombinedChart />
             </div>
             <div className="ar-chart-panel">
               <ConvertedProjectsStripsChart />

@@ -563,7 +563,7 @@ export default function ConvertedProjectsStripsChart() {
     <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
       <div className="relative mb-2 px-20 pb-1">
         <h3 className="text-center text-[1.6875rem] font-semibold text-[var(--slb-charcoal)]">
-          Converted Projects — Strip View
+          Converted Projects — Combined View
         </h3>
         <p className="mt-2 text-center text-xs font-semibold text-gray-500">
           Directly influenced projects by quarter, system type, and building type
