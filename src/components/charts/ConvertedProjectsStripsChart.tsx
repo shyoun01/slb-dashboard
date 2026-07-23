@@ -428,13 +428,13 @@ function BuildingTypeStrip({ row }: { row: BuildingRow }) {
           key: "institutional",
           value: row.institutional,
           color: BUILDING_COLORS.institutional,
-          suffix: row.year === "2026" ? "" : "Inst",
+          suffix: "Inst",
         },
         {
           key: "other",
           value: row.other,
           color: BUILDING_COLORS.other,
-          suffix: row.year === "2026" ? "" : "Other",
+          suffix: "Other",
         },
       ]}
     />
@@ -576,7 +576,7 @@ export default function ConvertedProjectsStripsChart() {
         />
       </div>
 
-      <div className="mx-auto mt-6 max-w-3xl">
+      <div className="mx-auto mt-6 max-w-5xl">
         <div className="space-y-1">
           {YEAR_GROUPS.map((group) => (
             <div key={group.year} className="pb-3">

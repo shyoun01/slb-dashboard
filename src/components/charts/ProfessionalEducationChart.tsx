@@ -81,7 +81,7 @@ const CHARTS: EducationChart[] = [
   {
     title: "CEU Credit Hours (M)",
     rows: [
-      makeRow("2024", 5.3, 5.0, 5.3, 13.8),
+      makeRow("2024", 5.3, 5.0, 5.3, 14.7),
       makeRow("2025", 3.6, 4.4, 4.4, 12.9),
       makeRow("2026", 2.7, 4.600, null, null, 25.2),
     ],

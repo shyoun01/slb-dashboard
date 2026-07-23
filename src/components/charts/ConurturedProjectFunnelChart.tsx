@@ -323,6 +323,9 @@ export default function ConurturedProjectFunnelChart() {
             </div>
           ))}
         </div>
+        <p className="mt-4 text-center text-xs italic text-gray-600">
+          MQL and SQL figures reflect program lifetime totals.
+        </p>
         <div className="mt-auto flex min-h-20 items-center justify-center border-t border-gray-100 pt-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
