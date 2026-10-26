@@ -11,6 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { convertedByBuilding, convertedBySystem, quarterlyRows } from "@/data/airtable";
 
 type VolumeRow = {
   year: string;
@@ -18,9 +19,16 @@ type VolumeRow = {
   q2: number;
   q3: number;
   q4: number;
+  /** Year total, set only on the top (latest) quarter segment. */
+  totalLabelQ1: number | null;
   totalLabelQ2: number | null;
+  totalLabelQ3: number | null;
   totalLabelQ4: number | null;
-  goal: number | null;
+  /** Goal callout, set only on the top quarter segment. */
+  goalQ1: number | null;
+  goalQ2: number | null;
+  goalQ3: number | null;
+  goalQ4: number | null;
 };
 
 type SystemRow = {
@@ -47,92 +55,41 @@ type YearGroup = {
   building: BuildingRow;
 };
 
-const YEAR_GROUPS: YearGroup[] = [
-  {
-    year: "2024",
+const SYSTEM_BY_YEAR = convertedBySystem();
+const BUILDING_BY_YEAR = convertedByBuilding();
+
+const YEAR_GROUPS: YearGroup[] = quarterlyRows("Directly Influenced Projects", "Directly Influenced Projects").map((r) => {
+  const system = SYSTEM_BY_YEAR.find((x) => x.year === r.year)!;
+  const b = BUILDING_BY_YEAR.find((x) => x.year === r.year)!;
+  return {
+    year: r.year,
     volume: {
-      year: "2024",
-      q1: 87,
-      q2: 97,
-      q3: 106,
-      q4: 101,
-      totalLabelQ2: null,
-      totalLabelQ4: 391,
-      goal: null,
+      year: r.year,
+      q1: r.q1 ?? 0,
+      q2: r.q2 ?? 0,
+      q3: r.q3 ?? 0,
+      q4: r.q4 ?? 0,
+      totalLabelQ1: r.totalOnQ1,
+      totalLabelQ2: r.totalOnQ2,
+      totalLabelQ3: r.totalOnQ3,
+      totalLabelQ4: r.totalOnQ4,
+      goalQ1: r.goalOnQ1,
+      goalQ2: r.goalOnQ2,
+      goalQ3: r.goalOnQ3,
+      goalQ4: r.goalOnQ4,
     },
-    system: {
-      year: "2024",
-      lightFrame: 264,
-      hybridMtLf: 30,
-      heavyMt: 97,
-      total: 391,
-    },
+    system,
     building: {
-      year: "2024",
-      multifamily: 215,
-      commercial: 61,
-      institutional: 107,
-      other: 8,
-      total: 391,
+      year: r.year,
+      multifamily: b.multifamily,
+      commercial: b.commercial,
+      institutional: b.institutional,
+      // The strip view folds Warehouse/Mfg into Other
+      other: b.warehouse + b.other,
+      total: b.total,
     },
-  },
-  {
-    year: "2025",
-    volume: {
-      year: "2025",
-      q1: 91,
-      q2: 97,
-      q3: 111,
-      q4: 106,
-      totalLabelQ2: null,
-      totalLabelQ4: 405,
-      goal: null,
-    },
-    system: {
-      year: "2025",
-      lightFrame: 267,
-      hybridMtLf: 32,
-      heavyMt: 106,
-      total: 405,
-    },
-    building: {
-      year: "2025",
-      multifamily: 211,
-      commercial: 68,
-      institutional: 119,
-      other: 7,
-      total: 405,
-    },
-  },
-  {
-    year: "2026",
-    volume: {
-      year: "2026",
-      q1: 105,
-      q2: 109,
-      q3: 0,
-      q4: 0,
-      totalLabelQ2: 214,
-      totalLabelQ4: null,
-      goal: 373,
-    },
-    system: {
-      year: "2026",
-      lightFrame: 133,
-      hybridMtLf: 17,
-      heavyMt: 64,
-      total: 214,
-    },
-    building: {
-      year: "2026",
-      multifamily: 120,
-      commercial: 36,
-      institutional: 57,
-      other: 1,
-      total: 214,
-    },
-  },
-];
+  };
+});
 
 const CHART_MARGIN = { top: 4, right: 56, left: 8, bottom: 4 };
 const BAR_SIZE = 54;
@@ -365,6 +322,16 @@ function VolumeChart({ row }: { row: VolumeRow }) {
         <YAxis type="category" dataKey="yLabel" hide width={0} />
         <Bar dataKey="q1" stackId="volume" fill="#005F33" barSize={BAR_SIZE}>
           <LabelList dataKey="q1" {...insideLabelProps} fill="#ffffff" />
+          <LabelList dataKey="totalLabelQ1" {...totalLabelProps} />
+          <LabelList
+            dataKey="goalQ1"
+            position="right"
+            offset={44}
+            formatter={formatGoal}
+            fill="#F78F2D"
+            fontSize={11}
+            fontWeight={700}
+          />
         </Bar>
         <Bar dataKey="q2" stackId="volume" fill="#42B245" barSize={BAR_SIZE}>
           <Cell
@@ -377,7 +344,7 @@ function VolumeChart({ row }: { row: VolumeRow }) {
           <LabelList dataKey="q2" {...insideLabelProps} fill="#ffffff" />
           <LabelList dataKey="totalLabelQ2" {...totalLabelProps} />
           <LabelList
-            dataKey="goal"
+            dataKey="goalQ2"
             position="right"
             offset={44}
             formatter={formatGoal}
@@ -395,11 +362,30 @@ function VolumeChart({ row }: { row: VolumeRow }) {
             }
           />
           <LabelList dataKey="q3" {...insideLabelProps} fill="#255D38" />
+          <LabelList dataKey="totalLabelQ3" {...totalLabelProps} />
+          <LabelList
+            dataKey="goalQ3"
+            position="right"
+            offset={44}
+            formatter={formatGoal}
+            fill="#F78F2D"
+            fontSize={11}
+            fontWeight={700}
+          />
         </Bar>
         <Bar dataKey="q4" stackId="volume" fill="#F78F2D" barSize={BAR_SIZE}>
           <Cell radius={cellRadius([0, 6, 6, 0])} />
           <LabelList dataKey="q4" {...insideLabelProps} fill="#ffffff" />
           <LabelList dataKey="totalLabelQ4" {...totalLabelProps} />
+          <LabelList
+            dataKey="goalQ4"
+            position="right"
+            offset={44}
+            formatter={formatGoal}
+            fill="#F78F2D"
+            fontSize={11}
+            fontWeight={700}
+          />
         </Bar>
       </BarChart>
     </ResponsiveContainer>

@@ -12,12 +12,14 @@ import OnDemandUniversityEducationChart from "@/components/charts/OnDemandUniver
 import ConurturedProjectFunnelChart from "@/components/charts/ConurturedProjectFunnelChart";
 import ConvertedProjectsChart from "@/components/charts/ConvertedProjectsChart";
 import ConvertedProjectsStripsChart from "@/components/charts/ConvertedProjectsStripsChart";
+import { latestQuarter } from "@/data/airtable";
 
 export default function InvestorsQuarterlyPage() {
   const allData = loadYears();
   if (!allData || allData.length === 0) {
     return <div className="p-6 text-red-700">Error: No data loaded</div>;
   }
+  const latest = latestQuarter();
 
   return (
     <>
@@ -33,7 +35,7 @@ export default function InvestorsQuarterlyPage() {
               </span>
             </h1>
             <p className="ar-hero-executive__quarter">
-              Program Impact Report for Q2 2026
+              Program Impact Report for Q{latest.quarter} {latest.year}
             </p>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -49,10 +51,10 @@ export default function InvestorsQuarterlyPage() {
         <div className="mx-auto max-w-6xl">
           <div className="space-y-8">
             <div className="ar-chart-panel">
-              <DemandGeneratedChart data={allData} />
+              <DemandGeneratedChart />
             </div>
             <div className="ar-chart-panel">
-              <ProjectInfluenceDemandChart data={allData} />
+              <ProjectInfluenceDemandChart />
             </div>
             <div className="ar-chart-panel">
               <PanelInfluenceDemandChart />

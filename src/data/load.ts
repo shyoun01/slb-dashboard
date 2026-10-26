@@ -1,112 +1,62 @@
-import raw from "@/data/slb.json";
 import { Years, YearRow } from "./slb.schema";
-
-const YEARS_WITH_CALCULATED_TOTAL_BF = [2023, 2024, 2025] as const;
-
-const TOTAL_SOFTWOOD_LUMBER_CONSUMPTION_MM_BF: Record<number, number> = {
-  2024: 51220,
-  2025: 49715,
-};
+import { years, num, quarterValues, type YearRec } from "./airtable";
 
 /**
- * For 2023, 2024, 2025: totalBF_MM = incBF_MM (Direct) + tailBF_MM (Tail).
- * Uses existing fields: incBF_MM = Incremental Lumber, Direct; tailBF_MM = Incremental Lumber, Tail.
+ * Builds the annual rows the charts use from the Airtable snapshot.
+ * Totals, influence, revenue, ROI, cumulative ROI and market share are
+ * calculated in Airtable; nothing is derived here.
  */
-function deriveTotalBF_MM(rows: YearRow[]): YearRow[] {
-  return rows.map((row) => {
-    if (!YEARS_WITH_CALCULATED_TOTAL_BF.includes(row.year as (typeof YEARS_WITH_CALCULATED_TOTAL_BF)[number])) {
-      return row;
-    }
-    const direct = row.incBF_MM;
-    const tail = row.tailBF_MM;
-    if (direct != null && tail != null) {
-      return { ...row, totalBF_MM: direct + tail };
-    }
-    return row;
-  });
-}
+function toYearRow(y: YearRec): YearRow {
+  const year = y.Year;
+  const inYear = num(y, "In-Year Lumber (MM BF)");
+  const total = num(y, "Demand Generated (MM BF)");
+  const influence = num(y, "Influence (MM BF)");
+  const [q1, q2, q3, q4] = quarterValues(year, "Demand Generated (MM BF)");
+  const [iq1, iq2, iq3, iq4] = quarterValues(year, "In-Year Lumber (MM BF)");
 
-/**
- * When both totalBF_MM and avgPricePerThousandBF are present, compute
- * incrementalRevenueMM = (totalBF_MM * avgPricePerThousandBF) / 1000
- */
-function deriveIncrementalRevenueMM(rows: YearRow[]): YearRow[] {
-  return rows.map((row) => {
-    const total = row.totalBF_MM;
-    const price = row.avgPricePerThousandBF;
-    if (total != null && price != null) {
-      return { ...row, incrementalRevenueMM: Math.round((total * price) / 1000) };
-    }
-    return row;
-  });
-}
-
-/**
- * When totalBF_MM, avgPricePerThousandBF, and spendMM are present, compute
- * roiPerDollar = (totalBF_MM * avgPricePerThousandBF) / spendMM, then store as
- * (value / 1000) so the dashboard can show "$37.30 per $1".
- */
-function deriveRoiPerDollar(rows: YearRow[]): YearRow[] {
-  return rows.map((row) => {
-    const total = row.totalBF_MM;
-    const price = row.avgPricePerThousandBF;
-    const spend = row.spendMM;
-    if (total != null && price != null && spend != null && spend !== 0) {
-      const raw = (total * price) / spend;
-      const perDollar = Math.round((raw / 1000) * 100) / 100;
-      return { ...row, roiPerDollar: perDollar };
-    }
-    return row;
-  });
-}
-
-/**
- * For years where we have a known total softwood lumber consumption figure,
- * compute slbShare_pct = totalBF_MM / total_softwood_consumption.
- * Stored as a fraction (e.g., 0.031 → 3.1%) to match chart expectations.
- */
-function deriveSlbSharePct(rows: YearRow[]): YearRow[] {
-  return rows.map((row) => {
-    const denominator = TOTAL_SOFTWOOD_LUMBER_CONSUMPTION_MM_BF[row.year];
-    const total = row.totalBF_MM;
-    if (denominator != null && total != null) {
-      const share = total / denominator;
-      const rounded = Math.round(share * 1000) / 1000;
-      return { ...row, slbShare_pct: rounded };
-    }
-    return row;
-  });
-}
-
-/**
- * For each year, cumulative ROI = (sum of incrementalRevenueMM from start through that year)
- * / (sum of spendMM from start through that year). Matches the Cumulative ROI Summary card.
- * Rows must be sorted by year ascending.
- */
-function deriveCumulativeRoiPerDollar(rows: YearRow[]): YearRow[] {
-  let cumRevenue = 0;
-  let cumSpend = 0;
-  return rows.map((row) => {
-    cumRevenue += row.incrementalRevenueMM ?? 0;
-    cumSpend += row.spendMM ?? 0;
-    const roi = cumSpend > 0 ? Math.round((cumRevenue / cumSpend) * 100) / 100 : null;
-    return { ...row, cumulativeRoiPerDollar: roi };
-  });
+  return {
+    year,
+    incrementalRevenueMM: num(y, "Incremental Revenue ($MM)"),
+    spendMM: num(y, "SLB Investment ($MM)"),
+    roiPerDollar: num(y, "ROI per $1"),
+    cumulativeRoiPerDollar: num(y, "Cumulative ROI per $1"),
+    incBF_MM: inYear,
+    // Legacy years (2012–15) have no in-year/tail split: Demand Generated = In-Year, no tail
+    tailBF_MM: influence === 0 && inYear === total ? null : influence,
+    totalBF_MM: total,
+    avgPricePerThousandBF: num(y, "Avg Lumber Price ($/MBF)"),
+    q1BF_MM: q1,
+    q2BF_MM: q2,
+    q3BF_MM: q3,
+    q4BF_MM: q4,
+    inYear_q1BF_MM: iq1,
+    inYear_q2BF_MM: iq2,
+    inYear_q3BF_MM: iq3,
+    inYear_q4BF_MM: iq4,
+    projects: num(y, "Projects"),
+    slbShare_pct: num(y, "SLB Market Share"),
+    volumePortion_pct: num(y, "Volume Portion"),
+    pricePortion_pct: num(y, "Price Portion"),
+    mfStarts_k: num(y, "Macro: MF Starts (k)"),
+    mfPermits_k: num(y, "Macro: MF Permits (k)"),
+    abiAvg: num(y, "Macro: ABI Avg"),
+    nahbHmi: num(y, "Macro: NAHB HMI"),
+    constructionSpendingGrowth_pct: num(y, "Macro: Construction Spending Growth (%)"),
+    mortgage30yr_pct: num(y, "Macro: 30-yr Mortgage (%)"),
+    treasury10yr_pct: num(y, "Macro: 10-yr Treasury (%)"),
+    fedFunds_pct: num(y, "Macro: Fed Funds (%)"),
+    lumberPrice_usdPerMbf: num(y, "Macro: Market Lumber Price ($/MBF)"),
+    bankLendingTighteningIndex_pct: num(y, "Macro: Bank Lending Tightening (%)"),
+  };
 }
 
 /** Load and validate the year rows; returns a year-sorted array */
 export function loadYears(): YearRow[] {
-  const parsed = Years.safeParse(raw);
+  const parsed = Years.safeParse(years.map(toYearRow));
   if (!parsed.success) {
     // If validation fails, log the error and return empty to avoid crashing the page
     console.error("SLB data failed validation:", parsed.error?.format?.() ?? parsed.error);
     return [];
   }
-  const withDerivedTotalBF = deriveTotalBF_MM(parsed.data);
-  const withDerivedRevenue = deriveIncrementalRevenueMM(withDerivedTotalBF);
-  const withDerivedRoi = deriveRoiPerDollar(withDerivedRevenue);
-  const withDerivedShare = deriveSlbSharePct(withDerivedRoi);
-  const sorted = withDerivedShare.sort((a, b) => a.year - b.year);
-  const withCumulativeRoi = deriveCumulativeRoiPerDollar(sorted);
-  return withCumulativeRoi;
+  return parsed.data.sort((a, b) => a.year - b.year);
 }

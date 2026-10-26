@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { latestQuarter, num, quarterRec, quarterlyRows } from "@/data/airtable";
 
 type FunnelStage = {
   label: string;
@@ -23,11 +24,23 @@ type FunnelStage = {
   points: string;
 };
 
+// Funnel figures come from the latest quarter that reports them (lifetime totals)
+const FUNNEL_QUARTER = quarterRec(latestQuarter("Funnel Subscribers").year, `Q${latestQuarter("Funnel Subscribers").quarter}`);
+
+function funnelValue(field: string) {
+  return (num(FUNNEL_QUARTER, field) ?? 0).toLocaleString("en-US");
+}
+
+function funnelChange(field: string) {
+  const pct = Math.round((num(FUNNEL_QUARTER, field) ?? 0) * 100);
+  return `${pct >= 0 ? "+" : ""}${pct}%`;
+}
+
 const FUNNEL_STAGES: FunnelStage[] = [
   {
     label: "Subscriber",
-    value: "27,157",
-    change: "+4%",
+    value: funnelValue("Funnel Subscribers"),
+    change: funnelChange("Funnel Subscribers QoQ"),
     description: "Contacts with email only or outside of the priority audience",
     fill: "#005F33",
     textColor: "#ffffff",
@@ -35,8 +48,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Prospects",
-    value: "6,904",
-    change: "+13%",
+    value: funnelValue("Funnel Prospects"),
+    change: funnelChange("Funnel Prospects QoQ"),
     description: "Email, name, and company within the priority target",
     fill: "#42B245",
     textColor: "#ffffff",
@@ -44,8 +57,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Leads",
-    value: "22,685",
-    change: "+24%",
+    value: funnelValue("Funnel Leads"),
+    change: funnelChange("Funnel Leads QoQ"),
     description: "Engaged projects",
     fill: "#A8D649",
     textColor: "#183B27",
@@ -53,8 +66,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Priority Leads (MQL)",
-    value: "65,319",
-    change: "+4%",
+    value: funnelValue("Funnel MQL"),
+    change: funnelChange("Funnel MQL QoQ"),
     description: "Prospects with high engagement",
     fill: "#DDEFCB",
     textColor: "#183B27",
@@ -62,8 +75,8 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
   {
     label: "Qualified Leads (SQL)",
-    value: "2,479",
-    change: "+3%",
+    value: funnelValue("Funnel SQL"),
+    change: funnelChange("Funnel SQL QoQ"),
     description: "Leads sent to WoodWorks",
     fill: "#ffffff",
     textColor: "#183B27",
@@ -71,35 +84,7 @@ const FUNNEL_STAGES: FunnelStage[] = [
   },
 ];
 
-const SQL_REFERRAL_DATA = [
-  {
-    year: "2024",
-    q1: 5,
-    q2: 6,
-    q3: 7,
-    q4: 12,
-    totalOnQ2: null,
-    totalOnQ4: 30,
-  },
-  {
-    year: "2025",
-    q1: 6,
-    q2: 5,
-    q3: 9,
-    q4: 12,
-    totalOnQ2: null,
-    totalOnQ4: 32,
-  },
-  {
-    year: "2026",
-    q1: 11,
-    q2: 5,
-    q3: null,
-    q4: null,
-    totalOnQ2: 16,
-    totalOnQ4: null,
-  },
-];
+const SQL_REFERRAL_DATA = quarterlyRows("SQL Referral Conversions");
 
 function formatLabel(value: unknown) {
   const number = Number(value);
@@ -171,7 +156,14 @@ function SqlReferralConversionsChart() {
             maxBarSize={72}
             name="Q1"
           >
+            {SQL_REFERRAL_DATA.map((row) => (
+              <Cell
+                key={`sql-q1-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ1 != null, 5)}
+              />
+            ))}
             <LabelList dataKey="q1" {...insideLabelProps} fill="#ffffff" />
+            <LabelList dataKey="totalOnQ1" {...totalLabelProps} />
           </Bar>
           <Bar
             dataKey="q2"
@@ -196,7 +188,14 @@ function SqlReferralConversionsChart() {
             maxBarSize={72}
             name="Q3"
           >
+            {SQL_REFERRAL_DATA.map((row) => (
+              <Cell
+                key={`sql-q3-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ3 != null, 5)}
+              />
+            ))}
             <LabelList dataKey="q3" {...insideLabelProps} fill="#255D38" />
+            <LabelList dataKey="totalOnQ3" {...totalLabelProps} />
           </Bar>
           <Bar
             dataKey="q4"

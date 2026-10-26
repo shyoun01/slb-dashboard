@@ -13,6 +13,7 @@ import MarketShareChart from "@/components/charts/MarketShareChart";
 import InfluenceProjectsChart from "@/components/charts/InfluenceProjectsChart";
 import ProgramImpactInYearChart from "@/components/charts/ProgramImpactInYearChart";
 import ProgramImpactVsMacrosChart from "@/components/charts/ProgramImpactVsMacrosChart";
+import { lastAnnualYear } from "@/data/airtable";
 
 export default function Page() {
   const allData = loadYears();
@@ -20,9 +21,9 @@ export default function Page() {
     return <div className="p-6 text-red-700">Error: No data loaded</div>;
   }
 
-  // Keep annual KPIs/stepper anchored to the latest *annual* year (currently through 2025),
+  // Keep annual KPIs/stepper anchored to the latest *annual* year (the last year with spend reported),
   // while allowing the quarterly dashboard to include partial-year updates (e.g., 2026 Q1).
-  const annualData = allData.filter((r) => r.year <= 2025);
+  const annualData = allData.filter((r) => r.year <= lastAnnualYear());
   const latest = annualData[annualData.length - 1] ?? allData[allData.length - 1];
   const [year, setYear] = useState(latest.year);
   const row = annualData.find((r) => r.year === year)!;

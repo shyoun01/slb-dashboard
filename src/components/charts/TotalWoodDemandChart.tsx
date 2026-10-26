@@ -12,6 +12,7 @@ import {
   Legend,
   LabelList,
 } from "recharts";
+import { barPeriods, num } from "@/data/airtable";
 
 type PeriodRow = {
   label: string;
@@ -21,42 +22,8 @@ type PeriodRow = {
   total: number;
 };
 
-/** In-year lumber (MM BF) — matches ProjectInfluenceDemandChart */
-const LUMBER = {
-  "2016–18": 1298.3,
-  "2019–21": 2076,
-  "2022–24": 2341,
-  "2025": 581,
-  "2026": 442.2,
-} as const;
-
 /** Panel (MM SF) — MM BF in combined total = half of MM SF */
 const PANEL_FACTOR = 0.5;
-
-const PANEL = {
-  "2016–18": 989.0,
-  "2019–21": 1462.8,
-  "2022–24": 1453.4,
-  "2025": 360.2,
-  "2026": 266.0,
-} as const;
-
-/** EWP (MM BF) — matches EwpInfluenceDemandChart */
-const EWP = {
-  "2016–18": 304.6,
-  "2019–21": 461.6,
-  "2022–24": 478.6,
-  "2025": 118.6,
-  "2026": 88.6,
-} as const;
-
-const PERIODS = [
-  "2016–18",
-  "2019–21",
-  "2022–24",
-  "2025",
-  "2026",
-] as const;
 
 const ONE_DECIMAL: Intl.NumberFormatOptions = {
   minimumFractionDigits: 1,
@@ -92,18 +59,20 @@ function formatPanelInsideLabel(value: unknown) {
 
 export default function TotalWoodDemandChart() {
   const chartData = useMemo((): PeriodRow[] => {
-    return PERIODS.map((label) => {
-      const lumber = LUMBER[label];
-      const panel = PANEL[label] * PANEL_FACTOR;
-      const ewp = EWP[label];
-      return {
-        label,
-        lumber,
-        panel,
-        ewp,
-        total: lumber + panel + ewp,
-      };
-    });
+    return barPeriods()
+      .filter((p) => p.Period !== "2012–15")
+      .map((p) => {
+        const lumber = num(p, "Total Wood Lumber (MM BF)") ?? 0;
+        const panel = (num(p, "Panel (MM SF)") ?? 0) * PANEL_FACTOR;
+        const ewp = num(p, "EWP (MM BF)") ?? 0;
+        return {
+          label: p.Period,
+          lumber,
+          panel,
+          ewp,
+          total: lumber + panel + ewp,
+        };
+      });
   }, []);
 
   const maxVolume = useMemo(() => {

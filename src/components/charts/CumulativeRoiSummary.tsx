@@ -21,7 +21,7 @@ export default function CumulativeRoiSummary({ data }: { data: YearRow[] }) {
         <div className="flex items-center gap-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">
-              Cumulative ROI Summary (2012–2025)
+              Cumulative ROI Summary ({data[0]?.year}–{data[data.length - 1]?.year})
             </h3>
             <div className="text-3xl font-bold text-[var(--slb-blue)] mt-1">
               ${totals.roi.toFixed(2)} <span className="text-base font-normal text-gray-600">per $1</span>

@@ -13,6 +13,7 @@ import {
   Legend,
   LabelList,
 } from "recharts";
+import { num, periodRec } from "@/data/airtable";
 import { SpendLineLabel } from "@/components/charts/SpendLineLabel";
 
 interface RevenueSpendChartProps {
@@ -30,10 +31,11 @@ const BF_TABLE_YEAR_MIN = 2021;
 const BF_TABLE_YEAR_MAX = 2025;
 
 /** Cumulative in-year and indirect MM BF for 2012–2020 */
+const BF_IMPACT_PERIOD = periodRec("2012–20 (BF impact table)");
 const PERIOD_2012_20 = {
   label: "2012–20",
-  inYear: 3323,
-  indirect: 4586,
+  inYear: num(BF_IMPACT_PERIOD, "BF Impact In-Year Published") ?? 0,
+  indirect: num(BF_IMPACT_PERIOD, "BF Impact Indirect Published") ?? 0,
 } as const;
 
 /**

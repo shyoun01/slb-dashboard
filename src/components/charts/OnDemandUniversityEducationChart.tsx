@@ -12,128 +12,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { num, quarterlyRows, yearRec, type QuarterlyRow } from "@/data/airtable";
 
-type OnDemandRow = {
-  year: string;
-  q1: number;
-  q2: number;
-  q3: number | null;
-  q4: number | null;
-  /** Annual total for complete years. */
-  newAccounts: number;
-  /** Q1/Q2 new accounts for partial years (pill shows YTD sum). */
-  newAccountsQ1?: number;
-  newAccountsQ2?: number;
-  totalOnQ2: number | null;
-  totalOnQ4: number | null;
-  goal: number | null;
+type OnDemandRow = QuarterlyRow & {
+  /** New accounts for the year (YTD for the current year). */
+  newAccounts: number | null;
 };
 
-const ON_DEMAND_DATA: OnDemandRow[] = [
-  {
-    year: "2024",
-    q1: 1363,
-    q2: 2804,
-    q3: 2537,
-    q4: 6280,
-    newAccounts: 4491,
-    totalOnQ2: null,
-    totalOnQ4: 12984,
-    goal: null,
-  },
-  {
-    year: "2025",
-    q1: 3128,
-    q2: 3413,
-    q3: 3439,
-    q4: 7446,
-    newAccounts: 5170,
-    totalOnQ2: null,
-    totalOnQ4: 17426,
-    goal: null,
-  },
-  {
-    year: "2026",
-    q1: 3438,
-    q2: 3829,
-    q3: null,
-    q4: null,
-    newAccounts: 2069,
-    newAccountsQ1: 1020,
-    newAccountsQ2: 1049,
-    totalOnQ2: 7267,
-    totalOnQ4: null,
-    goal: 17805,
-  },
-];
+const ON_DEMAND_DATA: OnDemandRow[] = quarterlyRows("On-Demand Completions", "On-Demand Completions").map((row) => ({
+  ...row,
+  newAccounts: num(yearRec(Number(row.year)), "On-Demand New Accounts"),
+}));
 
-type UniversityEducationRow = Omit<OnDemandRow, "newAccounts">;
+type UniversityEducationRow = QuarterlyRow;
 
-const UNIVERSITY_EDUCATION_DATA: UniversityEducationRow[] = [
-  {
-    year: "2024",
-    q1: 1640,
-    q2: 971,
-    q3: 1109,
-    q4: 1322,
-    totalOnQ2: null,
-    totalOnQ4: 5042,
-    goal: null,
-  },
-  {
-    year: "2025",
-    q1: 1444,
-    q2: 1091,
-    q3: 1272,
-    q4: 1856,
-    totalOnQ2: null,
-    totalOnQ4: 5663,
-    goal: null,
-  },
-  {
-    year: "2026",
-    q1: 2173,
-    q2: 1036,
-    q3: null,
-    q4: null,
-    totalOnQ2: 3209,
-    totalOnQ4: null,
-    goal: 5994,
-  },
-];
+const UNIVERSITY_EDUCATION_DATA: UniversityEducationRow[] = quarterlyRows("Student Engagements", "Student Engagements");
 
-const FACULTY_ENGAGEMENT_DATA: UniversityEducationRow[] = [
-  {
-    year: "2024",
-    q1: 210,
-    q2: 322,
-    q3: 165,
-    q4: 151,
-    totalOnQ2: null,
-    totalOnQ4: 848,
-    goal: null,
-  },
-  {
-    year: "2025",
-    q1: 282,
-    q2: 320,
-    q3: 184,
-    q4: 576,
-    totalOnQ2: null,
-    totalOnQ4: 1362,
-    goal: null,
-  },
-  {
-    year: "2026",
-    q1: 397,
-    q2: 468,
-    q3: null,
-    q4: null,
-    totalOnQ2: 865,
-    totalOnQ4: null,
-    goal: 993,
-  },
-];
+const FACULTY_ENGAGEMENT_DATA: UniversityEducationRow[] = quarterlyRows("Faculty Engagements", "Faculty Engagements");
 
 function formatWholeNumber(value: unknown) {
   const number = Number(value);
@@ -142,13 +37,7 @@ function formatWholeNumber(value: unknown) {
 }
 
 function newAccountsYtd(row: OnDemandRow | undefined) {
-  if (!row) return null;
-  if (row.q3 == null && row.q4 == null) {
-    const q1 = row.newAccountsQ1 ?? 0;
-    const q2 = row.newAccountsQ2 ?? 0;
-    if (q1 > 0 || q2 > 0) return q1 + q2;
-  }
-  return row.newAccounts;
+  return row?.newAccounts ?? null;
 }
 
 const insideLabelProps = {
@@ -304,10 +193,26 @@ function OnDemandChart() {
             maxBarSize={64}
             name="Q1"
           >
+            {ON_DEMAND_DATA.map((row) => (
+              <Cell
+                key={`q1-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ1 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q1"
               {...insideLabelProps}
               fill="#ffffff"
+            />
+            <LabelList dataKey="totalOnQ1" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ1"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -330,7 +235,7 @@ function OnDemandChart() {
             />
             <LabelList dataKey="totalOnQ2" {...totalLabelProps} />
             <LabelList
-              dataKey="goal"
+              dataKey="goalOnQ2"
               position="top"
               offset={25}
               formatter={formatGoal}
@@ -346,10 +251,26 @@ function OnDemandChart() {
             maxBarSize={64}
             name="Q3"
           >
+            {ON_DEMAND_DATA.map((row) => (
+              <Cell
+                key={`q3-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ3 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q3"
               {...insideLabelProps}
               fill="#255D38"
+            />
+            <LabelList dataKey="totalOnQ3" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ3"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -366,6 +287,15 @@ function OnDemandChart() {
               fill="#ffffff"
             />
             <LabelList dataKey="totalOnQ4" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ4"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
@@ -445,10 +375,26 @@ function UniversityEducationChart({
             maxBarSize={64}
             name="Q1"
           >
+            {data.map((row) => (
+              <Cell
+                key={`${stackId}-q1-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ1 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q1"
               {...insideLabelProps}
               fill="#ffffff"
+            />
+            <LabelList dataKey="totalOnQ1" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ1"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -471,7 +417,7 @@ function UniversityEducationChart({
             />
             <LabelList dataKey="totalOnQ2" {...totalLabelProps} />
             <LabelList
-              dataKey="goal"
+              dataKey="goalOnQ2"
               position="top"
               offset={25}
               formatter={formatGoal}
@@ -487,10 +433,26 @@ function UniversityEducationChart({
             maxBarSize={64}
             name="Q3"
           >
+            {data.map((row) => (
+              <Cell
+                key={`${stackId}-q3-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ3 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q3"
               {...insideLabelProps}
               fill="#255D38"
+            />
+            <LabelList dataKey="totalOnQ3" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ3"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -507,6 +469,15 @@ function UniversityEducationChart({
               fill="#ffffff"
             />
             <LabelList dataKey="totalOnQ4" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ4"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

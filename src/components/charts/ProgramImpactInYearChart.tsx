@@ -15,13 +15,13 @@ import {
 type Row = {
   year: number;
 
-  // In-year quarterly data (new fields in slb.json)
+  // In-year quarterly data (from the Airtable snapshot)
   inYear_q1BF_MM?: number | null;
   inYear_q2BF_MM?: number | null;
   inYear_q3BF_MM?: number | null;
   inYear_q4BF_MM?: number | null;
 
-  // Annual in-year total (already in slb.json)
+  // Annual in-year total (from the Airtable snapshot)
   incBF_MM?: number | null;
 };
 

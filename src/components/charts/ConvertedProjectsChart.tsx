@@ -12,17 +12,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { convertedByBuilding, convertedBySystem, quarterlyRows, type QuarterlyRow } from "@/data/airtable";
 
-type ProjectRow = {
-  year: string;
-  q1: number;
-  q2: number;
-  q3: number | null;
-  q4: number | null;
-  totalOnQ2: number | null;
-  totalOnQ4: number | null;
-  goal: number | null;
-};
+type ProjectRow = QuarterlyRow;
 
 type SystemTypeRow = {
   year: string;
@@ -43,95 +35,11 @@ type BuildingTypeRow = {
   topKey: "multifamily" | "commercial" | "institutional" | "warehouse" | "other";
 };
 
-const DIRECTLY_INFLUENCED_DATA: ProjectRow[] = [
-  {
-    year: "2024",
-    q1: 87,
-    q2: 97,
-    q3: 106,
-    q4: 101,
-    totalOnQ2: null,
-    totalOnQ4: 391,
-    goal: null,
-  },
-  {
-    year: "2025",
-    q1: 91,
-    q2: 97,
-    q3: 111,
-    q4: 106,
-    totalOnQ2: null,
-    totalOnQ4: 405,
-    goal: null,
-  },
-  {
-    year: "2026",
-    q1: 105,
-    q2: 109,
-    q3: null,
-    q4: null,
-    totalOnQ2: 214,
-    totalOnQ4: null,
-    goal: 373,
-  },
-];
+const DIRECTLY_INFLUENCED_DATA: ProjectRow[] = quarterlyRows("Directly Influenced Projects", "Directly Influenced Projects");
 
-const SYSTEM_TYPE_DATA: SystemTypeRow[] = [
-  {
-    year: "2024",
-    lightFrame: 264,
-    hybridMtLf: 30,
-    heavyMt: 97,
-    total: 391,
-  },
-  {
-    year: "2025",
-    lightFrame: 267,
-    hybridMtLf: 32,
-    heavyMt: 106,
-    total: 405,
-  },
-  {
-    year: "2026",
-    lightFrame: 133,
-    hybridMtLf: 17,
-    heavyMt: 64,
-    total: 214,
-  },
-];
+const SYSTEM_TYPE_DATA: SystemTypeRow[] = convertedBySystem();
 
-const BUILDING_TYPE_DATA: BuildingTypeRow[] = [
-  {
-    year: "2024",
-    multifamily: 215,
-    commercial: 61,
-    institutional: 107,
-    warehouse: 6,
-    other: 2,
-    total: 391,
-    topKey: "other",
-  },
-  {
-    year: "2025",
-    multifamily: 211,
-    commercial: 68,
-    institutional: 119,
-    warehouse: 6,
-    other: 1,
-    total: 405,
-    topKey: "other",
-  },
-  {
-    year: "2026",
-    multifamily: 120,
-    commercial: 36,
-    institutional: 57,
-    warehouse: 0,
-    other: 1,
-    total: 214,
-    topKey: "other",
-  },
-];
+const BUILDING_TYPE_DATA: BuildingTypeRow[] = convertedByBuilding();
 
 const QUARTERLY_LEGEND_ITEMS = [
   { label: "Q1", color: "#005F33" },
@@ -300,10 +208,26 @@ function DirectlyInfluencedChart() {
             maxBarSize={64}
             name="Q1"
           >
+            {DIRECTLY_INFLUENCED_DATA.map((row) => (
+              <Cell
+                key={`projects-q1-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ1 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q1"
               {...insideLabelProps}
               fill="#ffffff"
+            />
+            <LabelList dataKey="totalOnQ1" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ1"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -326,7 +250,7 @@ function DirectlyInfluencedChart() {
             />
             <LabelList dataKey="totalOnQ2" {...totalLabelProps} />
             <LabelList
-              dataKey="goal"
+              dataKey="goalOnQ2"
               position="top"
               offset={25}
               formatter={formatGoal}
@@ -342,10 +266,26 @@ function DirectlyInfluencedChart() {
             maxBarSize={64}
             name="Q3"
           >
+            {DIRECTLY_INFLUENCED_DATA.map((row) => (
+              <Cell
+                key={`projects-q3-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ3 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q3"
               {...insideLabelProps}
               fill="#255D38"
+            />
+            <LabelList dataKey="totalOnQ3" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ3"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
             />
           </Bar>
           <Bar
@@ -362,6 +302,15 @@ function DirectlyInfluencedChart() {
               fill="#ffffff"
             />
             <LabelList dataKey="totalOnQ4" {...totalLabelProps} />
+            <LabelList
+              dataKey="goalOnQ4"
+              position="top"
+              offset={25}
+              formatter={formatGoal}
+              fill="#F78F2D"
+              fontSize={11}
+              fontWeight={700}
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

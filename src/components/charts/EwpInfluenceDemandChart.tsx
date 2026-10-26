@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
+import { volumeRows, type VolumeRow } from "@/data/airtable";
 import {
   ResponsiveContainer,
   BarChart,
@@ -14,30 +15,7 @@ import {
   LabelList,
 } from "recharts";
 
-type PeriodRow = {
-  label: string;
-  totalFallback: number | null;
-  q1: number | null;
-  q2: number | null;
-  q3: number | null;
-  q4: number | null;
-  totalBF_MM: number | null;
-  volumeLabelAnnual: number | null;
-  volumeLabelQ1: number | null;
-  volumeLabelQ2: number | null;
-  volumeLabelQ4: number | null;
-  showQuarters: boolean;
-};
-
-const PERIOD_2016_18 = 304.6;
-const PERIOD_2019_21 = 461.6;
-const PERIOD_2022_24 = 478.6;
-const YEAR_2025_Q1 = 27.0;
-const YEAR_2025_Q2 = 35.1;
-const YEAR_2025_Q3 = 30.0;
-const YEAR_2025_Q4 = 26.5;
-const YEAR_2026_Q1 = 44.8;
-const YEAR_2026_Q2 = 43.8;
+type PeriodRow = VolumeRow;
 
 const ONE_DECIMAL: Intl.NumberFormatOptions = {
   minimumFractionDigits: 1,
@@ -63,84 +41,16 @@ function quarterSum(row: PeriodRow) {
 }
 
 export default function EwpInfluenceDemandChart() {
-  const chartData = useMemo((): PeriodRow[] => {
-    const total2025 =
-      YEAR_2025_Q1 + YEAR_2025_Q2 + YEAR_2025_Q3 + YEAR_2025_Q4;
-    const total2026 = YEAR_2026_Q1 + YEAR_2026_Q2;
-
-    return [
-      {
-        label: "2016–18",
-        totalFallback: PERIOD_2016_18,
-        q1: null,
-        q2: null,
-        q3: null,
-        q4: null,
-        totalBF_MM: PERIOD_2016_18,
-        volumeLabelAnnual: PERIOD_2016_18,
-        volumeLabelQ1: null,
-        volumeLabelQ2: null,
-        volumeLabelQ4: null,
-        showQuarters: false,
-      },
-      {
-        label: "2019–21",
-        totalFallback: PERIOD_2019_21,
-        q1: null,
-        q2: null,
-        q3: null,
-        q4: null,
-        totalBF_MM: PERIOD_2019_21,
-        volumeLabelAnnual: PERIOD_2019_21,
-        volumeLabelQ1: null,
-        volumeLabelQ2: null,
-        volumeLabelQ4: null,
-        showQuarters: false,
-      },
-      {
-        label: "2022–24",
-        totalFallback: PERIOD_2022_24,
-        q1: null,
-        q2: null,
-        q3: null,
-        q4: null,
-        totalBF_MM: PERIOD_2022_24,
-        volumeLabelAnnual: PERIOD_2022_24,
-        volumeLabelQ1: null,
-        volumeLabelQ2: null,
-        volumeLabelQ4: null,
-        showQuarters: false,
-      },
-      {
-        label: "2025",
-        totalFallback: null,
-        q1: YEAR_2025_Q1,
-        q2: YEAR_2025_Q2,
-        q3: YEAR_2025_Q3,
-        q4: YEAR_2025_Q4,
-        totalBF_MM: total2025,
-        volumeLabelAnnual: null,
-        volumeLabelQ1: null,
-        volumeLabelQ2: null,
-        volumeLabelQ4: total2025,
-        showQuarters: true,
-      },
-      {
-        label: "2026",
-        totalFallback: null,
-        q1: YEAR_2026_Q1,
-        q2: YEAR_2026_Q2,
-        q3: null,
-        q4: null,
-        totalBF_MM: total2026,
-        volumeLabelAnnual: null,
-        volumeLabelQ1: null,
-        volumeLabelQ2: total2026,
-        volumeLabelQ4: null,
-        showQuarters: true,
-      },
-    ];
-  }, []);
+  const chartData = useMemo(
+    (): PeriodRow[] =>
+      volumeRows({
+        periodField: "EWP (MM BF)",
+        quarterField: "EWP (MM BF)",
+        publishedField: "EWP Published (MM BF)",
+        skip: ["2012–15"],
+      }),
+    []
+  );
 
   const maxBF = useMemo(() => {
     const vals = chartData.map((r) =>
@@ -256,6 +166,13 @@ export default function EwpInfluenceDemandChart() {
               {...quarterInsideLabelProps}
               fill="#ffffff"
             />
+            {chartData.map((entry) => (
+              <Cell
+                key={`q1-${entry.label}`}
+                radius={conditionalTopCellRadius(entry.volumeLabelQ1 != null)}
+              />
+            ))}
+            <LabelList dataKey="volumeLabelQ1" {...volumeLabelProps} />
           </Bar>
           <Bar
             dataKey="q2"
@@ -264,17 +181,17 @@ export default function EwpInfluenceDemandChart() {
             maxBarSize={96}
             name="q2"
           >
+            <LabelList
+              dataKey="q2"
+              {...quarterInsideLabelProps}
+              fill="#ffffff"
+            />
             {chartData.map((entry) => (
               <Cell
                 key={`q2-${entry.label}`}
                 radius={conditionalTopCellRadius(entry.volumeLabelQ2 != null)}
               />
             ))}
-            <LabelList
-              dataKey="q2"
-              {...quarterInsideLabelProps}
-              fill="#ffffff"
-            />
             <LabelList dataKey="volumeLabelQ2" {...volumeLabelProps} />
           </Bar>
           <Bar
@@ -289,6 +206,13 @@ export default function EwpInfluenceDemandChart() {
               {...quarterInsideLabelProps}
               fill="#255D38"
             />
+            {chartData.map((entry) => (
+              <Cell
+                key={`q3-${entry.label}`}
+                radius={conditionalTopCellRadius(entry.volumeLabelQ3 != null)}
+              />
+            ))}
+            <LabelList dataKey="volumeLabelQ3" {...volumeLabelProps} />
           </Bar>
           <Bar
             dataKey="q4"

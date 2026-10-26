@@ -2,6 +2,7 @@
 
 import React from "react";
 import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
+import { quarterlyRows, type QuarterlyRow } from "@/data/airtable";
 import {
   ResponsiveContainer,
   BarChart,
@@ -14,17 +15,7 @@ import {
   LabelList,
 } from "recharts";
 
-type EducationRow = {
-  year: string;
-  q1: number;
-  q2: number;
-  q3: number | null;
-  q4: number | null;
-  total: number;
-  totalOnQ2: number | null;
-  totalOnQ4: number | null;
-  goal: number | null;
-};
+type EducationRow = QuarterlyRow;
 
 type EducationLogo = {
   /** Path relative to /public, e.g. "/logos/aia.svg" */
@@ -40,36 +31,10 @@ type EducationChart = {
   logos: EducationLogo[];
 };
 
-function makeRow(
-  year: string,
-  q1: number,
-  q2: number,
-  q3: number | null,
-  q4: number | null,
-  goal: number | null = null
-): EducationRow {
-  const total = q1 + q2 + (q3 ?? 0) + (q4 ?? 0);
-  return {
-    year,
-    q1,
-    q2,
-    q3,
-    q4,
-    total,
-    totalOnQ2: q3 == null && q4 == null ? total : null,
-    totalOnQ4: q4 != null ? total : null,
-    goal,
-  };
-}
-
 const CHARTS: EducationChart[] = [
   {
     title: "Education Contact Hours (M)",
-    rows: [
-      makeRow("2024", 22.2, 18.2, 9.2, 14.8),
-      makeRow("2025", 10.7, 9.2, 9.2, 12.7),
-      makeRow("2026", 9.4, 8.680, null, null, 40.0),
-    ],
+    rows: quarterlyRows("Education Contact Hours (M)", "Education Contact Hours"),
     logos: [
       {
         src: "/awc_logo.png",
@@ -80,11 +45,7 @@ const CHARTS: EducationChart[] = [
   },
   {
     title: "CEU Credit Hours (M)",
-    rows: [
-      makeRow("2024", 5.3, 5.0, 5.3, 14.7),
-      makeRow("2025", 3.6, 4.4, 4.4, 12.9),
-      makeRow("2026", 2.7, 4.600, null, null, 25.2),
-    ],
+    rows: quarterlyRows("CEU Credit Hours (M)", "CEU Credit Hours"),
     logos: [
       {
         src: "/thinkwood_logo.png",
@@ -95,11 +56,7 @@ const CHARTS: EducationChart[] = [
   },
   {
     title: "Practitioner Education Hours (M)",
-    rows: [
-      makeRow("2024", 30.1, 13.6, 12.2, 13.7),
-      makeRow("2025", 22.5, 11.6, 11.3, 17.3),
-      makeRow("2026", 15.6, 19.843, null, null, 48.2),
-    ],
+    rows: quarterlyRows("Practitioner Education Hours (M)", "Practitioner Education Hours"),
     logos: [
       {
         src: "/woodworks_logo.svg",
@@ -200,11 +157,19 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
             maxBarSize={64}
             name="q1"
           >
+            {chart.rows.map((row) => (
+              <Cell
+                key={`q1-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ1 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q1"
               {...insideLabelProps}
               fill="#ffffff"
             />
+            <LabelList dataKey="totalOnQ1" {...totalLabelProps} />
+            <LabelList dataKey="goalOnQ1" {...goalLabelProps} />
           </Bar>
           <Bar
             dataKey="q2"
@@ -225,7 +190,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
               fill="#ffffff"
             />
             <LabelList dataKey="totalOnQ2" {...totalLabelProps} />
-            <LabelList dataKey="goal" {...goalLabelProps} />
+            <LabelList dataKey="goalOnQ2" {...goalLabelProps} />
           </Bar>
           <Bar
             dataKey="q3"
@@ -234,11 +199,19 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
             maxBarSize={64}
             name="q3"
           >
+            {chart.rows.map((row) => (
+              <Cell
+                key={`q3-${row.year}`}
+                radius={conditionalTopCellRadius(row.totalOnQ3 != null, 5)}
+              />
+            ))}
             <LabelList
               dataKey="q3"
               {...insideLabelProps}
               fill="#255D38"
             />
+            <LabelList dataKey="totalOnQ3" {...totalLabelProps} />
+            <LabelList dataKey="goalOnQ3" {...goalLabelProps} />
           </Bar>
           <Bar
             dataKey="q4"
@@ -254,6 +227,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
               fill="#ffffff"
             />
             <LabelList dataKey="totalOnQ4" {...totalLabelProps} />
+            <LabelList dataKey="goalOnQ4" {...goalLabelProps} />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

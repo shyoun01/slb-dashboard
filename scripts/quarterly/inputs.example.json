@@ -1,0 +1,26 @@
+{
+  "sources": "AWC Q3 report (Oct 22 2026); Think Wood Q3 2026 report; SLB Education Q3 2026 report",
+  "quarter": {
+    "Education Contact Hours (M)": 8.755,
+    "CEU Credit Hours (M)": 4.719,
+    "On-Demand Completions": 2899,
+    "On-Demand New Accounts": 783,
+    "Student Engagements": 1464,
+    "Faculty Engagements": 352,
+    "SQL Referral Conversions": 9,
+    "Funnel Subscribers": 28470,
+    "Funnel Prospects": 7394,
+    "Funnel Leads": 25894,
+    "Funnel MQL": 67214,
+    "Funnel SQL": 2582,
+    "Funnel Subscribers QoQ": 0.05,
+    "Funnel Prospects QoQ": 0.07,
+    "Funnel Leads QoQ": 0.14,
+    "Funnel MQL QoQ": 0.03,
+    "Funnel SQL QoQ": 0.04
+  },
+  "prior": {
+    "Q1": { "On-Demand Completions": 3438, "Student Engagements": 2173, "Faculty Engagements": 397, "On-Demand New Accounts": 1020 },
+    "Q2": { "On-Demand Completions": 3829, "Student Engagements": 1036, "Faculty Engagements": 468, "On-Demand New Accounts": 1049 }
+  }
+}

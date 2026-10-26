@@ -14,6 +14,7 @@ import {
   LabelList,
   Cell,
 } from "recharts";
+import { barPeriods, isSingleYear, num } from "@/data/airtable";
 
 type PeriodRow = {
   label: string;
@@ -25,62 +26,17 @@ type PeriodRow = {
   topSegment: "l1" | "l2" | "l3" | "l4";
 };
 
-const CHART_DATA: PeriodRow[] = [
-  {
-    label: "2012–15",
-    l1: 1188,
-    l2: null,
-    l3: null,
-    l4: null,
-    total: 1188,
-    topSegment: "l1",
-  },
-  {
-    label: "2016–18",
-    l1: 2397,
-    l2: null,
-    l3: null,
-    l4: null,
-    total: 2397,
-    topSegment: "l1",
-  },
-  {
-    label: "2019–21",
-    l1: 4360,
-    l2: null,
-    l3: null,
-    l4: null,
-    total: 4360,
-    topSegment: "l1",
-  },
-  {
-    label: "2022–24",
-    l1: 5449,
-    l2: null,
-    l3: null,
-    l4: null,
-    total: 5449,
-    topSegment: "l1",
-  },
-  {
-    label: "2025",
-    l1: 282,
-    l2: 264,
-    l3: 480,
-    l4: 580,
-    total: 1606,
-    topSegment: "l4",
-  },
-  {
-    label: "2026",
-    l1: 264,
-    l2: 240,
-    l3: 436,
-    l4: 441,
-    total: 1381,
-    topSegment: "l4",
-  },
-];
+/** Single-year bars show the tail layers; multi-year bars show the period total. */
+const CHART_DATA: PeriodRow[] = barPeriods().map((p) => {
+  if (!isSingleYear(p)) {
+    const total = Math.round(num(p, "Demand Realized Total (MM BF)") ?? 0);
+    return { label: p.Period, l1: total, l2: null, l3: null, l4: null, total, topSegment: "l1" };
+  }
+  const seg = (field: string) => Math.round(num(p, field) ?? 0);
+  const [l1, l2, l3, l4] = [seg("DR 25% 3-Yr Tail"), seg("DR 25% 2-Yr Tail"), seg("DR 50% Prior-Yr Tail"), seg("DR Direct")];
+  const published = num(p, "Demand Realized Total Published (MM BF)");
+  return { label: p.Period, l1, l2, l3, l4, total: published ?? l1 + l2 + l3 + l4, topSegment: "l4" };
+});
 
 const SEGMENTS = [
   { key: "l1" as const, fill: "#005F33", labelFill: "#ffffff" },

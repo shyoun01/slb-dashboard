@@ -10,8 +10,9 @@ import IncrementalLumberChart from "@/components/charts/IncrementalLumberChart";
 import CumulativeRoiSummary from "@/components/charts/CumulativeRoiSummary";
 import InfluenceProjectsChart from "@/components/charts/InfluenceProjectsChart";
 import ProgramImpactInYearChart from "@/components/charts/ProgramImpactInYearChart";
+import { lastAnnualYear } from "@/data/airtable";
 
-const ANNUAL_YEAR_MAX = 2025;
+const ANNUAL_YEAR_MAX = lastAnnualYear();
 
 export default function InvestorsRoiPage() {
   const allData = loadYears();
