@@ -12,6 +12,7 @@ import OnDemandUniversityEducationChart from "@/components/charts/OnDemandUniver
 import ConurturedProjectFunnelChart from "@/components/charts/ConurturedProjectFunnelChart";
 import ConvertedProjectsChart from "@/components/charts/ConvertedProjectsChart";
 import ConvertedProjectsStripsChart from "@/components/charts/ConvertedProjectsStripsChart";
+import CarbonImpactTable from "@/components/charts/CarbonImpactTable";
 import { latestQuarter } from "@/data/airtable";
 
 export default function InvestorsQuarterlyPage() {
@@ -82,6 +83,9 @@ export default function InvestorsQuarterlyPage() {
             </div>
             <div className="ar-chart-panel">
               <DemandRealizedChart />
+            </div>
+            <div className="ar-chart-panel">
+              <CarbonImpactTable />
             </div>
           </div>
         </div>

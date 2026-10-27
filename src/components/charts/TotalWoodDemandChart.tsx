@@ -17,7 +17,10 @@ import { barPeriods, num } from "@/data/airtable";
 type PeriodRow = {
   label: string;
   lumber: number;
+  /** Panel stack height (MM BF equiv. = ½ × MM SF). */
   panel: number;
+  /** Panel subtotal label (MM SF, matches the Panel influence chart). */
+  panelMsf: number;
   ewp: number;
   total: number;
 };
@@ -63,12 +66,14 @@ export default function TotalWoodDemandChart() {
       .filter((p) => p.Period !== "2012–15")
       .map((p) => {
         const lumber = num(p, "Total Wood Lumber (MM BF)") ?? 0;
-        const panel = (num(p, "Panel (MM SF)") ?? 0) * PANEL_FACTOR;
+        const panelMsf = num(p, "Panel (MM SF)") ?? 0;
+        const panel = panelMsf * PANEL_FACTOR;
         const ewp = num(p, "EWP (MM BF)") ?? 0;
         return {
           label: p.Period,
           lumber,
           panel,
+          panelMsf,
           ewp,
           total: lumber + panel + ewp,
         };
@@ -169,7 +174,7 @@ export default function TotalWoodDemandChart() {
             name="panel"
           >
             <LabelList
-              dataKey="panel"
+              dataKey="panelMsf"
               position="center"
               formatter={formatPanelInsideLabel}
               fontSize={11}

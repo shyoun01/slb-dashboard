@@ -33,7 +33,7 @@ function formatQuarterInsideLabel(value: unknown) {
   if (value == null || value === "") return "";
   const n = Number(value);
   if (!Number.isFinite(n) || n <= 0) return "";
-  return `${n.toLocaleString("en-US")} MM`;
+  return `${Math.round(n).toLocaleString("en-US")} MM`;
 }
 
 type PeriodRow = VolumeRow;

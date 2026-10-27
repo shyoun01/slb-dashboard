@@ -508,11 +508,12 @@ function StripLegend() {
         ))}
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        <span className="font-bold text-gray-500">System Type:</span>
+        <span className="font-bold text-gray-500">Building Type:</span>
         {[
-          { label: "Light-Frame", color: "#005F33" },
-          { label: "Hybrid MT/LF", color: "#42B245" },
-          { label: "Heavy/MT", color: "#F78F2D" },
+          { label: "Multifamily", color: "#005F33" },
+          { label: "Commercial", color: "#42B245" },
+          { label: "Institutional", color: "#7EBC41" },
+          { label: "Other", color: "#4A93BB" },
         ].map((item) => (
           <span key={item.label} className="inline-flex items-center gap-1">
             <span
@@ -524,12 +525,11 @@ function StripLegend() {
         ))}
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        <span className="font-bold text-gray-500">Building Type:</span>
+        <span className="font-bold text-gray-500">System Type:</span>
         {[
-          { label: "Multifamily", color: "#005F33" },
-          { label: "Commercial", color: "#42B245" },
-          { label: "Institutional", color: "#7EBC41" },
-          { label: "Other", color: "#4A93BB" },
+          { label: "Light-Frame", color: "#005F33" },
+          { label: "Hybrid MT/LF", color: "#42B245" },
+          { label: "Heavy/MT", color: "#F78F2D" },
         ].map((item) => (
           <span key={item.label} className="inline-flex items-center gap-1">
             <span

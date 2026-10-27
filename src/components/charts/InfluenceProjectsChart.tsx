@@ -48,7 +48,8 @@ function CustomTooltip({ active, payload, label }: any) {
     row?.q4 !== null &&
     row?.q4 !== undefined;
 
-  const fmtBF = (n: number) => `${n.toLocaleString()} MM BF`;
+  const fmtBF = (n: number) =>
+    `${Math.round(n).toLocaleString("en-US")} MM BF`;
 
   const projects = typeof row?.projects === "number" ? row.projects : null;
 
@@ -164,7 +165,7 @@ export default function InfluenceProjectsChart({ data }: { data: SlbRow[] }) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
       <h3 className="text-center text-lg font-semibold text-[var(--slb-charcoal)] mb-4">
-        Program Impact (In-Year &amp; Tail) &amp; Projects Converted
+        Program Impact (In-Year &amp; Tail) &amp; Projects Influenced
       </h3>
 
       <ResponsiveContainer width="100%" height={360}>

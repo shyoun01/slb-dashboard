@@ -48,6 +48,14 @@ WW_ROWS = {
 ROUND = {"In-Year Lumber (MM BF)": 1, "Demand Generated (MM BF)": 1, "Panel (MM SF)": 1, "EWP (MM BF)": 1,
          "Practitioner Education Hours (M)": 3}
 
+# Carbon rows are summed from the monthly columns: WW's quarterly blocks for row 45 are blank for 2016-2020.
+CARBON_ROWS = {
+    "Wood Volume (M m3)": (42, "Volume of Wood Product", 1000),  # WW reports thousand m3
+    "Carbon Stored (MM t CO2)": (44, "Direct Carbon Storage", 1),
+    "Emissions Avoided (MM t CO2)": (45, "Avoided greenhouse gas", 1),
+    "Carbon Benefit (MM t CO2)": (46, "Total Potential Carbon Benefit", 1),
+}
+
 # WW "Building Occupancy" -> dashboard building type (matches the published 2024-2026 counts)
 BUILDING = {
     "Multi-family": "Converted: Multifamily",
@@ -115,7 +123,25 @@ def read_ww(path, year):
             vals.append(v / divisor if isinstance(v, (int, float)) else None)
         values[field] = vals
 
-    projects = [list(r) for r in wb["Projects"].iter_rows(values_only=True)]
+    month_cols, seen = {}, set()
+    for j, d in enumerate(summary[2]):
+        # first column per month only (the header row repeats a stray date further right)
+        if isinstance(d, datetime.datetime) and d.year == year and d.day == 1 and d.month not in seen:
+            seen.add(d.month)
+            month_cols.setdefault((d.month - 1) // 3 + 1, []).append(j)
+    for field, (row, label, divisor) in CARBON_ROWS.items():
+        found = str(summary[row - 1][1] or "").strip()
+        if not found.startswith(label):
+            sys.exit(f"WW Summary row {row} is '{found}', expected '{label}...'. The workbook layout changed; "
+                     "update CARBON_ROWS before loading.")
+        vals = []
+        for q in range(1, 5):
+            cells = [summary[row - 1][j] for j in month_cols.get(q, [])]
+            nums = [c for c in cells if isinstance(c, (int, float))]
+            vals.append(round(sum(nums) / divisor, 6) if nums else None)
+        values[field] = vals
+
+    projects =[list(r) for r in wb["Projects"].iter_rows(values_only=True)]
     header = projects[3]
     idx = {name: header.index(name) for name in ("Report Date", "Building Occupancy", "Num_LF_Systems", "Num_MT_Systems")}
     by_quarter = {q: [] for q in range(1, 5)}
@@ -171,6 +197,8 @@ def main():
             tol = 0.6 if field in ROUND else 0  # published volumes are rounded; counts must match exactly
             if field == "Practitioner Education Hours (M)":
                 tol = 0.06
+            if field in CARBON_ROWS:
+                tol = 0.0005
             flag = "" if abs(at - src) <= tol else "   <-- MISMATCH"
             problems += bool(flag)
             print(f"  Q{q} {field:40s} airtable={at:<10g} source={round(src, 3):<10g}{flag}")
