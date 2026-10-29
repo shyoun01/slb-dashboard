@@ -40,13 +40,15 @@ WW_ROWS = {
     "Demand Generated (MM BF)": (55, "Lumber (mmbf)", 1),
     "Projects (Dir & Indir)": (12, "Number of Direct and Indirect Projects", 1),
     "Panel (MM SF)": (22, "Panels (mmsqft", 1),
+    # Board-foot panel (half of the MM SF row) for the Total Wood chart
+    "Panel (MM BF)": (21, "Panels (mmbf)", 1),
     "EWP (MM BF)": (20, "EWP (mmbf)", 1),
     "Directly Influenced Projects": (72, "Number of Projects", 1),
     # Dashboard shows WoodWorks education hours in thousands
     "Practitioner Education Hours (M)": (252, "Educational Hours", 1000),
 }
-ROUND = {"In-Year Lumber (MM BF)": 1, "Demand Generated (MM BF)": 1, "Panel (MM SF)": 1, "EWP (MM BF)": 1,
-         "Practitioner Education Hours (M)": 3}
+ROUND = {"In-Year Lumber (MM BF)": 1, "Demand Generated (MM BF)": 1, "Panel (MM SF)": 1, "Panel (MM BF)": 3,
+         "EWP (MM BF)": 1, "Practitioner Education Hours (M)": 3}
 
 # Carbon rows are summed from the monthly columns: WW's quarterly blocks for row 45 are blank for 2016-2020.
 CARBON_ROWS = {
@@ -218,7 +220,7 @@ def main():
     fields["WW Demand Generated Latest (MM BF)"] = round(ww["Demand Generated (MM BF)"][qn - 1], 3)
     fields.update(manual.get("quarter", {}))
     fields["Source Note"] = (f"Loaded by scripts/quarterly/load_quarter.py from {os.path.basename(a.ww)} "
-                             f"(Summary rows 19/55/12/22/20/72/252)"
+                             f"(Summary rows 19/55/12/22/21/20/72/252)"
                              + (f" and {os.path.basename(a.manual)} ({manual.get('sources', 'PDF reports')})" if a.manual else "")
                              + f" on {datetime.date.today()}.")
 

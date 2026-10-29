@@ -12,7 +12,7 @@ Put them in `put ww files here/` (git-ignored; the WW workbook contains contact 
 
 | Source | Dashboard figures |
 |---|---|
-| **WW Master-Metrics workbook** (`.xlsx`) | Read by the script: in-year lumber (Summary row 19), Demand Generated (55), direct & indirect projects (12), panel MM SF (22), EWP (20), directly influenced projects (72), WoodWorks education hours (252, shown in thousands), converted projects by system/building type (Projects tab); carbon slide figures: wood volume (42, ÷1000 to million m³), carbon stored (44), emissions avoided (45), total carbon benefit (46), summed from the monthly columns |
+| **WW Master-Metrics workbook** (`.xlsx`) | Read by the script: in-year lumber (Summary row 19), Demand Generated (55), direct & indirect projects (12), panel MM SF (22) and MM BF (21), EWP (20), directly influenced projects (72), WoodWorks education hours (252, shown in thousands), converted projects by system/building type (Projects tab); carbon slide figures: wood volume (42, ÷1000 to million m³), carbon stored (44), emissions avoided (45), total carbon benefit (46), summed from the monthly columns |
 | **AWC quarterly report** | Education Contact Hours: quarter "Contact Hours" (÷1000) |
 | **Think Wood quarterly report** | CEU Credit Hours: "CEUs Completed" table (quarter = YTD − earlier quarters, ÷1000); lead funnel page (Subscribers, Prospects, Leads, MQLs, SQLs and their QoQ %); SQL Referral Conversions = "new project leads" in the quarter (Lead Conversion page) |
 | **SLB Education report** | On-demand course completions and new accounts; student & grad engagements; faculty engagements (each has a "… in Qn:" headline) |

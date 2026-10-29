@@ -133,7 +133,7 @@ export default function PanelInfluenceDemandChart() {
             verticalAlign="bottom"
             height={36}
             formatter={(value) => {
-              if (value === "totalFallback") return "Total BF";
+              if (value === "totalFallback") return "Total SF";
               if (value === "q1") return "Q1";
               if (value === "q2") return "Q2";
               if (value === "q3") return "Q3";
