@@ -4,22 +4,23 @@ import { years, num, quarterValues, type YearRec } from "./airtable";
 /**
  * Builds the annual rows the charts use from the Airtable snapshot.
  * Totals, influence, revenue, ROI, cumulative ROI and market share are
- * calculated in Airtable; nothing is derived here.
+ * calculated in Airtable ("Calc" fields, which ignore published overrides);
+ * nothing is derived here.
  */
 function toYearRow(y: YearRec): YearRow {
   const year = y.Year;
   const inYear = num(y, "In-Year Lumber (MM BF)");
   const total = num(y, "Demand Generated (MM BF)");
-  const influence = num(y, "Influence (MM BF)");
+  const influence = num(y, "Influence Calc (MM BF)");
   const [q1, q2, q3, q4] = quarterValues(year, "Demand Generated (MM BF)");
   const [iq1, iq2, iq3, iq4] = quarterValues(year, "In-Year Lumber (MM BF)");
 
   return {
     year,
-    incrementalRevenueMM: num(y, "Incremental Revenue ($MM)"),
+    incrementalRevenueMM: num(y, "Incremental Revenue Calc ($MM)"),
     spendMM: num(y, "SLB Investment ($MM)"),
-    roiPerDollar: num(y, "ROI per $1"),
-    cumulativeRoiPerDollar: num(y, "Cumulative ROI per $1"),
+    roiPerDollar: num(y, "ROI per $1 Calc"),
+    cumulativeRoiPerDollar: num(y, "Cumulative ROI per $1 Calc"),
     incBF_MM: inYear,
     // Legacy years (2012–15) have no in-year/tail split: Demand Generated = In-Year, no tail
     tailBF_MM: influence === 0 && inYear === total ? null : influence,
@@ -33,7 +34,7 @@ function toYearRow(y: YearRec): YearRow {
     inYear_q2BF_MM: iq2,
     inYear_q3BF_MM: iq3,
     inYear_q4BF_MM: iq4,
-    projects: num(y, "Projects"),
+    projects: num(y, "Projects Calc"),
     slbShare_pct: num(y, "SLB Market Share"),
     volumePortion_pct: num(y, "Volume Portion"),
     pricePortion_pct: num(y, "Price Portion"),

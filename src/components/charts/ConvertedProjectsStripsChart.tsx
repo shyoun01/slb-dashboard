@@ -243,7 +243,7 @@ function TypeStrip({
                     textAnchor="middle"
                     dominantBaseline="auto"
                     fill={segment.color}
-                    fontSize={9}
+                    fontSize={12}
                     fontWeight={700}
                   >
                     {label}
@@ -272,7 +272,7 @@ function TypeStrip({
                   textAnchor="middle"
                   dominantBaseline="hanging"
                   fill={segment.color}
-                  fontSize={9}
+                  fontSize={12}
                   fontWeight={700}
                 >
                   {label}
@@ -289,7 +289,7 @@ function TypeStrip({
 const insideLabelProps = {
   position: "center" as const,
   formatter: formatWholeNumber,
-  fontSize: 11,
+  fontSize: 14,
   fontWeight: 700,
 };
 
@@ -298,7 +298,7 @@ const totalLabelProps = {
   offset: 8,
   formatter: formatWholeNumber,
   fill: "#255D38",
-  fontSize: 12,
+  fontSize: 15,
   fontWeight: 700,
 };
 
@@ -329,7 +329,7 @@ function VolumeChart({ row }: { row: VolumeRow }) {
             offset={44}
             formatter={formatGoal}
             fill="#F78F2D"
-            fontSize={11}
+            fontSize={14}
             fontWeight={700}
           />
         </Bar>
@@ -349,7 +349,7 @@ function VolumeChart({ row }: { row: VolumeRow }) {
             offset={44}
             formatter={formatGoal}
             fill="#F78F2D"
-            fontSize={11}
+            fontSize={14}
             fontWeight={700}
           />
         </Bar>
@@ -369,7 +369,7 @@ function VolumeChart({ row }: { row: VolumeRow }) {
             offset={44}
             formatter={formatGoal}
             fill="#F78F2D"
-            fontSize={11}
+            fontSize={14}
             fontWeight={700}
           />
         </Bar>
@@ -383,7 +383,7 @@ function VolumeChart({ row }: { row: VolumeRow }) {
             offset={44}
             formatter={formatGoal}
             fill="#F78F2D"
-            fontSize={11}
+            fontSize={14}
             fontWeight={700}
           />
         </Bar>
@@ -461,7 +461,7 @@ function SharedXAxis() {
 
   return (
     <div className="flex gap-2">
-      <div className="w-[6rem] shrink-0" aria-hidden="true" />
+      <div className="w-[8.5rem] shrink-0" aria-hidden="true" />
       <div className="min-w-0 flex-1">
         <ResponsiveContainer width="100%" height={28}>
           <BarChart
@@ -473,7 +473,7 @@ function SharedXAxis() {
             <XAxis
               type="number"
               domain={[0, 480]}
-              tick={{ fill: "#374151", fontSize: 11 }}
+              tick={{ fill: "#374151", fontSize: 14 }}
               tickFormatter={(value) => Number(value).toLocaleString("en-US")}
               tickLine={false}
               axisLine={{ stroke: "#d1d5db" }}
@@ -489,7 +489,7 @@ function SharedXAxis() {
 
 function StripLegend() {
   return (
-    <div className="mt-4 space-y-2 border-t border-gray-100 pt-4 text-[10px] font-medium uppercase text-gray-600">
+    <div className="mt-4 space-y-2 border-t border-gray-100 pt-4 text-[13px] font-medium uppercase text-gray-600">
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
         <span className="font-bold text-gray-500">Projects:</span>
         {[
@@ -551,7 +551,7 @@ export default function ConvertedProjectsStripsChart() {
         <h3 className="text-center text-[1.6875rem] font-semibold text-[var(--slb-charcoal)]">
           Converted Projects — Combined View
         </h3>
-        <p className="mt-2 text-center text-xs font-semibold text-gray-500">
+        <p className="mt-2 text-center text-sm font-semibold text-gray-500">
           Directly influenced projects by quarter, system type, and building type
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -567,9 +567,9 @@ export default function ConvertedProjectsStripsChart() {
           {YEAR_GROUPS.map((group) => (
             <div key={group.year} className="pb-3">
               <div className="flex gap-2">
-                <div className="w-[6rem] shrink-0" aria-hidden="true" />
+                <div className="w-[8.5rem] shrink-0" aria-hidden="true" />
                 <p
-                  className="min-w-0 flex-1 text-left text-sm font-semibold leading-none text-[#374151]"
+                  className="min-w-0 flex-1 text-left text-base font-semibold leading-none text-[#374151]"
                   style={{
                     paddingLeft: CHART_MARGIN.left,
                     marginBottom: "-8px",
@@ -582,7 +582,7 @@ export default function ConvertedProjectsStripsChart() {
                 className="flex items-stretch gap-2"
                 style={{ marginTop: "-16px" }}
               >
-                <div className="flex w-[6rem] shrink-0 flex-col pr-2 text-right text-[10px] font-semibold uppercase leading-tight tracking-[0.1em] text-gray-500">
+                <div className="flex w-[8.5rem] shrink-0 flex-col pr-2 text-right text-[12px] font-semibold uppercase leading-tight tracking-[0.06em] text-gray-500">
                   <div
                     className="flex items-center justify-end whitespace-nowrap"
                     style={{ height: STRIP_CHART_HEIGHT_ABOVE }}
@@ -590,7 +590,7 @@ export default function ConvertedProjectsStripsChart() {
                     Building Type
                   </div>
                   <div
-                    className="-mt-2 flex items-center justify-end text-[13px] font-bold leading-tight"
+                    className="-mt-2 flex items-center justify-end text-[15px] font-bold leading-tight"
                     style={{ height: CHART_ROW_HEIGHT }}
                   >
                     Converted Projects

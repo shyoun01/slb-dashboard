@@ -74,12 +74,12 @@ export default function CarbonImpactTable() {
       </p>
 
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-sm text-gray-900">
+        <table className="w-full border-collapse text-base text-gray-900">
           <thead>
             <tr className="bg-[#42B245] text-white">
               <th className={labelCell} />
               {columns.map((c) => (
-                <th key={c.key} className={`${cell} text-base font-bold`}>
+                <th key={c.key} className={`${cell} text-lg font-bold`}>
                   {c.heading}
                 </th>
               ))}
@@ -92,7 +92,7 @@ export default function CarbonImpactTable() {
                 <tr key={m.field} className={i % 2 === 0 ? "bg-gray-100" : "bg-white"}>
                   <td className={labelCell}>
                     <div className="font-bold">{m.title}</div>
-                    <div className="text-xs text-gray-700">{m.sub}</div>
+                    <div className="text-sm text-gray-700">{m.sub}</div>
                   </td>
                   {columns.map((c) => (
                     <td key={c.key} className={cell}>
@@ -106,7 +106,7 @@ export default function CarbonImpactTable() {
             <tr className="bg-[#DCEAF2]">
               <td className={labelCell}>
                 <div className="font-bold">TOTAL POTENTIAL CARBON BENEFIT</div>
-                <div className="text-xs text-gray-700">(metric tons CO<sub>2</sub>)</div>
+                <div className="text-sm text-gray-700">(metric tons CO<sub>2</sub>)</div>
               </td>
               {columns.map((c) => (
                 <td key={c.key} className={`${cell} font-bold`}>
@@ -145,7 +145,7 @@ export default function CarbonImpactTable() {
         </table>
       </div>
 
-      <p className="mt-2 text-xs text-gray-600">
+      <p className="mt-2 text-sm text-gray-600">
         {showStates && (
           <>
             *Based on the number of registered gasoline-fueled passenger vehicles in the state in{" "}

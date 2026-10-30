@@ -41,7 +41,7 @@ const FUNNEL_STAGES: FunnelStage[] = [
     label: "Subscriber",
     value: funnelValue("Funnel Subscribers"),
     change: funnelChange("Funnel Subscribers QoQ"),
-    description: "Contacts with email only or outside of the priority audience",
+    description: "Email only or secondary audience.",
     fill: "#005F33",
     textColor: "#ffffff",
     points: "0,0 100,0 95,64 5,64",
@@ -95,7 +95,7 @@ function SqlReferralConversionsChart() {
   const insideLabelProps = {
     position: "center" as const,
     formatter: formatLabel,
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
   const totalLabelProps = {
@@ -103,7 +103,7 @@ function SqlReferralConversionsChart() {
     offset: 7,
     formatter: formatLabel,
     fill: "#255D38",
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 700,
   };
 
@@ -112,7 +112,7 @@ function SqlReferralConversionsChart() {
       <h4 className="mb-2 text-center text-lg font-semibold text-[var(--slb-charcoal)]">
         SQL Referral Conversions
       </h4>
-      <p className="mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+      <p className="mb-3 text-center text-[14px] font-bold uppercase leading-5 tracking-[0.05em] text-gray-500">
         Qualified Leads Converted to Project Leads
       </p>
       <ResponsiveContainer width="100%" height={370}>
@@ -125,13 +125,13 @@ function SqlReferralConversionsChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 14 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
           />
           <YAxis
             domain={[0, 40]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             width={30}
@@ -145,7 +145,7 @@ function SqlReferralConversionsChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 10,
+              fontSize: 13,
               textAlign: "center",
             }}
           />
@@ -234,7 +234,7 @@ export default function ConurturedProjectFunnelChart() {
         <h4 className="text-center text-lg font-semibold text-[var(--slb-charcoal)]">
           Lead Scoring Funnel
         </h4>
-        <p className="mb-5 mt-2 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+        <p className="mb-5 mt-2 text-center text-[14px] font-bold uppercase leading-5 tracking-[0.05em] text-gray-500">
           Current and Historical Volume (QoQ Change)
         </p>
 
@@ -243,7 +243,7 @@ export default function ConurturedProjectFunnelChart() {
             {FUNNEL_STAGES.map((stage) => (
               <div
                 key={stage.label}
-                className="flex h-16 items-center justify-end pr-2 text-right text-[10px] font-bold uppercase leading-tight text-[var(--slb-charcoal)]"
+                className="flex h-16 items-center justify-end pr-2 text-right text-[14px] font-bold uppercase leading-tight text-[var(--slb-charcoal)]"
               >
                 {stage.label}
               </div>
@@ -254,7 +254,7 @@ export default function ConurturedProjectFunnelChart() {
             {FUNNEL_STAGES.map((stage) => (
               <div
                 key={stage.label}
-                className="relative flex h-16 items-center justify-center text-sm font-bold"
+                className="relative flex h-16 items-center justify-center text-[17px] font-bold"
                 style={{ color: stage.textColor }}
               >
                 <svg
@@ -288,7 +288,7 @@ export default function ConurturedProjectFunnelChart() {
             {FUNNEL_STAGES.map((stage) => (
               <div
                 key={stage.label}
-                className="flex h-16 items-center pl-2 text-[10px] font-medium leading-snug text-gray-700"
+                className="flex h-16 items-center pl-2 text-[13px] font-medium leading-snug text-gray-700"
               >
                 {stage.description}
               </div>
@@ -312,17 +312,17 @@ export default function ConurturedProjectFunnelChart() {
                 {stage.value} ({stage.change})
               </div>
               <div className="px-4 py-3 text-center">
-                <p className="text-xs font-bold uppercase text-[var(--slb-charcoal)]">
+                <p className="text-sm font-bold uppercase text-[var(--slb-charcoal)]">
                   {stage.label}
                 </p>
-                <p className="mt-1 text-xs text-gray-600">
+                <p className="mt-1 text-sm text-gray-600">
                   {stage.description}
                 </p>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-4 text-center text-xs italic text-gray-600">
+        <p className="mt-4 text-center text-sm italic text-gray-600">
           MQL and SQL figures reflect program lifetime totals.
         </p>
         <div className="mt-auto flex min-h-20 items-center justify-center border-t border-gray-100 pt-3">

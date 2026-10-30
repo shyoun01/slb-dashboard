@@ -43,7 +43,9 @@ WW_ROWS = {
     # Board-foot panel (half of the MM SF row) for the Total Wood chart
     "Panel (MM BF)": (21, "Panels (mmbf)", 1),
     "EWP (MM BF)": (20, "EWP (mmbf)", 1),
-    "Directly Influenced Projects": (72, "Number of Projects", 1),
+    "Directly Influenced Projects": (9, "Number of Direct Projects", 1),
+    # Pyramid: Audience Engaged
+    "WW New Contacts": (253, "New Contacts", 1),
     # Dashboard shows WoodWorks education hours in thousands
     "Practitioner Education Hours (M)": (252, "Educational Hours", 1000),
 }
@@ -220,7 +222,7 @@ def main():
     fields["WW Demand Generated Latest (MM BF)"] = round(ww["Demand Generated (MM BF)"][qn - 1], 3)
     fields.update(manual.get("quarter", {}))
     fields["Source Note"] = (f"Loaded by scripts/quarterly/load_quarter.py from {os.path.basename(a.ww)} "
-                             f"(Summary rows 19/55/12/22/21/20/72/252)"
+                             f"(Summary rows 19/55/12/22/21/20/9/252/253)"
                              + (f" and {os.path.basename(a.manual)} ({manual.get('sources', 'PDF reports')})" if a.manual else "")
                              + f" on {datetime.date.today()}.")
 

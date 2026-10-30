@@ -1,6 +1,6 @@
 "use client";
 
-import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
+import { conditionalTopCellRadius, insideLabelIfFits } from "@/components/charts/chartUtils";
 import {
   Bar,
   BarChart,
@@ -74,8 +74,9 @@ function formatWholeNumber(value: unknown) {
 
 const insideLabelProps = {
   position: "center" as const,
+  content: insideLabelIfFits,
   formatter: formatWholeNumber,
-  fontSize: 10,
+  fontSize: 13,
   fontWeight: 700,
 };
 
@@ -84,7 +85,7 @@ const totalLabelProps = {
   offset: 7,
   formatter: formatWholeNumber,
   fill: "#255D38",
-  fontSize: 11,
+  fontSize: 14,
   fontWeight: 700,
 };
 
@@ -95,7 +96,7 @@ function formatGoal(value: unknown) {
 
 function QuarterlyLegend() {
   return (
-    <div className="flex items-center justify-center gap-x-3 pt-3 text-[10px] font-medium uppercase text-gray-600">
+    <div className="flex items-center justify-center gap-x-3 pt-3 text-[13px] font-medium uppercase text-gray-600">
       {QUARTERLY_LEGEND_ITEMS.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-1">
           <span
@@ -111,7 +112,7 @@ function QuarterlyLegend() {
 
 function SystemTypeLegend() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-3 text-[9px] font-medium uppercase text-gray-600">
+    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-3 text-xs font-medium uppercase text-gray-600">
       {SYSTEM_TYPE_LEGEND_ITEMS.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-1">
           <span
@@ -127,7 +128,7 @@ function SystemTypeLegend() {
 
 function BuildingTypeLegend() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-3 text-[8px] font-medium uppercase text-gray-600">
+    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-3 text-[11px] font-medium uppercase text-gray-600">
       {BUILDING_TYPE_LEGEND_ITEMS.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-1">
           <span
@@ -161,7 +162,7 @@ function DirectlyInfluencedChart() {
         <h4 className="text-base font-semibold text-[var(--slb-charcoal)]">
           Converted Projects
         </h4>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+        <p className="mt-1 text-[14px] font-bold uppercase leading-5 tracking-[0.05em] text-gray-500">
           Directly influenced projects
         </p>
       </div>
@@ -175,14 +176,14 @@ function DirectlyInfluencedChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 14 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             height={46}
           />
           <YAxis
             domain={[0, 480]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickFormatter={(value) => Number(value).toLocaleString("en-US")}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
@@ -197,7 +198,7 @@ function DirectlyInfluencedChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 10,
+              fontSize: 13,
               textAlign: "center",
             }}
           />
@@ -226,7 +227,7 @@ function DirectlyInfluencedChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -255,7 +256,7 @@ function DirectlyInfluencedChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -284,7 +285,7 @@ function DirectlyInfluencedChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -308,7 +309,7 @@ function DirectlyInfluencedChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -337,14 +338,14 @@ function SystemTypeChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 14 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             height={46}
           />
           <YAxis
             domain={[0, 480]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickFormatter={(value) => Number(value).toLocaleString("en-US")}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
@@ -359,7 +360,7 @@ function SystemTypeChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 9,
+              fontSize: 12,
               textAlign: "center",
             }}
           />
@@ -441,14 +442,14 @@ function BuildingTypeChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 14 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             height={46}
           />
           <YAxis
             domain={[0, 480]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickFormatter={(value) => Number(value).toLocaleString("en-US")}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
@@ -463,7 +464,7 @@ function BuildingTypeChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 8,
+              fontSize: 11,
               textAlign: "center",
             }}
           />
@@ -508,7 +509,7 @@ function BuildingTypeChart() {
                       x={Number(x) + Number(width) / 2}
                       y={Number(y) - 7}
                       fill="#255D38"
-                      fontSize={11}
+                      fontSize={14}
                       fontWeight={700}
                       textAnchor="middle"
                     >

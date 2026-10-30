@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
-import { volumeRows, type VolumeRow } from "@/data/airtable";
+import { VOLUME_CHARTS, volumeRows, type VolumeRow } from "@/data/airtable";
 import {
   ResponsiveContainer,
   BarChart,
@@ -43,12 +43,7 @@ function quarterSum(row: PeriodRow) {
 export default function EwpInfluenceDemandChart() {
   const chartData = useMemo(
     (): PeriodRow[] =>
-      volumeRows({
-        periodField: "EWP (MM BF)",
-        quarterField: "EWP (MM BF)",
-        publishedField: "EWP Published (MM BF)",
-        skip: ["2012–15"],
-      }),
+      volumeRows(VOLUME_CHARTS.ewp),
     []
   );
 
@@ -74,14 +69,14 @@ export default function EwpInfluenceDemandChart() {
     offset: 8,
     formatter: formatVolumeLabel,
     fill: "#255D38",
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 700,
   };
 
   const quarterInsideLabelProps = {
     position: "center" as const,
     formatter: formatQuarterInsideLabel,
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
 
@@ -107,7 +102,7 @@ export default function EwpInfluenceDemandChart() {
           <XAxis
             dataKey="label"
             type="category"
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             interval={0}
@@ -118,10 +113,10 @@ export default function EwpInfluenceDemandChart() {
             tickFormatter={(v) =>
               `${Number(v).toLocaleString("en-US", ONE_DECIMAL)} MM`
             }
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
-            width={78}
+            width={92}
             label={{
               value: "EWP Volume (MM BF)",
               angle: -90,

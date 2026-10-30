@@ -12,10 +12,14 @@ Put them in `put ww files here/` (git-ignored; the WW workbook contains contact 
 
 | Source | Dashboard figures |
 |---|---|
-| **WW Master-Metrics workbook** (`.xlsx`) | Read by the script: in-year lumber (Summary row 19), Demand Generated (55), direct & indirect projects (12), panel MM SF (22) and MM BF (21), EWP (20), directly influenced projects (72), WoodWorks education hours (252, shown in thousands), converted projects by system/building type (Projects tab); carbon slide figures: wood volume (42, ÷1000 to million m³), carbon stored (44), emissions avoided (45), total carbon benefit (46), summed from the monthly columns |
-| **AWC quarterly report** | Education Contact Hours: quarter "Contact Hours" (÷1000) |
-| **Think Wood quarterly report** | CEU Credit Hours: "CEUs Completed" table (quarter = YTD − earlier quarters, ÷1000); lead funnel page (Subscribers, Prospects, Leads, MQLs, SQLs and their QoQ %); SQL Referral Conversions = "new project leads" in the quarter (Lead Conversion page) |
-| **SLB Education report** | On-demand course completions and new accounts; student & grad engagements; faculty engagements (each has a "… in Qn:" headline) |
+| **WW Master-Metrics workbook** (`.xlsx`) | Read by the script: in-year lumber (Summary row 19), Demand Generated (55), direct & indirect projects (12), panel MM SF (22) and MM BF (21), EWP (20), directly influenced projects (9), new contacts (253), WoodWorks education hours (252, shown in thousands), converted projects by system/building type (Projects tab); carbon slide figures: wood volume (42, ÷1000 to million m³), carbon stored (44), emissions avoided (45), total carbon benefit (46), summed from the monthly columns |
+| **AWC quarterly report** | Quarter table (p.11 in the Oct 2026 report; YTD on p.2): "Contact Hours" (÷1000) → Education Contact Hours; "Attendees" → AWC Attendees |
+| **Think Wood quarterly report** | "Performance Measures by Quarter" page (p.5): "CEUs Completed" → CEU Credit Hours (quarter = YTD − earlier quarters, ÷1000; interim: counted as education hours, 1 completion = 1 hour, until TW reports hours) and "Net New Contacts" → TW Net New Contacts (quarter = YTD − earlier quarters); lead funnel page (Subscribers, Prospects, Leads, MQLs, SQLs and their QoQ %); SQL Referral Conversions = "new project leads" in the quarter (Lead Conversion page) |
+| **SLB Education report** | On-demand course completions and new accounts; "Completed Hours" on the Directional Metrics page (p.7) → On-Demand Learning Hours; student & grad engagements; faculty engagements (each has a "… in Qn:" headline) |
+
+The **Building Demand through Coordinated Programs** pyramid card adds these up in Airtable (Years table): *Audience Engaged* = TW net new
+contacts + WW new contacts + AWC attendees + Wood Institute completions + student and faculty engagements;
+*Education Hours* = AWC contact hours + TW CEUs + WW practitioner hours + Wood Institute learning hours.
 
 ## 2. Fill in the PDF figures
 
@@ -39,11 +43,20 @@ counts must match exactly. Anything marked MISMATCH needs an explanation before 
 ```bash
 AIRTABLE_TOKEN=xxx npm run snapshot
 git diff src/data/airtable-snapshot.json
+npm run check
 npm run dev
 ```
 
-The diff should only add the new quarter and the totals that depend on it. Check `/investors-quarterly`
-(header shows the new quarter), `/` and `/investors-roi`.
+The diff should only add the new quarter and the totals that depend on it.
+
+`npm run check` runs the math checks in `checks/math.test.ts`: stacked bars add up to their totals, no
+square-feet/board-feet mixing, the same figure matches across cards, years agree with their quarters, and
+every "Published" override in Airtable has a documented reason. Every production build (local or Vercel)
+runs them too and stops if one fails. If a difference is intentional, add it to `KNOWN_EXCEPTIONS` in that
+file with the reason; otherwise fix the data or the chart.
+
+Then check `/investors-quarterly` (header shows the new quarter, and update the highlight boxes in
+`src/app/investors-quarterly/page.tsx`), `/` and `/investors-roi`.
 
 ## 5. Publish
 

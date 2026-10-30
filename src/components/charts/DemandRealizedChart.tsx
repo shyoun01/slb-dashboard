@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
+import { conditionalTopCellRadius, insideLabelIfFits } from "@/components/charts/chartUtils";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -14,29 +14,11 @@ import {
   LabelList,
   Cell,
 } from "recharts";
-import { barPeriods, isSingleYear, num } from "@/data/airtable";
+import { demandRealizedRows, type RealizedRow } from "@/data/airtable";
 
-type PeriodRow = {
-  label: string;
-  l1: number | null;
-  l2: number | null;
-  l3: number | null;
-  l4: number | null;
-  total: number;
-  topSegment: "l1" | "l2" | "l3" | "l4";
-};
+type PeriodRow = RealizedRow;
 
-/** Single-year bars show the tail layers; multi-year bars show the period total. */
-const CHART_DATA: PeriodRow[] = barPeriods().map((p) => {
-  if (!isSingleYear(p)) {
-    const total = Math.round(num(p, "Demand Realized Total (MM BF)") ?? 0);
-    return { label: p.Period, l1: total, l2: null, l3: null, l4: null, total, topSegment: "l1" };
-  }
-  const seg = (field: string) => Math.round(num(p, field) ?? 0);
-  const [l1, l2, l3, l4] = [seg("DR 25% 3-Yr Tail"), seg("DR 25% 2-Yr Tail"), seg("DR 50% Prior-Yr Tail"), seg("DR Direct")];
-  const published = num(p, "Demand Realized Total Published (MM BF)");
-  return { label: p.Period, l1, l2, l3, l4, total: published ?? l1 + l2 + l3 + l4, topSegment: "l4" };
-});
+const CHART_DATA: PeriodRow[] = demandRealizedRows();
 
 const SEGMENTS = [
   { key: "l1" as const, fill: "#005F33", labelFill: "#ffffff" },
@@ -81,8 +63,10 @@ export default function DemandRealizedChart() {
 
   const insideLabelProps = {
     position: "center" as const,
+    content: insideLabelIfFits,
     formatter: formatSegmentInsideLabel,
-    fontSize: 11,
+    // one step smaller than other cards so the thin tail layers (e.g. 2026's 240) still fit
+    fontSize: 13,
     fontWeight: 700,
   };
 
@@ -108,7 +92,7 @@ export default function DemandRealizedChart() {
           <XAxis
             dataKey="label"
             type="category"
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             interval={0}
@@ -117,10 +101,10 @@ export default function DemandRealizedChart() {
           <YAxis
             domain={[0, maxVolume]}
             tickFormatter={(v) => `${v.toLocaleString("en-US")} MM`}
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
-            width={64}
+            width={92}
             label={{
               value: "Volume (MM BF)",
               angle: -90,
@@ -139,7 +123,7 @@ export default function DemandRealizedChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 10,
+              fontSize: 13,
               textAlign: "center",
             }}
           />
@@ -172,7 +156,7 @@ export default function DemandRealizedChart() {
                 offset={8}
                 formatter={formatVolumeLabel}
                 fill="#255D38"
-                fontSize={12}
+                fontSize={15}
                 fontWeight={700}
                 content={({ x, y, width, value, index }) => {
                   const row = CHART_DATA[index ?? 0];
@@ -185,7 +169,7 @@ export default function DemandRealizedChart() {
                       x={Number(x) + Number(width) / 2}
                       y={Number(y) - 8}
                       fill="#255D38"
-                      fontSize={12}
+                      fontSize={15}
                       fontWeight={700}
                       textAnchor="middle"
                     >

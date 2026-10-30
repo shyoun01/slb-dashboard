@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
-import { volumeRows, type VolumeRow } from "@/data/airtable";
+import { VOLUME_CHARTS, volumeRows, type VolumeRow } from "@/data/airtable";
 import {
   ResponsiveContainer,
   BarChart,
@@ -45,12 +45,7 @@ function quarterSum(row: PeriodRow) {
 export default function DemandGeneratedChart() {
   const chartData = useMemo(
     (): PeriodRow[] =>
-      volumeRows({
-        periodField: "Demand Generated (MM BF)",
-        quarterField: "Demand Generated (MM BF)",
-        publishedField: "Demand Generated Published (MM BF)",
-        goalMetric: "Demand Generated",
-      }),
+      volumeRows(VOLUME_CHARTS.demandGenerated),
     []
   );
 
@@ -76,7 +71,7 @@ export default function DemandGeneratedChart() {
     offset: 8,
     formatter: formatBfVolumeLabel,
     fill: "#255D38",
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 700,
   };
 
@@ -85,14 +80,14 @@ export default function DemandGeneratedChart() {
     offset: 26,
     formatter: formatGoalLabel,
     fill: "#F78F2D",
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 700,
   };
 
   const quarterInsideLabelProps = {
     position: "center" as const,
     formatter: formatQuarterInsideLabel,
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
 
@@ -108,7 +103,7 @@ export default function DemandGeneratedChart() {
       <ResponsiveContainer width="100%" height={540}>
         <BarChart
           data={chartData}
-          margin={{ top: 64, right: 30, left: 60, bottom: 20 }}
+          margin={{ top: 64, right: 30, left: 88, bottom: 20 }}
           barCategoryGap="18%"
           barGap={0}
         >
@@ -117,24 +112,25 @@ export default function DemandGeneratedChart() {
           <XAxis
             dataKey="label"
             type="category"
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             interval={0}
           />
 
           <YAxis
+            width={92}
             domain={[0, maxBF]}
             tickFormatter={(v) => `${v.toLocaleString("en-US")} MM`}
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
             label={{
               value: "Lumber Volume (MM BF)",
               angle: -90,
-              position: "insideLeft",
-              dy: 65,
-              style: { fill: "#374151" },
+              position: "left",
+              offset: 12,
+              style: { fill: "#374151", textAnchor: "middle" },
             }}
           />
 

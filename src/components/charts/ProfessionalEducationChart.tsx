@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { conditionalTopCellRadius } from "@/components/charts/chartUtils";
+import { conditionalTopCellRadius, insideLabelIfFits } from "@/components/charts/chartUtils";
 import { quarterlyRows, type QuarterlyRow } from "@/data/airtable";
 import {
   ResponsiveContainer,
@@ -90,8 +90,9 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
   const domainMax = Math.ceil(max * 1.18);
   const insideLabelProps = {
     position: "center" as const,
+    content: insideLabelIfFits,
     formatter: formatInsideLabel,
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: 700,
   };
   const totalLabelProps = {
@@ -99,7 +100,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
     offset: 7,
     formatter: formatTotalLabel,
     fill: "#255D38",
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
   const goalLabelProps = {
@@ -107,7 +108,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
     offset: 25,
     formatter: formatGoalLabel,
     fill: "#F78F2D",
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
 
@@ -126,13 +127,13 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 14 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
           />
           <YAxis
             domain={[0, domainMax]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             width={34}
@@ -146,7 +147,7 @@ function EducationSubchart({ chart }: { chart: EducationChart }) {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 11,
+              fontSize: 14,
               textAlign: "center",
             }}
           />

@@ -224,6 +224,102 @@ export function convertedByBuilding() {
   });
 }
 
+/** Settings for the four volume charts (shared with the math checks in checks/) */
+export const VOLUME_CHARTS = {
+  demandGenerated: {
+    periodField: "Demand Generated Calc (MM BF)",
+    quarterField: "Demand Generated (MM BF)",
+    goalMetric: "Demand Generated",
+  },
+  lumber: {
+    periodField: "In-Year Lumber (MM BF)",
+    quarterField: "In-Year Lumber (MM BF)",
+    goalMetric: "In-Year Lumber",
+    skip: ["2012–15"],
+  },
+  panel: {
+    periodField: "Panel Calc (MM SF)",
+    quarterField: "Panel (MM SF)",
+    skip: ["2012–15"],
+  },
+  ewp: {
+    periodField: "EWP (MM BF)",
+    quarterField: "EWP (MM BF)",
+    publishedField: "EWP Published (MM BF)",
+    skip: ["2012–15"],
+  },
+} satisfies Record<string, Parameters<typeof volumeRows>[0]>;
+
+/** Total Wood chart bar: lumber + panel + EWP, all in MM BF */
+export type TotalWoodRow = {
+  label: string;
+  lumber: number;
+  /** Panel in MM BF (Airtable "Panel (MM BF)"), so lumber + panel + EWP add up to the total. */
+  panel: number;
+  ewp: number;
+  total: number;
+};
+
+export function totalWoodRows(): TotalWoodRow[] {
+  return barPeriods()
+    .filter((p) => p.Period !== "2012–15")
+    .map((p) => {
+      const lumber = num(p, "Total Wood Lumber Calc (MM BF)") ?? 0;
+      const panel = num(p, "Panel Calc (MM BF)") ?? 0;
+      const ewp = num(p, "EWP (MM BF)") ?? 0;
+      return { label: p.Period, lumber, panel, ewp, total: lumber + panel + ewp };
+    });
+}
+
+/** Demand Realized chart bar (MM BF): tail layers l1–l3 and direct l4, or a period total in l1 */
+export type RealizedRow = {
+  label: string;
+  l1: number | null;
+  l2: number | null;
+  l3: number | null;
+  l4: number | null;
+  total: number;
+  topSegment: "l1" | "l2" | "l3" | "l4";
+};
+
+/** Single-year bars show the tail layers; multi-year bars show the period total. */
+export function demandRealizedRows(): RealizedRow[] {
+  return barPeriods().map((p) => {
+    if (!isSingleYear(p)) {
+      const total = Math.round(num(p, "Demand Realized Total Calc (MM BF)") ?? 0);
+      return { label: p.Period, l1: total, l2: null, l3: null, l4: null, total, topSegment: "l1" };
+    }
+    const seg = (field: string) => Math.round(num(p, field) ?? 0);
+    const [l1, l2, l3, l4] = [seg("DR 25% 3-Yr Tail Calc"), seg("DR 25% 2-Yr Tail Calc"), seg("DR 50% Prior-Yr Tail Calc"), seg("DR Direct Calc")];
+    return { label: p.Period, l1, l2, l3, l4, total: l1 + l2 + l3 + l4, topSegment: "l4" };
+  });
+}
+
+/** Headline figures for the program impact pyramid (current year to date) */
+export type PyramidFigures = {
+  year: number;
+  demandGenerated: number | null;
+  projectsConverted: number | null;
+  projectsInfluenced: number | null;
+  /** Audience Engaged: TW net new contacts + WW new contacts + AWC attendees + WI completions + student/faculty engagements */
+  individualContacts: number | null;
+  /** AWC contact hours + TW CEUs (interim: 1 completion = 1 hour) + WW practitioner hours + WI learning hours */
+  educationHours: number | null;
+};
+
+export function pyramidFigures(): PyramidFigures {
+  const { year } = latestQuarter();
+  const y = yearRec(year);
+  return {
+    year,
+    demandGenerated: num(y, "Demand Generated (MM BF)"),
+    projectsConverted: num(y, "Directly Influenced Projects (Year)"),
+    projectsInfluenced: num(y, "Projects Calc"),
+    individualContacts: num(y, "Audience Engaged"),
+    educationHours: num(y, "Education Hours"),
+  };
+}
+
 /** Years shown in the quarterly program charts (2024 onward) */
 export function programYears(field: string): number[] {
   return [...new Set(quarters.filter((q) => num(q, field) != null).map((q) => q.Year))].sort();

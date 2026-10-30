@@ -5,9 +5,12 @@
     "CEU Credit Hours (M)": 4.719,
     "On-Demand Completions": 2899,
     "On-Demand New Accounts": 783,
+    "On-Demand Learning Hours": 3785.5,
     "Student Engagements": 1464,
     "Faculty Engagements": 352,
     "SQL Referral Conversions": 9,
+    "TW Net New Contacts": 7340,
+    "AWC Attendees": 5380,
     "Funnel Subscribers": 28470,
     "Funnel Prospects": 7394,
     "Funnel Leads": 25894,
@@ -20,7 +23,24 @@
     "Funnel SQL QoQ": 0.04
   },
   "prior": {
-    "Q1": { "On-Demand Completions": 3438, "Student Engagements": 2173, "Faculty Engagements": 397, "On-Demand New Accounts": 1020 },
-    "Q2": { "On-Demand Completions": 3829, "Student Engagements": 1036, "Faculty Engagements": 468, "On-Demand New Accounts": 1049 }
-  }
+    "Q1": {
+      "On-Demand Completions": 3438,
+      "Student Engagements": 2173,
+      "Faculty Engagements": 397,
+      "On-Demand New Accounts": 1020,
+      "TW Net New Contacts": 4900,
+      "AWC Attendees": 5366,
+      "On-Demand Learning Hours": 4596.5
+    },
+    "Q2": {
+      "On-Demand Completions": 3829,
+      "Student Engagements": 1036,
+      "Faculty Engagements": 468,
+      "On-Demand New Accounts": 1049,
+      "TW Net New Contacts": 8800,
+      "AWC Attendees": 5005,
+      "On-Demand Learning Hours": 4905
+    }
+  },
+  "_notes": "TW Net New Contacts and CEUs: TW shows quarters rounded (e.g. 7.4K) but YTD exact; enter the latest quarter as exact YTD minus the earlier quarters. CEUs are counted as education hours (1 completion = 1 hour) until TW reports hours."
 }

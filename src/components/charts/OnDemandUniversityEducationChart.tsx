@@ -19,7 +19,8 @@ type OnDemandRow = QuarterlyRow & {
   newAccounts: number | null;
 };
 
-const ON_DEMAND_DATA: OnDemandRow[] = quarterlyRows("On-Demand Completions", "On-Demand Completions").map((row) => ({
+// Wood Institute learning hours by quarter (no hours goal set yet, so no goal line)
+const ON_DEMAND_DATA: OnDemandRow[] = quarterlyRows("On-Demand Learning Hours").map((row) => ({
   ...row,
   newAccounts: num(yearRec(Number(row.year)), "On-Demand New Accounts"),
 }));
@@ -30,10 +31,13 @@ const UNIVERSITY_EDUCATION_DATA: UniversityEducationRow[] = quarterlyRows("Stude
 
 const FACULTY_ENGAGEMENT_DATA: UniversityEducationRow[] = quarterlyRows("Faculty Engagements", "Faculty Engagements");
 
+/** Y-axis top: 12% headroom over the largest year, rounded up to the next 1,000 */
+const ON_DEMAND_AXIS_MAX = Math.ceil((Math.max(...ON_DEMAND_DATA.map((r) => r.total)) * 1.12) / 1000) * 1000;
+
 function formatWholeNumber(value: unknown) {
   const number = Number(value);
   if (!Number.isFinite(number) || number <= 0) return "";
-  return number.toLocaleString("en-US");
+  return Math.round(number).toLocaleString("en-US");
 }
 
 function newAccountsYtd(row: OnDemandRow | undefined) {
@@ -43,7 +47,7 @@ function newAccountsYtd(row: OnDemandRow | undefined) {
 const insideLabelProps = {
   position: "center" as const,
   formatter: formatWholeNumber,
-  fontSize: 10,
+  fontSize: 14,
   fontWeight: 700,
 };
 
@@ -52,7 +56,7 @@ const totalLabelProps = {
   offset: 7,
   formatter: formatWholeNumber,
   fill: "#255D38",
-  fontSize: 11,
+  fontSize: 15,
   fontWeight: 700,
 };
 
@@ -66,7 +70,7 @@ const LEGEND_ITEMS = [
 
 function OnDemandLegend() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 pt-3 text-[10px] font-medium uppercase text-gray-600">
+    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 pt-3 text-[13px] font-medium uppercase text-gray-600">
       {LEGEND_ITEMS.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-1">
           {item.label === "New Accounts" ? (
@@ -86,7 +90,7 @@ function OnDemandLegend() {
 
 function QuarterlyLegend() {
   return (
-    <div className="flex items-center justify-center gap-x-3 pt-3 text-[10px] font-medium uppercase text-gray-600">
+    <div className="flex items-center justify-center gap-x-3 pt-3 text-[13px] font-medium uppercase text-gray-600">
       {LEGEND_ITEMS.slice(0, 4).map((item) => (
         <span key={item.label} className="inline-flex items-center gap-1">
           <span
@@ -120,19 +124,19 @@ function AccountTick({
 
   return (
     <g transform={`translate(${x},${y})`} textAnchor="middle">
-      <text y={14} fill="#374151" fontSize={11}>
+      <text y={16} fill="#374151" fontSize={15}>
         {payload?.value}
       </text>
       <rect
-        x={-30}
-        y={20}
-        width={60}
-        height={21}
-        rx={10.5}
+        x={-32}
+        y={24}
+        width={64}
+        height={26}
+        rx={13}
         fill="#EAF3F8"
         stroke="#9CC2DA"
       />
-      <text y={35} fill="#25608F" fontSize={11} fontWeight={700}>
+      <text y={42} fill="#25608F" fontSize={14} fontWeight={700}>
         {formatWholeNumber(newAccountsYtd(row))}
       </text>
     </g>
@@ -142,12 +146,13 @@ function AccountTick({
 function OnDemandChart() {
   return (
     <div className="min-w-0 rounded-xl border border-gray-200 bg-white px-2 pb-4 pt-4">
-      <div className="min-h-12 px-2 text-center">
+      {/* Room for a two-line subhead so the three charts stay aligned when one wraps */}
+      <div className="min-h-[4.75rem] px-2 text-center">
         <h4 className="text-base font-semibold text-[var(--slb-charcoal)]">
           On-Demand Education
         </h4>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-          Completions by Quarter
+        <p className="mt-1 text-[14px] font-bold uppercase leading-5 tracking-[0.05em] text-gray-500">
+          Learning Hours by Quarter
         </p>
       </div>
       <ResponsiveContainer width="100%" height={402}>
@@ -163,15 +168,15 @@ function OnDemandChart() {
             tick={<AccountTick />}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
-            height={46}
+            height={58}
           />
           <YAxis
-            domain={[0, 21000]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            domain={[0, ON_DEMAND_AXIS_MAX]}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickFormatter={(value) => Number(value).toLocaleString("en-US")}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
-            width={45}
+            width={56}
           />
           <Legend
             verticalAlign="bottom"
@@ -182,7 +187,7 @@ function OnDemandChart() {
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 10,
+              fontSize: 13,
               textAlign: "center",
             }}
           />
@@ -211,7 +216,7 @@ function OnDemandChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -240,7 +245,7 @@ function OnDemandChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -269,7 +274,7 @@ function OnDemandChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -293,7 +298,7 @@ function OnDemandChart() {
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -324,11 +329,12 @@ function UniversityEducationChart({
 }) {
   return (
     <div className="min-w-0 rounded-xl border border-gray-200 bg-white px-2 pb-4 pt-4">
-      <div className="min-h-12 px-2 text-center">
+      {/* Room for a two-line subhead so the three charts stay aligned when one wraps */}
+      <div className="min-h-[4.75rem] px-2 text-center">
         <h4 className="text-base font-semibold text-[var(--slb-charcoal)]">
           University Education
         </h4>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+        <p className="mt-1 text-[14px] font-bold uppercase leading-5 tracking-[0.05em] text-gray-500">
           {subhead}
         </p>
       </div>
@@ -342,18 +348,18 @@ function UniversityEducationChart({
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#374151", fontSize: 11 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             height={46}
           />
           <YAxis
             domain={[0, domainMax]}
-            tick={{ fill: "#374151", fontSize: 10 }}
+            tick={{ fill: "#374151", fontSize: 13 }}
             tickFormatter={(value) => Number(value).toLocaleString("en-US")}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
-            width={40}
+            width={52}
           />
           <Legend
             verticalAlign="bottom"
@@ -364,7 +370,7 @@ function UniversityEducationChart({
               left: 0,
               right: 0,
               width: "100%",
-              fontSize: 10,
+              fontSize: 13,
               textAlign: "center",
             }}
           />
@@ -393,7 +399,7 @@ function UniversityEducationChart({
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -422,7 +428,7 @@ function UniversityEducationChart({
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -451,7 +457,7 @@ function UniversityEducationChart({
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>
@@ -475,7 +481,7 @@ function UniversityEducationChart({
               offset={25}
               formatter={formatGoal}
               fill="#F78F2D"
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
             />
           </Bar>

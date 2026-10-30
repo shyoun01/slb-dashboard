@@ -13,6 +13,7 @@ import ConurturedProjectFunnelChart from "@/components/charts/ConurturedProjectF
 import ConvertedProjectsChart from "@/components/charts/ConvertedProjectsChart";
 import ConvertedProjectsStripsChart from "@/components/charts/ConvertedProjectsStripsChart";
 import CarbonImpactTable from "@/components/charts/CarbonImpactTable";
+import ImpactPyramidCard from "@/components/charts/ImpactPyramidCard";
 import CardCallout from "@/components/CardCallout";
 import { latestQuarter } from "@/data/airtable";
 
@@ -57,6 +58,9 @@ export default function InvestorsQuarterlyPage() {
               <CardCallout>
                 With a quarter to go, 2026 demand (1,554 MM BF) has already surpassed all of 2025 (1,452 MM BF).
               </CardCallout>
+            </div>
+            <div className="ar-chart-panel">
+              <ImpactPyramidCard />
             </div>
             <div className="ar-chart-panel">
               <ProjectInfluenceDemandChart />

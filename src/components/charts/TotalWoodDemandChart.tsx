@@ -12,16 +12,10 @@ import {
   Legend,
   LabelList,
 } from "recharts";
-import { barPeriods, num } from "@/data/airtable";
+import { insideLabelIfFits } from "@/components/charts/chartUtils";
+import { totalWoodRows, type TotalWoodRow } from "@/data/airtable";
 
-type PeriodRow = {
-  label: string;
-  lumber: number;
-  /** Panel in MM BF (Airtable "Panel (MM BF)"), so lumber + panel + EWP add up to the total. */
-  panel: number;
-  ewp: number;
-  total: number;
-};
+type PeriodRow = TotalWoodRow;
 
 const ONE_DECIMAL: Intl.NumberFormatOptions = {
   minimumFractionDigits: 1,
@@ -56,22 +50,7 @@ function formatPanelInsideLabel(value: unknown) {
 }
 
 export default function TotalWoodDemandChart() {
-  const chartData = useMemo((): PeriodRow[] => {
-    return barPeriods()
-      .filter((p) => p.Period !== "2012–15")
-      .map((p) => {
-        const lumber = num(p, "Total Wood Lumber (MM BF)") ?? 0;
-        const panel = num(p, "Panel (MM BF)") ?? 0;
-        const ewp = num(p, "EWP (MM BF)") ?? 0;
-        return {
-          label: p.Period,
-          lumber,
-          panel,
-          ewp,
-          total: lumber + panel + ewp,
-        };
-      });
-  }, []);
+  const chartData = useMemo((): PeriodRow[] => totalWoodRows(), []);
 
   const maxVolume = useMemo(() => {
     const max = Math.max(...chartData.map((r) => r.total));
@@ -85,8 +64,9 @@ export default function TotalWoodDemandChart() {
 
   const insideLabelProps = {
     position: "center" as const,
+    content: insideLabelIfFits,
     formatter: formatSegmentInsideLabel,
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 700,
   };
 
@@ -100,7 +80,8 @@ export default function TotalWoodDemandChart() {
         {totalBbfLabel}
       </p>
 
-      <ResponsiveContainer width="100%" height={540}>
+      {/* Taller than the other volume charts so the thin EWP slices (2025, 2026) can hold their labels */}
+      <ResponsiveContainer width="100%" height={700}>
         <ComposedChart
           data={chartData}
           margin={{ top: 48, right: 30, left: 72, bottom: 20 }}
@@ -112,7 +93,7 @@ export default function TotalWoodDemandChart() {
           <XAxis
             dataKey="label"
             type="category"
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             interval={0}
@@ -121,12 +102,12 @@ export default function TotalWoodDemandChart() {
           <YAxis
             domain={[0, maxVolume]}
             tickFormatter={(v) => `${v.toLocaleString("en-US")} MM`}
-            tick={{ fill: "#374151", fontSize: 12 }}
+            tick={{ fill: "#374151", fontSize: 15 }}
             axisLine={{ stroke: "#d1d5db" }}
             tickLine={false}
-            width={64}
+            width={92}
             label={{
-              value: "Volume (MM)",
+              value: "Volume (MM BF)",
               angle: -90,
               position: "left",
               offset: 12,
@@ -169,8 +150,9 @@ export default function TotalWoodDemandChart() {
             <LabelList
               dataKey="panel"
               position="center"
+              content={insideLabelIfFits}
               formatter={formatPanelInsideLabel}
-              fontSize={11}
+              fontSize={14}
               fontWeight={700}
               fill="#ffffff"
             />
@@ -190,7 +172,7 @@ export default function TotalWoodDemandChart() {
               offset={8}
               formatter={formatVolumeLabel}
               fill="#255D38"
-              fontSize={12}
+              fontSize={15}
               fontWeight={700}
             />
           </Bar>
